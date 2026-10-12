@@ -1,0 +1,13 @@
+<script lang="ts">
+  let { size = '2.75rem' }: { size?: string } = $props();
+</script>
+
+<!-- A contest balloon: in ICPC every solved problem earns a balloon. -->
+<svg viewBox="0 0 64 64" width={size} height={size} aria-hidden="true">
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="#1E9CC4" />
+  <path d="M32 46 C 30 50, 34 52, 31 58" stroke="#FFF8EA" stroke-width="2" fill="none" stroke-linecap="round" />
+  <path d="M32 9 C 20 9 15 18 15 25 C 15 35 25 42 32 46 C 39 42 49 35 49 25 C 49 18 44 9 32 9 Z" fill="#FF6B4A" />
+  <path d="M29.5 45 L 34.5 45 L 33.5 48.5 L 30.5 48.5 Z" fill="#D9472A" />
+  <ellipse cx="22.5" cy="17.5" rx="3" ry="4.8" fill="#FFFFFF" opacity="0.45" transform="rotate(-25 22.5 17.5)" />
+  <path d="M32 19 l2.6 5.3 5.8 .8 -4.2 4.1 1 5.8 -5.2 -2.7 -5.2 2.7 1 -5.8 -4.2 -4.1 5.8 -.8 z" fill="#FFC233" />
+</svg>

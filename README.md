@@ -24,3 +24,14 @@ Oʻz kompyuteringizda: `./build_apk.sh` (Flutter va Android SDK kerak).
 - Daraja kartasi: `lib/widgets/level_sheet.dart`
 
 Shrift: Nunito (SIL Open Font License, `assets/fonts/OFL.txt`).
+
+## Kompyuter versiyasi (`desktop/`)
+
+Windows, macOS va Linux uchun. TypeScript + Svelte, Electron bilan oʻralgan.
+Chapda bosqichlar, oʻrtada orollar xaritasi, oʻngda daraja paneli: har bir masala uchun katakcha,
+eslatmalar, klaviatura tugmalari (← → Y N C, Ctrl K), zaxira nusxa (JSON) va tiklash.
+
+Oʻrnatuvchilar har bir push dan keyin **Actions → Build desktop → Artifacts** da paydo boʻladi.
+
+Ishlab chiqish: `cd desktop && npm install && npm run dev`.
+Maʼlumotlar mobil ilova bilan bir xil: `python3 tool/export_json.py` → `desktop/src/data/roadmap.json`.

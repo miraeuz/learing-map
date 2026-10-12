@@ -1,0 +1,88 @@
+@font-face { font-family: 'Nunito'; font-weight: 600; font-display: swap; src: url('./assets/fonts/Nunito-SemiBold.ttf') format('truetype'); }
+@font-face { font-family: 'Nunito'; font-weight: 700; font-display: swap; src: url('./assets/fonts/Nunito-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Nunito'; font-weight: 800; font-display: swap; src: url('./assets/fonts/Nunito-ExtraBold.ttf') format('truetype'); }
+@font-face { font-family: 'Nunito'; font-weight: 900; font-display: swap; src: url('./assets/fonts/Nunito-Black.ttf') format('truetype'); }
+
+:root {
+  /* Voyage palette, shared with the mobile app */
+  --lagoon: #2bb3d9;
+  --lagoon-2: #5fcdeb;
+  --deep: #0b5f86;
+  --sand: #f6dfa6;
+  --sand-2: #ddb46a;
+  --coral: #ff6b4a;
+  --coral-2: #d9472a;
+  --gold: #ffc233;
+  --gold-2: #e08a00;
+  --teal: #14a38b;
+  --teal-2: #0b7a67;
+  --ink: #1d2b3a;
+  --ink-2: #55657a;
+  --paper: #fff8ea;
+  --paper-2: #f7edd6;
+  --line: #ecdfbf;
+  --stone: #b9c3cc;
+  --stone-2: #8494a3;
+
+  --radius-s: 0.625rem;
+  --radius-m: 1rem;
+  --radius-l: 1.5rem;
+  --shadow: 0 0.5rem 1.5rem rgb(6 50 74 / 0.18);
+
+  --side: 17.5rem;
+  --panel: clamp(25rem, 31vw, 32rem);
+
+  /* Fluid root size: everything below is in rem, so the whole UI scales with the window */
+  font-size: clamp(14px, 0.3vw + 10.5px, 17px);
+  font-family: 'Nunito', system-ui, sans-serif;
+  font-weight: 700;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; height: 100%; }
+
+body {
+  background: var(--lagoon);
+  overflow: hidden;
+}
+
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+:focus-visible {
+  outline: 3px solid var(--deep);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+::selection { background: var(--gold); color: var(--ink); }
+
+/* Scrollbars that belong to the paper surfaces */
+* { scrollbar-width: thin; scrollbar-color: var(--sand-2) transparent; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+kbd {
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.05em 0.4em;
+  border-radius: 0.35rem;
+  border: 1.5px solid var(--line);
+  border-bottom-width: 3px;
+  background: #fff;
+  font: inherit;
+  font-size: 0.8em;
+  font-weight: 800;
+  text-align: center;
+  color: var(--ink-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
