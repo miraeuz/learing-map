@@ -1,0 +1,35 @@
+﻿ICPC yoʻli — foydalanish shartlari va maxfiylik
+
+1. LITSENZIYA
+ICPC yoʻli bepul va ochiq kodli dastur (MIT litsenziyasi).
+Copyright (c) 2026 muhammadiev.
+Dastur "qanday boʻlsa shunday" taqdim etiladi, hech qanday kafolatsiz.
+Toʻliq matn: https://github.com/miraeuz/learing-map/blob/main/LICENSE
+
+2. MAXFIYLIK
+Natijalaringiz faqat shu kompyuterda saqlanadi.
+
+Faollashtirishda (birinchi ishga tushirishda) muallifning Telegram botiga
+quyidagilar yuboriladi:
+  - siz kiritgan ism;
+  - kompyuter nomi va operatsion tizim turi;
+  - bir martalik faollashtirish kodi.
+Boshqa hech qanday maʼlumot (natijalar, fayllar, statistika) yuborilmaydi.
+Toʻliq maxfiylik siyosati:
+https://github.com/miraeuz/learing-map/blob/main/PRIVACY.md
+
+3. MASHQ HAVOLALARI
+Masalalar Codeforces, LeetCode, CSES, acmp.ru va boshqa saytlarga tegishli.
+Ilova faqat ularga havola beradi; havolalar brauzeringizda ochiladi.
+
+"Roziman" tugmasini bosib, siz ushbu shartlarga rozilik bildirasiz.
+
+---------------------------------------------------------------------
+
+ICPC yoʻli — terms of use and privacy (English)
+
+Free and open-source software under the MIT License, provided "as is" without
+warranty. Progress is stored only on this computer. During activation the name
+you enter, your computer name and OS type, and a one-time code are sent to the
+author's Telegram bot. Nothing else is sent.
+Privacy policy: https://github.com/miraeuz/learing-map/blob/main/PRIVACY.md

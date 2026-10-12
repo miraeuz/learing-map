@@ -18,6 +18,40 @@
   const learned = $derived(learnedCount(i, learnTotal));
   const steps = $derived(lessonSteps(i));
   const stepsDone = $derived(steps.filter((s) => s.done).length);
+  const nextIdx = $derived(steps.findIndex((s) => !s.done));
+  const nextProblem = $derived(topic.links.find((l) => !l.title.startsWith('Nazariya: ') && !isSolved(l.url)));
+
+  // Each level starts reading from the top.
+  let body = $state<HTMLDivElement>();
+  $effect(() => {
+    i;
+    if (body) body.scrollTop = 0;
+  });
+
+  function doNext() {
+    const st = steps[nextIdx];
+    if (!st) return;
+    if (nextIdx === 0 && st.url) {
+      markOpened(st.url);
+      window.open(st.url, '_blank', 'noopener');
+    } else if (nextIdx === 1) {
+      app.studyOpen = true;
+    } else if ((nextIdx === 2 || nextIdx === 3) && nextProblem) {
+      markOpened(nextProblem.url);
+      window.open(nextProblem.url, '_blank', 'noopener');
+    } else {
+      document.querySelector<HTMLElement>('.answer .primary')?.focus();
+    }
+  }
+
+  const nextLabel = $derived(
+    nextIdx === 0 ? 'Nazariyani oʻqing'
+    : nextIdx === 1 ? `Asosiy gʻoyalarni belgilang (${learned}/${learnTotal})`
+    : (nextIdx === 2 || nextIdx === 3) && nextProblem ? `Masala yeching: ${nextProblem.title}`
+    : nextIdx === 4 ? 'Tayyor boʻlsangiz — "Ha, bilaman"'
+    : '',
+  );
+  const nextAction = $derived(nextIdx === 1 ? 'Ochish' : nextIdx === 4 ? 'Belgilash' : 'Boshlash');
   let filter = $state<'all' | 'open'>('all');
   const shown = $derived(
     topic.links.map((l, k) => ({ l, k })).filter(({ l }) => filter === 'all' || !isSolved(l.url)),
@@ -80,7 +114,14 @@
     </div>
   </header>
 
-  <div class="body">
+  <div class="body" bind:this={body}>
+    {#if !locked && nextIdx >= 0 && nextLabel}
+      <button class="next" onclick={doNext}>
+        <span class="next-tag">Keyingi qadam</span>
+        <span class="next-text">{nextLabel}</span>
+        <span class="next-go">{nextAction} <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></span>
+      </button>
+    {/if}
     <section class="learn-card">
       <div class="lc-head">
         <h3>Nimani oʻrganishim kerak?</h3>
@@ -218,6 +259,17 @@
   .body { overflow-y: auto; padding: 1.1rem 1.25rem 1.25rem; display: grid; align-content: start; gap: 1.4rem; }
   h3 { margin: 0 0 0.45rem; font-size: 1rem; font-weight: 900; }
   .info { margin: 0; font-size: 1.02rem; line-height: 1.55; font-weight: 600; max-width: 38rem; }
+  .next {
+    display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.75rem;
+    width: 100%; padding: 0.7rem 0.9rem;
+    border: 1.5px dashed var(--coral); border-radius: var(--radius-m);
+    background: #fff4ef; text-align: left;
+  }
+  .next:hover { background: #ffebe3; }
+  .next-tag { padding: 0.15rem 0.55rem; border-radius: 1rem; background: var(--coral); color: #fff; font-size: 0.78rem; font-weight: 900; white-space: nowrap; }
+  .next-text { font-weight: 800; font-size: 0.95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .next-go { display: inline-flex; align-items: center; gap: 0.2rem; color: var(--coral-2); font-weight: 900; font-size: 0.9rem; }
+  .next-go svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
   .learn-card {
     padding: 1.1rem 1.15rem 1rem;
     background: #fff;

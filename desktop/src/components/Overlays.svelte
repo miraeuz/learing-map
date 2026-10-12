@@ -101,6 +101,15 @@
       <dd>{d}</dd>
     {/each}
   </dl>
+  <div class="about">
+    <b>ICPC yoʻli {__APP_VERSION__}</b>
+    <span>Bepul va ochiq kodli dastur (MIT litsenziyasi). Natijalar faqat shu kompyuterda saqlanadi.</span>
+    <span>
+      <a href="https://github.com/miraeuz/learing-map/blob/main/PRIVACY.md" target="_blank" rel="noopener noreferrer">Maxfiylik siyosati</a>
+      <a href="https://github.com/miraeuz/learing-map/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Litsenziya</a>
+      <a href="https://github.com/miraeuz/learing-map" target="_blank" rel="noopener noreferrer">Manba kodi</a>
+    </span>
+  </div>
   <button class="go" onclick={() => (app.helpOpen = false)}>Tushunarli</button>
 </Modal>
 
@@ -135,6 +144,9 @@
   }
   .go:active { transform: translateY(0.25rem); box-shadow: none; }
   .help-title { margin-top: 0; }
+  .about { display: grid; gap: 0.3rem; margin: 0 0 1.2rem; padding: 0.9rem 1rem; border-radius: 1rem; background: var(--paper-2); font-size: 0.88rem; color: var(--ink-2); font-weight: 700; line-height: 1.45; }
+  .about b { color: var(--ink); font-size: 0.95rem; }
+  .about a { color: var(--deep); font-weight: 900; margin-right: 0.9rem; }
   .keys { display: grid; grid-template-columns: auto 1fr; gap: 0.7rem 1.25rem; margin: 0 0 1.4rem; align-items: center; }
   .keys dt { display: flex; gap: 0.3rem; align-items: center; justify-content: flex-end; }
   .keys dd { margin: 0; font-weight: 700; }

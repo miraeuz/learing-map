@@ -6,6 +6,11 @@ on:
       - 'desktop/**'
       - '.github/workflows/build-desktop.yml'
   workflow_dispatch:
+    inputs:
+      store:
+        description: 'Microsoft Store paketi (.appx) ham yigʻilsinmi?'
+        type: boolean
+        default: false
 
 jobs:
   build:
@@ -57,7 +62,28 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID || '8795480827' }}
+          # Windows code signing: added automatically when these secrets exist
+          # (WIN_CSC_LINK = base64 of the .pfx certificate). Without them the build is unsigned.
+          WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
         run: npm run dist
+
+      - name: Microsoft Store package
+        if: matrix.name == 'windows' && inputs.store
+        shell: bash
+        env:
+          ID_NAME: ${{ vars.MS_STORE_IDENTITY_NAME }}
+          PUBLISHER: ${{ vars.MS_STORE_PUBLISHER }}
+          PUBLISHER_NAME: ${{ vars.MS_STORE_PUBLISHER_DISPLAY_NAME }}
+        run: |
+          if [ -z "$ID_NAME" ] || [ -z "$PUBLISHER" ] || [ -z "$PUBLISHER_NAME" ]; then
+            echo "::error title=Store maʼlumotlari yoʻq::Settings → Secrets and variables → Actions → Variables: MS_STORE_IDENTITY_NAME, MS_STORE_PUBLISHER, MS_STORE_PUBLISHER_DISPLAY_NAME (Partner Center → Product identity)."
+            exit 1
+          fi
+          npx electron-builder --win appx --publish never \
+            -c.appx.identityName="$ID_NAME" \
+            -c.appx.publisher="$PUBLISHER" \
+            -c.appx.publisherDisplayName="$PUBLISHER_NAME"
 
       - name: Upload
         uses: actions/upload-artifact@v4
@@ -65,6 +91,7 @@ jobs:
           name: icpc-yoli-${{ matrix.name }}
           path: |
             desktop/release/*.exe
+            desktop/release/*.appx
             desktop/release/*.dmg
             desktop/release/*.AppImage
             desktop/release/*.deb

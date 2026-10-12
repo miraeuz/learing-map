@@ -1,7 +1,7 @@
 {
   "name": "icpc-yoli",
   "productName": "ICPC yoʻli",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "ICPC tayyorgarlik yoʻl xaritasi — kompyuter uchun",
   "author": "muhammadiev",
   "license": "MIT",
@@ -55,12 +55,20 @@
           ]
         }
       ],
-      "icon": "resources/icon.png"
+      "icon": "resources/icon.png",
+      "legalTrademarks": "ICPC yoʻli"
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "artifactName": "ICPC-yoli-${version}-setup.${ext}"
+      "artifactName": "ICPC-yoli-${version}-setup.${ext}",
+      "license": "resources/license_uz.txt",
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "ICPC yoʻli",
+      "uninstallDisplayName": "ICPC yoʻli",
+      "deleteAppDataOnUninstall": false
     },
     "portable": {
       "artifactName": "ICPC-yoli-${version}-portable.${ext}"
@@ -86,7 +94,19 @@
       "category": "Education",
       "maintainer": "muhammadiev <nldgooner@gmail.com>"
     },
-    "publish": null
+    "publish": null,
+    "copyright": "© 2026 muhammadiev",
+    "appx": {
+      "applicationId": "ICPCyoli",
+      "displayName": "ICPC yoʻli",
+      "languages": [
+        "uz-Latn-UZ",
+        "en-US"
+      ],
+      "backgroundColor": "#1E9CC4",
+      "showNameOnTiles": true,
+      "artifactName": "ICPC-yoli-${version}-store.${ext}"
+    }
   },
   "repository": {
     "type": "git",

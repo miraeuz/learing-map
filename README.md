@@ -44,3 +44,19 @@ Kod 10 daqiqa amal qiladi, 5 ta notoʻgʻri urinishdan keyin bekor boʻladi.
 
 Bot tokeni kodda saqlanmaydi. GitHub repository → **Settings → Secrets and variables → Actions** da
 `TELEGRAM_BOT_TOKEN` (va ixtiyoriy `TELEGRAM_CHAT_ID`) secretini qoʻshing — oʻrnatuvchilar shundan yigʻiladi.
+
+### Imzolash ("Nomaʼlum nashriyotchi" ogohlantirishi)
+
+Windows imzosiz dasturlar uchun SmartScreen ogohlantirishini koʻrsatadi. Uni faqat
+kod imzolash sertifikati olib tashlaydi. Workflow tayyor — quyidagilardan birini tanlang:
+
+1. **OV sertifikat** (~$150–300/yil): `.pfx` faylni base64 qilib `WIN_CSC_LINK` secretiga,
+   parolini `WIN_CSC_KEY_PASSWORD` secretiga qoʻshing. Keyingi yigʻishlar avtomatik imzolanadi.
+2. **SignPath Foundation** (ochiq kodli loyihalar uchun bepul): https://signpath.org/ — ariza bering;
+   talablar: OSI litsenziya (`LICENSE`), maxfiylik siyosati (`PRIVACY.md`), imzolash siyosati (`CODE_SIGNING.md`).
+3. **Microsoft Store** (sertifikat kerak emas, Store oʻzi imzolaydi): Partner Center da ilova yarating,
+   **Product identity** qiymatlarini repository **Variables** ga qoʻshing
+   (`MS_STORE_IDENTITY_NAME`, `MS_STORE_PUBLISHER`, `MS_STORE_PUBLISHER_DISPLAY_NAME`),
+   soʻng **Run workflow** da "Microsoft Store paketi" belgisini yoqing.
+
+Maxfiylik siyosati: [PRIVACY.md](PRIVACY.md). Litsenziya: [LICENSE](LICENSE) (MIT).

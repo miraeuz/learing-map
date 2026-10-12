@@ -1,6 +1,6 @@
 // Electron shell for ICPC yoʻli: one window, activation in the main process,
 // external links open in the browser.
-const { app, BrowserWindow, shell, Menu, ipcMain } = require('electron');
+const { app, BrowserWindow, shell, Menu, ipcMain, screen } = require('electron');
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
@@ -37,21 +37,35 @@ function setupLicense() {
   ipcMain.handle('window:isFullscreen', () => Boolean(win && win.isFullScreen()));
 }
 
-// Window preference: full screen by default, remembered between launches.
+// Window state: opens maximized (with the normal title bar and taskbar),
+// remembers size, position and maximized state between launches.
+// F11 is an optional distraction-free full screen; the app never starts in it.
 const stateFile = () => path.join(app.getPath('userData'), 'window-state.json');
 function readWindowState() {
   try {
-    return { fullscreen: true, ...JSON.parse(fs.readFileSync(stateFile(), 'utf8')) };
+    const s = JSON.parse(fs.readFileSync(stateFile(), 'utf8'));
+    return { maximized: s.maximized !== false, bounds: s.bounds || null };
   } catch {
-    return { fullscreen: true };
+    return { maximized: true, bounds: null };
   }
 }
-function writeWindowState(state) {
+function saveWindowState() {
+  if (!win) return;
   try {
-    fs.writeFileSync(stateFile(), JSON.stringify(state));
+    fs.writeFileSync(
+      stateFile(),
+      JSON.stringify({ maximized: win.isMaximized() || win.isFullScreen(), bounds: win.getNormalBounds() }),
+    );
   } catch {
     /* not critical */
   }
+}
+/** Only reuse saved bounds if they are still visible on a connected screen. */
+function visibleBounds(b) {
+  if (!b) return null;
+  const area = screen.getDisplayMatching(b).workArea;
+  const visible = b.x < area.x + area.width - 100 && b.x + b.width > area.x + 100 && b.y >= area.y - 10 && b.y < area.y + area.height - 100;
+  return visible ? b : null;
 }
 
 function toggleFullscreen() {
@@ -62,9 +76,15 @@ function toggleFullscreen() {
 
 function createWindow() {
   const state = readWindowState();
+  const area = screen.getPrimaryDisplay().workArea;
+  const b = visibleBounds(state.bounds) || {
+    width: Math.min(1440, area.width),
+    height: Math.min(900, area.height),
+    x: area.x + Math.max(0, Math.round((area.width - Math.min(1440, area.width)) / 2)),
+    y: area.y + Math.max(0, Math.round((area.height - Math.min(900, area.height)) / 2)),
+  };
   win = new BrowserWindow({
-    width: 1440,
-    height: 900,
+    ...b,
     minWidth: 760,
     minHeight: 560,
     title: 'ICPC yoʻli',
@@ -83,14 +103,14 @@ function createWindow() {
 
   win.loadFile(path.join(__dirname, '..', 'dist', 'index.html'));
   win.once('ready-to-show', () => {
-    win.maximize();
-    if (state.fullscreen) win.setFullScreen(true);
+    if (state.maximized) win.maximize();
     win.show();
   });
+  win.on('close', saveWindowState);
 
   const sendFs = () => win.webContents.send('window:fullscreen', win.isFullScreen());
-  win.on('enter-full-screen', () => { writeWindowState({ fullscreen: true }); sendFs(); });
-  win.on('leave-full-screen', () => { writeWindowState({ fullscreen: false }); sendFs(); });
+  win.on('enter-full-screen', sendFs);
+  win.on('leave-full-screen', sendFs);
 
   // F11 toggles full screen (there is no menu bar to provide the shortcut).
   win.webContents.on('before-input-event', (event, input) => {
