@@ -3,6 +3,9 @@ Exits 1 if there are errors (warnings and infos are reported but don't fail)."""
 import sys
 
 errors = 0
+raw = open(sys.argv[1], encoding='utf-8', errors='replace').read()
+if '|' not in raw:
+    print('::warning title=analyzer output::' + raw[-3000:].replace('%', '%25').replace('\n', '%0A'))
 for line in open(sys.argv[1], encoding='utf-8', errors='replace'):
     parts = line.rstrip('\n').split('|')
     if len(parts) < 8:

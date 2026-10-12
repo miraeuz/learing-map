@@ -34,11 +34,15 @@ jobs:
 
       - name: Analyze
         run: |
-          flutter analyze --format=machine > analyze.txt 2>&1 || true
+          dart analyze --format=machine > analyze.txt 2>&1 || true
           python3 tool/analyze_annotate.py analyze.txt
 
       - name: Run tests
-        run: flutter test --reporter github
+        run: |
+          if ! flutter test > test.txt 2>&1; then
+            python3 -c "import sys; t=open('test.txt',errors='replace').read()[-6000:]; print('::error title=flutter test::' + t.replace('%','%25').replace('\r','').replace('\n','%0A'))"
+            exit 1
+          fi
 
       - name: Build release APK
         run: flutter build apk --release
