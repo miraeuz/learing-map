@@ -8,9 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
@@ -23,11 +23,17 @@ jobs:
       - name: Generate Android platform files
         run: flutter create --platforms=android --project-name icpc_quest --org com.icpcquest .
 
-      - name: Set app name
-        run: sed -i 's/android:label="icpc_quest"/android:label="ICPC Quest"/' android/app/src/main/AndroidManifest.xml
+      - name: Patch Android manifest (app name, open links)
+        run: python3 tool/patch_android.py android/app/src/main/AndroidManifest.xml
 
       - name: Get packages
         run: flutter pub get
+
+      - name: Generate app icon
+        run: dart run flutter_launcher_icons
+
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
 
       - name: Run tests
         run: flutter test
@@ -35,8 +41,11 @@ jobs:
       - name: Build release APK
         run: flutter build apk --release
 
+      - name: Rename APK
+        run: cp build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/ICPC-yoli.apk
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: icpc-quest-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: icpc-yoli-apk
+          path: build/app/outputs/flutter-apk/ICPC-yoli.apk

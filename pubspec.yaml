@@ -1,7 +1,7 @@
 name: icpc_quest
-description: ICPC preparation roadmap as a mobile-game island level map.
+description: ICPC tayyorgarlik yoʻl xaritasi — orollar boʻylab daraja xaritasi.
 publish_to: 'none'
-version: 1.0.0+1
+version: 2.0.0+2
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
@@ -10,10 +10,31 @@ dependencies:
   flutter:
     sdk: flutter
   shared_preferences: ^2.3.2
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.1
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: assets/icon/icon.png
+  adaptive_icon_background: '#1E9CC4'
+  adaptive_icon_foreground: assets/icon/icon_fg.png
+  min_sdk_android: 21
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Nunito-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Nunito-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Nunito-Black.ttf
+          weight: 900

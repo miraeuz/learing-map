@@ -1,10 +1,12 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Level status: not answered yet, answered "No" (practice), answered "Yes" (done).
+/// Level status: not answered, answered "Hali yoʻq" (practice), answered "Ha" (mastered).
 enum LevelStatus { none, practice, done }
 
 class ProgressStore {
   static const _key = 'icpc_progress_v1';
+  static const _visitedKey = 'icpc_visited_links_v1';
+  static const _onboardedKey = 'icpc_onboarded_v2';
 
   static Future<Map<int, LevelStatus>> load() async {
     final prefs = await SharedPreferences.getInstance();
@@ -31,8 +33,29 @@ class ProgressStore {
     await prefs.setStringList(_key, list);
   }
 
+  static Future<Set<String>> loadVisited() async {
+    final prefs = await SharedPreferences.getInstance();
+    return (prefs.getStringList(_visitedKey) ?? const <String>[]).toSet();
+  }
+
+  static Future<void> saveVisited(Set<String> urls) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_visitedKey, urls.toList());
+  }
+
+  static Future<bool> isOnboarded() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_onboardedKey) ?? false;
+  }
+
+  static Future<void> setOnboarded() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_onboardedKey, true);
+  }
+
   static Future<void> clear() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_key);
+    await prefs.remove(_visitedKey);
   }
 }

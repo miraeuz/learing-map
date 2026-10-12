@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../data/progress_store.dart';
 import '../data/topics.dart';
 import '../map/map_layout.dart';
 import '../map/map_painter.dart';
+import '../theme.dart';
+import '../widgets/confetti.dart';
+import '../widgets/hud.dart';
 import '../widgets/level_node.dart';
-import '../widgets/topic_card.dart';
+import '../widgets/level_sheet.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -16,22 +20,41 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   final _scroll = ScrollController();
+  final _confetti = GlobalKey<ConfettiOverlayState>();
   Map<int, LevelStatus> _progress = {};
+  Set<String> _visited = {};
   bool _loaded = false;
   bool _didInitialScroll = false;
   MapLayout? _layout;
   double _viewportHeight = 0;
 
+  static const _nodeBoxW = 90.0;
+  static const _nodeBoxH = 100.0;
+  static const _nodeFaceCenterY = 52.0;
+
   @override
   void initState() {
     super.initState();
-    ProgressStore.load().then((p) {
-      if (!mounted) return;
-      setState(() {
-        _progress = p;
-        _loaded = true;
-      });
+    _load();
+  }
+
+  Future<void> _load() async {
+    final p = await ProgressStore.load();
+    final v = await ProgressStore.loadVisited();
+    final onboarded = await ProgressStore.isOnboarded();
+    if (!mounted) return;
+    setState(() {
+      _progress = p;
+      _visited = v;
+      _loaded = true;
     });
+    if (!onboarded) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) return;
+        await showWelcome(context);
+        await ProgressStore.setOnboarded();
+      });
+    }
   }
 
   @override
@@ -42,11 +65,10 @@ class _MapScreenState extends State<MapScreen> {
 
   LevelStatus _status(int i) => _progress[i] ?? LevelStatus.none;
 
-  /// A level is open when the previous one has been answered (Yes or No).
+  /// A level is open when the previous one has been answered.
   bool _locked(int i) => i > 0 && _status(i - 1) == LevelStatus.none;
 
-  /// The frontier: first unanswered open level; otherwise the first
-  /// "needs practice" level; otherwise the last level.
+  /// First unanswered open level; otherwise the first "practice" level; otherwise the last.
   int get _currentIndex {
     for (var i = 0; i < topics.length; i++) {
       if (_status(i) == LevelStatus.none && !_locked(i)) return i;
@@ -57,13 +79,18 @@ class _MapScreenState extends State<MapScreen> {
     return topics.length - 1;
   }
 
-  int get _doneCount => _progress.values.where((s) => s == LevelStatus.done).length;
-  int get _practiceCount => _progress.values.where((s) => s == LevelStatus.practice).length;
+  /// How far the gold wake reaches: the first unanswered level.
+  int get _frontier {
+    for (var i = 0; i < topics.length; i++) {
+      if (_status(i) == LevelStatus.none) return i;
+    }
+    return topics.length;
+  }
 
   double _offsetFor(int i) {
     final layout = _layout!;
     final fromBottom = layout.height - layout.nodes[i].dy;
-    final target = fromBottom - _viewportHeight / 2;
+    final target = fromBottom - _viewportHeight * 0.42;
     final max = _scroll.hasClients ? _scroll.position.maxScrollExtent : layout.height;
     return target.clamp(0.0, max).toDouble();
   }
@@ -71,22 +98,37 @@ class _MapScreenState extends State<MapScreen> {
   void _scrollTo(int i, {bool animate = true}) {
     if (!_scroll.hasClients || _layout == null) return;
     final offset = _offsetFor(i);
-    if (animate) {
-      _scroll.animateTo(offset, duration: const Duration(milliseconds: 700), curve: Curves.easeInOutCubic);
+    if (animate && !MediaQuery.of(context).disableAnimations) {
+      _scroll.animateTo(offset, duration: const Duration(milliseconds: 750), curve: Curves.easeInOutCubic);
     } else {
       _scroll.jumpTo(offset);
     }
   }
 
+  void _scrollToStage(int stageId) {
+    final idx = topics.indexWhere((t) => t.stage == stageId);
+    if (idx >= 0) _scrollTo(idx);
+  }
+
+  void _markVisited(String url) {
+    _visited = {..._visited, url};
+    ProgressStore.saveVisited(_visited);
+  }
+
   Future<void> _openLevel(int i, Offset from) async {
-    final answer = await showTopicPopup(
+    HapticFeedback.lightImpact();
+    final answer = await showLevelPopup(
       context: context,
       index: i,
       status: _status(i),
       locked: _locked(i),
       from: from,
+      visited: _visited,
+      onVisit: _markVisited,
     );
-    if (answer == null || !mounted) return;
+    if (!mounted) return;
+    setState(() {}); // refresh visited counts
+    if (answer == null) return;
 
     setState(() {
       _progress = Map.of(_progress)..[i] = answer ? LevelStatus.done : LevelStatus.practice;
@@ -94,24 +136,32 @@ class _MapScreenState extends State<MapScreen> {
     await ProgressStore.save(_progress);
     if (!mounted) return;
 
+    final isLast = i == topics.length - 1;
+    final stageDone = answer &&
+        [for (var k = 0; k < topics.length; k++) if (topics[k].stage == topics[i].stage) k]
+            .every((k) => _status(k) == LevelStatus.done);
+
+    if (answer) _confetti.currentState?.burst(from);
+
     final messenger = ScaffoldMessenger.of(context);
     messenger.hideCurrentSnackBar();
-    final isLast = i == topics.length - 1;
     messenger.showSnackBar(SnackBar(
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: answer ? const Color(0xFFEF6C00) : const Color(0xFF00838F),
-      duration: const Duration(milliseconds: 1800),
+      backgroundColor: answer ? AppColors.goldDark : AppColors.tealDark,
+      duration: const Duration(milliseconds: 2200),
       content: Text(
-        answer
-            ? (isLast ? '🏆 Roadmap complete! See you at the World Finals!' : '⭐⭐⭐ Level ${i + 1} mastered!')
-            : '💪 Marked for practice. Come back when it feels easy.',
-        style: const TextStyle(fontWeight: FontWeight.w800),
+        isLast && answer
+            ? 'Yoʻl xaritasi tugadi! Endi World Finals 🏆'
+            : stageDone
+                ? '${stageOf(topics[i]).name} bosqichi toʻliq oʻzlashtirildi ⭐'
+                : answer
+                    ? '${i + 1}-daraja oʻzlashtirildi'
+                    : '${i + 1}-daraja mashq roʻyxatiga qoʻshildi. Oson tuyulganda qayting.',
       ),
     ));
 
     if (!isLast) {
-      Future.delayed(const Duration(milliseconds: 250), () {
-        if (mounted) _scrollTo(i + 1);
+      Future.delayed(const Duration(milliseconds: 350), () {
+        if (mounted) _scrollTo(_currentIndex);
       });
     }
   }
@@ -120,89 +170,109 @@ class _MapScreenState extends State<MapScreen> {
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Reset progress?'),
-        content: const Text('All levels will go back to the start.'),
+        backgroundColor: AppColors.paper,
+        title: const Text('Natijalarni tozalaysizmi?', style: TextStyle(fontWeight: FontWeight.w900)),
+        content: const Text('Barcha darajalar boshlangʻich holatga qaytadi.'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
-          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Reset')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Bekor qilish')),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: AppColors.coral),
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Tozalash'),
+          ),
         ],
       ),
     );
     if (ok != true) return;
     await ProgressStore.clear();
     if (!mounted) return;
-    setState(() => _progress = {});
+    setState(() {
+      _progress = {};
+      _visited = {};
+    });
     _scrollTo(0);
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!_loaded) {
+      return const Scaffold(
+        backgroundColor: AppColors.lagoon,
+        body: Center(child: CircularProgressIndicator(color: Colors.white)),
+      );
+    }
+    final current = _currentIndex;
     return Scaffold(
-      backgroundColor: const Color(0xFF3CC8EC),
-      body: !_loaded
-          ? const Center(child: CircularProgressIndicator(color: Colors.white))
-          : LayoutBuilder(builder: (context, constraints) {
-              final width = constraints.maxWidth;
-              if (_layout == null || _layout!.width != width) {
-                _layout = MapLayout(width);
-              }
-              _viewportHeight = constraints.maxHeight;
-              final layout = _layout!;
+      backgroundColor: AppColors.lagoon,
+      body: LayoutBuilder(builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        if (_layout == null || _layout!.width != width) {
+          _layout = MapLayout(width);
+        }
+        _viewportHeight = constraints.maxHeight;
+        final layout = _layout!;
 
-              if (!_didInitialScroll) {
-                _didInitialScroll = true;
-                WidgetsBinding.instance.addPostFrameCallback((_) => _scrollTo(_currentIndex, animate: false));
-              }
+        if (!_didInitialScroll) {
+          _didInitialScroll = true;
+          WidgetsBinding.instance.addPostFrameCallback((_) => _scrollTo(current, animate: false));
+        }
 
-              return Stack(
-                children: [
-                  SingleChildScrollView(
-                    controller: _scroll,
-                    reverse: true,
-                    child: SizedBox(
-                      width: width,
-                      height: layout.height,
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Positioned.fill(
-                            child: RepaintBoundary(
-                              child: CustomPaint(painter: MapPainter(layout)),
-                            ),
-                          ),
-                          ..._islandDecorations(layout),
-                          ..._stageSigns(layout),
-                          ..._levelNodes(layout),
-                        ],
-                      ),
+        return Stack(
+          children: [
+            SingleChildScrollView(
+              controller: _scroll,
+              reverse: true,
+              child: SizedBox(
+                width: width,
+                height: layout.height,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Positioned.fill(
+                      child: RepaintBoundary(child: CustomPaint(painter: MapPainter(layout))),
                     ),
-                  ),
-                  _TopBar(
-                    done: _doneCount,
-                    practice: _practiceCount,
-                    total: topics.length,
-                    stageName: stageOf(topics[_currentIndex]).name,
-                    onReset: _confirmReset,
-                  ),
-                ],
-              );
-            }),
-      floatingActionButton: _loaded
-          ? FloatingActionButton.extended(
-              backgroundColor: const Color(0xFFFF8F00),
-              foregroundColor: Colors.white,
-              onPressed: () => _scrollTo(_currentIndex),
-              icon: const Icon(Icons.my_location_rounded),
-              label: Text('Level ${_currentIndex + 1}', style: const TextStyle(fontWeight: FontWeight.w900)),
-            )
-          : null,
+                    Positioned.fill(
+                      child: RepaintBoundary(child: CustomPaint(painter: RoutePainter(layout, _frontier))),
+                    ),
+                    ..._islandDecorations(layout),
+                    ..._stageSigns(layout),
+                    ..._levelNodes(layout, current),
+                    _ship(layout, current),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              child: Hud(
+                progress: _progress,
+                currentStage: topics[current].stage,
+                onStageTap: _scrollToStage,
+                onReset: _confirmReset,
+                onHelp: () => showWelcome(context),
+              ),
+            ),
+            Positioned.fill(child: ConfettiOverlay(key: _confetti)),
+          ],
+        );
+      }),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: AppColors.deep,
+        foregroundColor: Colors.white,
+        onPressed: () => _scrollTo(current),
+        icon: const Text('⛵', style: TextStyle(fontSize: 20)),
+        label: Text('${current + 1}-darajaga',
+            style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 15)),
+      ),
     );
   }
 
   List<Widget> _islandDecorations(MapLayout layout) {
     final widgets = <Widget>[];
     for (final island in layout.islands) {
-      final s = island.radius * 0.75;
+      final s = island.radius * 0.72;
       widgets.add(Positioned(
         left: island.center.dx - s,
         top: island.center.dy - s * 1.25,
@@ -215,11 +285,11 @@ class _MapScreenState extends State<MapScreen> {
     }
     widgets.add(Positioned(
       left: layout.trophy.dx - 50,
-      top: layout.trophy.dy - 80,
+      top: layout.trophy.dy - 84,
       width: 100,
       height: 100,
       child: const IgnorePointer(
-        child: Center(child: Text('🏆', style: TextStyle(fontSize: 64))),
+        child: Center(child: Text('🏆', style: TextStyle(fontSize: 62))),
       ),
     ));
     return widgets;
@@ -229,193 +299,93 @@ class _MapScreenState extends State<MapScreen> {
     return [
       for (final sign in layout.signs)
         Positioned(
-          left: sign.center.dx - 82,
+          left: sign.center.dx - 84,
           top: sign.center.dy - 30,
-          width: 164,
+          width: 168,
           height: 60,
-          child: IgnorePointer(
+          child: GestureDetector(
+            onTap: () => _scrollToStage(sign.stage.id),
             child: Transform.rotate(
-              angle: sign.tiltLeft ? -0.05 : 0.05,
-              child: _WoodSign(stage: sign.stage),
+              angle: sign.tiltLeft ? -0.04 : 0.04,
+              child: _StageSign(stage: sign.stage),
             ),
           ),
         ),
     ];
   }
 
-  List<Widget> _levelNodes(MapLayout layout) {
-    final current = _currentIndex;
-    const box = 90.0;
+  List<Widget> _levelNodes(MapLayout layout, int current) {
     return [
       for (var i = 0; i < topics.length; i++)
         Positioned(
-          left: layout.nodes[i].dx - box / 2,
-          top: layout.nodes[i].dy - box / 2,
-          width: box,
-          height: box,
-          child: Center(
-            child: LevelNode(
-              index: i,
-              status: _status(i),
-              locked: _locked(i),
-              current: i == current,
-              onTap: (pos) => _openLevel(i, pos),
-            ),
+          left: layout.nodes[i].dx - _nodeBoxW / 2,
+          top: layout.nodes[i].dy - _nodeFaceCenterY,
+          width: _nodeBoxW,
+          height: _nodeBoxH,
+          child: LevelNode(
+            key: ValueKey('node$i'),
+            index: i,
+            status: _status(i),
+            locked: _locked(i),
+            current: i == current,
+            onTap: (pos) => _openLevel(i, pos),
           ),
         ),
     ];
   }
+
+  Widget _ship(MapLayout layout, int current) {
+    final node = layout.nodes[current];
+    final onLeft = node.dx > layout.width / 2;
+    final x = onLeft ? node.dx - 88 : node.dx + 42;
+    return AnimatedPositioned(
+      duration: const Duration(milliseconds: 900),
+      curve: Curves.easeInOutCubic,
+      left: x,
+      top: node.dy - 30,
+      width: 48,
+      height: 52,
+      child: IgnorePointer(child: ShipMarker(facingLeft: !onLeft)),
+    );
+  }
 }
 
-class _WoodSign extends StatelessWidget {
+class _StageSign extends StatelessWidget {
   final Stage stage;
-  const _WoodSign({required this.stage});
+  const _StageSign({required this.stage});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      padding: const EdgeInsets.fromLTRB(10, 6, 12, 6),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFFC98B4E), Color(0xFF8D5A2B)],
-        ),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFF5D3A1A), width: 2.5),
-        boxShadow: const [BoxShadow(color: Color(0x55000000), blurRadius: 6, offset: Offset(0, 3))],
+        color: const Color(0xFFB57A45),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0xFF7A4A22), width: 2.5),
+        boxShadow: const [BoxShadow(color: Color(0x4006324A), blurRadius: 6, offset: Offset(0, 4))],
       ),
       child: Row(
         children: [
           Text(stage.emoji, style: const TextStyle(fontSize: 22)),
-          const SizedBox(width: 6),
+          const SizedBox(width: 8),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('STAGE ${stage.id}',
-                    style: const TextStyle(
-                        color: Color(0xFFFFE0B2), fontSize: 10, fontWeight: FontWeight.w900, letterSpacing: 1)),
+                Text('${stage.id}-bosqich',
+                    style: const TextStyle(color: Color(0xFFFFE3BF), fontSize: 11.5, fontWeight: FontWeight.w800)),
                 Text(
                   stage.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w900),
+                  style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w900),
                 ),
               ],
             ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _TopBar extends StatelessWidget {
-  final int done;
-  final int practice;
-  final int total;
-  final String stageName;
-  final VoidCallback onReset;
-
-  const _TopBar({
-    required this.done,
-    required this.practice,
-    required this.total,
-    required this.stageName,
-    required this.onReset,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        margin: const EdgeInsets.fromLTRB(12, 8, 12, 0),
-        padding: const EdgeInsets.fromLTRB(16, 10, 6, 12),
-        decoration: BoxDecoration(
-          color: const Color(0xEEFFFBF2),
-          borderRadius: BorderRadius.circular(22),
-          border: Border.all(color: Colors.white, width: 3),
-          boxShadow: const [BoxShadow(color: Color(0x33000000), blurRadius: 12, offset: Offset(0, 4))],
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                const Text('🏝️', style: TextStyle(fontSize: 24)),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('ICPC Quest',
-                          style: TextStyle(fontSize: 19, fontWeight: FontWeight.w900, color: Color(0xFF3E2723))),
-                      Text('Now: $stageName',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFF8D6E63))),
-                    ],
-                  ),
-                ),
-                _Pill(text: '⭐ $done', color: const Color(0xFFEF6C00)),
-                const SizedBox(width: 6),
-                _Pill(text: '↻ $practice', color: const Color(0xFF00838F)),
-                PopupMenuButton<String>(
-                  icon: const Icon(Icons.more_vert_rounded, color: Color(0xFF5D4037)),
-                  onSelected: (v) {
-                    if (v == 'reset') onReset();
-                  },
-                  itemBuilder: (_) => const [
-                    PopupMenuItem(value: 'reset', child: Text('Reset progress')),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: LinearProgressIndicator(
-                        value: total == 0 ? 0 : done / total,
-                        minHeight: 12,
-                        backgroundColor: const Color(0xFFFFE0B2),
-                        valueColor: const AlwaysStoppedAnimation(Color(0xFFFF8F00)),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Text('$done / $total',
-                      style: const TextStyle(fontWeight: FontWeight.w900, color: Color(0xFF5D4037))),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _Pill extends StatelessWidget {
-  final String text;
-  final Color color;
-  const _Pill({required this.text, required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withAlpha(30),
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Text(text, style: TextStyle(color: color, fontWeight: FontWeight.w900, fontSize: 13)),
     );
   }
 }

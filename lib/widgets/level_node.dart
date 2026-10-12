@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../data/progress_store.dart';
+import '../theme.dart';
 
-/// One round level button on the map, styled like a match-3 level point.
-class LevelNode extends StatelessWidget {
+/// A pressable 3D level button on the map.
+class LevelNode extends StatefulWidget {
   final int index;
   final LevelStatus status;
   final bool locked;
@@ -19,103 +22,110 @@ class LevelNode extends StatelessWidget {
     required this.onTap,
   });
 
-  List<Color> get _colors {
-    if (locked) return const [Color(0xFFE0E0E0), Color(0xFF9E9E9E)];
-    switch (status) {
+  @override
+  State<LevelNode> createState() => _LevelNodeState();
+}
+
+class _LevelNodeState extends State<LevelNode> {
+  bool _pressed = false;
+
+  (Color, Color, Color) get _colors {
+    if (widget.locked) return (const Color(0xFFD5DCE2), AppColors.stone, AppColors.stoneDark);
+    switch (widget.status) {
       case LevelStatus.done:
-        return const [Color(0xFFFFE082), Color(0xFFFF8F00)];
+        return (const Color(0xFFFFDC7A), AppColors.gold, AppColors.goldDark);
       case LevelStatus.practice:
-        return const [Color(0xFF80DEEA), Color(0xFF00838F)];
+        return (const Color(0xFF5ED3BE), AppColors.teal, AppColors.tealDark);
       case LevelStatus.none:
-        return const [Color(0xFFF48FB1), Color(0xFFC2185B)];
+        return (const Color(0xFFFF9A80), AppColors.coral, AppColors.coralDark);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final colors = _colors;
-    final label = (index + 1).toString().padLeft(2, '0');
+    final (light, face, rim) = _colors;
+    final label = '${widget.index + 1}';
+    const size = 60.0;
+    const depth = 6.0;
+    final press = _pressed ? depth - 1 : 0.0;
 
-    Widget button = GestureDetector(
+    return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTapUp: (d) => onTap(d.globalPosition),
-      child: Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.center,
-        children: [
-          // Pedestal under the button.
-          Positioned(
-            bottom: -6,
-            child: Container(
-              width: 62,
-              height: 24,
-              decoration: BoxDecoration(
-                color: const Color(0x99E1F5FE),
-                borderRadius: BorderRadius.circular(30),
-              ),
-            ),
-          ),
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: colors,
-              ),
-              border: Border.all(color: Colors.white, width: 3),
-              boxShadow: [
-                BoxShadow(
-                  color: colors.last.withAlpha(140),
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-            ),
-            alignment: Alignment.center,
-            child: locked
-                ? const Icon(Icons.lock_rounded, color: Colors.white, size: 26)
-                : Text(
-                    label,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                      fontSize: label.length > 2 ? 17 : 21,
-                      shadows: const [
-                        Shadow(color: Color(0x66000000), offset: Offset(0, 2), blurRadius: 2),
-                      ],
-                    ),
-                  ),
-          ),
-          // Shine.
-          Positioned(
-            top: 9,
-            left: 16,
-            child: IgnorePointer(
+      onTapDown: (_) => setState(() => _pressed = true),
+      onTapCancel: () => setState(() => _pressed = false),
+      onTapUp: (d) {
+        setState(() => _pressed = false);
+        widget.onTap(d.globalPosition);
+      },
+      child: SizedBox(
+        width: size + 30,
+        height: size + depth + 34,
+        child: Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.topCenter,
+          children: [
+            // Soft shadow on the water.
+            Positioned(
+              top: size + depth - 8,
               child: Container(
-                width: 16,
-                height: 8,
+                width: size * 0.95,
+                height: 16,
                 decoration: BoxDecoration(
-                  color: const Color(0x80FFFFFF),
-                  borderRadius: BorderRadius.circular(8),
+                  color: const Color(0x330B5F86),
+                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
             ),
-          ),
-          if (status == LevelStatus.done && !locked)
-            const Positioned(top: -26, child: _Stars()),
-          if (status == LevelStatus.practice && !locked)
-            const Positioned(top: -10, right: -10, child: _PracticeBadge()),
-        ],
+            // Rim (the button's side).
+            Positioned(
+              top: 22 + depth,
+              child: Container(
+                width: size,
+                height: size,
+                decoration: BoxDecoration(shape: BoxShape.circle, color: rim),
+              ),
+            ),
+            // Face.
+            AnimatedPositioned(
+              duration: const Duration(milliseconds: 70),
+              top: 22 + press,
+              child: Container(
+                width: size,
+                height: size,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    center: const Alignment(-0.35, -0.45),
+                    radius: 0.95,
+                    colors: [light, face],
+                  ),
+                  border: Border.all(color: Colors.white, width: 3),
+                ),
+                alignment: Alignment.center,
+                child: widget.locked
+                    ? const Icon(Icons.lock_rounded, color: Colors.white, size: 24)
+                    : Text(
+                        label,
+                        style: TextStyle(
+                          fontFamily: 'Nunito',
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900,
+                          fontSize: label.length > 2 ? 19 : 23,
+                          shadows: [Shadow(color: rim, offset: const Offset(0, 2))],
+                        ),
+                      ),
+              ),
+            ),
+            if (widget.status == LevelStatus.done && !widget.locked)
+              const Positioned(top: 0, child: _Stars()),
+            if (widget.status == LevelStatus.practice && !widget.locked)
+              const Positioned(top: 12, right: 6, child: _PracticeBadge()),
+            if (widget.current && !widget.locked)
+              const Positioned(top: 22, child: IgnorePointer(child: _Ripple(size: size))),
+          ],
+        ),
       ),
     );
-
-    if (current && !locked) {
-      button = _Pulse(child: button);
-    }
-    return button;
   }
 }
 
@@ -124,14 +134,18 @@ class _Stars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget star(double size, double dy) => Transform.translate(
+    Widget star(double size, double dy, double angle) => Transform.translate(
           offset: Offset(0, dy),
-          child: Icon(Icons.star_rounded, size: size, color: const Color(0xFFFFD600),
-              shadows: const [Shadow(color: Color(0x88E65100), blurRadius: 3, offset: Offset(0, 1))]),
+          child: Transform.rotate(
+            angle: angle,
+            child: Icon(Icons.star_rounded, size: size, color: AppColors.gold, shadows: const [
+              Shadow(color: Color(0x99B36200), blurRadius: 2, offset: Offset(0, 1.5)),
+            ]),
+          ),
         );
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: [star(24, 8), star(28, 0), star(24, 8)],
+      children: [star(22, 8, -0.25), star(28, 0, 0), star(22, 8, 0.25)],
     );
   }
 }
@@ -142,32 +156,30 @@ class _PracticeBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 26,
-      height: 26,
+      width: 24,
+      height: 24,
       decoration: BoxDecoration(
-        color: const Color(0xFFFF7043),
+        color: AppColors.coral,
         shape: BoxShape.circle,
         border: Border.all(color: Colors.white, width: 2),
       ),
-      child: const Icon(Icons.replay_rounded, size: 15, color: Colors.white),
+      child: const Icon(Icons.replay_rounded, size: 14, color: Colors.white),
     );
   }
 }
 
-/// Gentle bounce on the current level so the player knows where to go.
-class _Pulse extends StatefulWidget {
-  final Widget child;
-  const _Pulse({required this.child});
+/// Expanding rings around the current level: "you are here".
+class _Ripple extends StatefulWidget {
+  final double size;
+  const _Ripple({required this.size});
 
   @override
-  State<_Pulse> createState() => _PulseState();
+  State<_Ripple> createState() => _RippleState();
 }
 
-class _PulseState extends State<_Pulse> with SingleTickerProviderStateMixin {
-  late final AnimationController _c = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 900),
-  )..repeat(reverse: true);
+class _RippleState extends State<_Ripple> with SingleTickerProviderStateMixin {
+  late final AnimationController _c =
+      AnimationController(vsync: this, duration: const Duration(milliseconds: 1800))..repeat();
 
   @override
   void dispose() {
@@ -177,16 +189,79 @@ class _PulseState extends State<_Pulse> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    if (MediaQuery.of(context).disableAnimations) return const SizedBox.shrink();
     return AnimatedBuilder(
       animation: _c,
-      builder: (context, child) {
-        final t = Curves.easeInOut.transform(_c.value);
-        return Transform.translate(
-          offset: Offset(0, -6 * t),
-          child: Transform.scale(scale: 1.0 + 0.06 * t, child: child),
+      builder: (context, _) {
+        return CustomPaint(
+          size: Size(widget.size, widget.size),
+          painter: _RipplePainter(_c.value),
         );
       },
-      child: widget.child,
+    );
+  }
+}
+
+class _RipplePainter extends CustomPainter {
+  final double t;
+  _RipplePainter(this.t);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final c = size.center(Offset.zero);
+    for (final shift in const [0.0, 0.5]) {
+      final v = (t + shift) % 1.0;
+      final r = size.width / 2 + 4 + v * 26;
+      final paint = Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 3
+        ..color = Colors.white.withAlpha((180 * (1 - v)).round());
+      canvas.drawCircle(c, r, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _RipplePainter old) => old.t != t;
+}
+
+/// The little ship moored next to the current level.
+class ShipMarker extends StatefulWidget {
+  final bool facingLeft;
+  const ShipMarker({super.key, required this.facingLeft});
+
+  @override
+  State<ShipMarker> createState() => _ShipMarkerState();
+}
+
+class _ShipMarkerState extends State<ShipMarker> with SingleTickerProviderStateMixin {
+  late final AnimationController _c =
+      AnimationController(vsync: this, duration: const Duration(milliseconds: 2400))..repeat();
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final still = MediaQuery.of(context).disableAnimations;
+    final ship = Transform(
+      alignment: Alignment.center,
+      transform: Matrix4.diagonal3Values(widget.facingLeft ? -1 : 1, 1, 1),
+      child: const Text('⛵', style: TextStyle(fontSize: 38)),
+    );
+    if (still) return ship;
+    return AnimatedBuilder(
+      animation: _c,
+      child: ship,
+      builder: (context, child) {
+        final a = _c.value * 2 * pi;
+        return Transform.translate(
+          offset: Offset(0, sin(a) * 4),
+          child: Transform.rotate(angle: sin(a + 0.8) * 0.06, child: child),
+        );
+      },
     );
   }
 }

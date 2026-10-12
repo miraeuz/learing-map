@@ -1,32 +1,26 @@
-# ICPC Quest 🏝️
+# ICPC yoʻli ⛵
 
-Your ICPC roadmap as a mobile-game island map: 117 levels across 11 stages
-(Fundamentals → Data Structures → Graphs → Trees → DP → Math → Strings →
-Geometry → Elite → Team skills).
+ICPC tayyorgarlik yoʻl xaritasi — orollar boʻylab daraja xaritasi koʻrinishida.
+117 ta daraja, 11 ta bosqich: Asoslar → Maʼlumotlar tuzilmalari → Graflar → Daraxtlar →
+Dinamik dasturlash → Matematika → Satrlar → Geometriya → Elita darajasi → Jamoa koʻnikmalari.
 
-- Tap a level point → a popup grows out of it with **what to learn**, **where to practice**, and **what to search**.
-- Answer **Yes** → level gets 3 stars (mastered). Answer **No** → marked "needs practice" (↻ badge).
-- Either answer unlocks the next level. Progress is saved on the phone.
+- Darajani bosing — karta shu nuqtadan ochiladi: **Oʻrganish** (nimani bilish kerak) va **Masalalar** (15 ta havola).
+- Havolalar: Codeforces, LeetCode, CSES, acmp.ru, RoboContest, AtCoder, Library Checker, SPOJ, cp-algorithms va boshqalar.
+- **Ha, bilaman** — daraja oʻzlashtirildi (3 yulduz). **Hali yoʻq** — mashq roʻyxatiga tushadi.
+- Har qanday javob keyingi darajani ochadi. Natijalar va ochilgan havolalar telefonda saqlanadi.
 
-## Get the APK without installing anything (GitHub, free)
+## APK ni olish
 
-1. Create a new repository on github.com and upload all files in this folder (keep the `.github` folder).
-2. Open the **Actions** tab. The "Build APK" workflow runs automatically (about 5–8 minutes).
-3. Open the finished run → **Artifacts** → download `icpc-quest-apk` → unzip → `app-release.apk`.
-4. Copy it to your phone and install it (allow "Install unknown apps").
+Har bir `push` dan keyin GitHub **Actions** APK ni avtomatik yigʻadi:
+Actions → oxirgi "Build APK" → **Artifacts** → `icpc-yoli-apk`.
 
-## Build on your own computer
+Oʻz kompyuteringizda: `./build_apk.sh` (Flutter va Android SDK kerak).
 
-Requires Flutter (stable) and the Android SDK.
+## Tuzilishi
 
-```bash
-./build_apk.sh
-```
+- Mavzular va tavsiflar: `lib/data/topics.dart`
+- Mashq havolalari: `lib/data/links.dart` — `tool/build_links.py` yaratadi
+- Xarita chizmasi: `lib/map/map_painter.dart`
+- Daraja kartasi: `lib/widgets/level_sheet.dart`
 
-The APK will be at `build/app/outputs/flutter-apk/app-release.apk`.
-
-## Customize
-
-- Topics and explanations: `lib/data/topics.dart`
-- Map drawing (ocean, islands, palms): `lib/map/map_painter.dart`
-- Level popup: `lib/widgets/topic_card.dart`
+Shrift: Nunito (SIL Open Font License, `assets/fonts/OFL.txt`).
