@@ -194,7 +194,7 @@ const topicLinks = <List<PracticeLink>>[
     PracticeLink('acmp', 'Дороги', 'https://acmp.ru/index.asp?main=task&id_task=15'),
     PracticeLink('acmp', 'Светофорчики', 'https://acmp.ru/index.asp?main=task&id_task=124'),
     PracticeLink('spoj', 'CT23E', 'http://www.spoj.com/problems/CT23E/'),
-    PracticeLink('codechef', 'CODECHEF: GERALD07', 'https://www.codechef.com/MARCH14/problems/GERALD07'),
+    PracticeLink('codechef', 'GERALD07', 'https://www.codechef.com/MARCH14/problems/GERALD07'),
     PracticeLink('acmp', 'Цветной дождь', 'https://acmp.ru/index.asp?main=task&id_task=125'),
     PracticeLink('cf', 'Codeforces: "graphs" 1200–1600', 'https://codeforces.com/problemset?tags=graphs,1200-1600'),
     PracticeLink('cf', 'Codeforces: barcha "graphs" masalalari', 'https://codeforces.com/problemset?tags=graphs'),
@@ -285,7 +285,7 @@ const topicLinks = <List<PracticeLink>>[
     PracticeLink('ys', 'Unionfind With Potential', 'https://judge.yosupo.jp/problem/unionfind_with_potential'),
     PracticeLink('cf', 'Roads not only in Berland', 'http://codeforces.com/contest/25/problem/D'),
     PracticeLink('spoj', 'Strange Food Chain', 'http://www.spoj.com/problems/CHAIN/'),
-    PracticeLink('timus', 'TIMUS - Anansi\'s Cobweb', 'http://acm.timus.ru/problem.aspx?space=1&num=1671'),
+    PracticeLink('timus', 'Anansi\'s Cobweb', 'http://acm.timus.ru/problem.aspx?space=1&num=1671'),
     PracticeLink('toph', 'Unbelievable Array', 'https://toph.co/p/unbelievable-array'),
     PracticeLink('cf', 'Codeforces: barcha "dsu" masalalari', 'https://codeforces.com/problemset?tags=dsu'),
     PracticeLink('robo', 'RoboContest masalalar arxivi', 'https://robocontest.uz/tasks'),
@@ -356,7 +356,7 @@ const topicLinks = <List<PracticeLink>>[
     PracticeLink('ys', 'Longest Increasing Subsequence', 'https://judge.yosupo.jp/problem/longest_increasing_subsequence'),
     PracticeLink('cf', 'ACMSGURU - "North-East"', 'http://codeforces.com/problemsets/acmsguru/problem/99999/521'),
     PracticeLink('spoj', 'DOSA', 'https://www.spoj.com/problems/DOSA/'),
-    PracticeLink('topcoder', 'Topcoder - AutoMarket', 'https://community.topcoder.com/stat?c=problem_statement&pm=3937&rd=6532'),
+    PracticeLink('topcoder', 'AutoMarket', 'https://community.topcoder.com/stat?c=problem_statement&pm=3937&rd=6532'),
     PracticeLink('uva', 'Back To Edit Distance', 'https://onlinejudge.org/external/127/12747.pdf'),
     PracticeLink('cf', 'LCIS', 'http://codeforces.com/problemset/problem/10/D'),
     PracticeLink('cf', 'Codeforces: barcha "dp" masalalari', 'https://codeforces.com/problemset?tags=dp'),
@@ -412,7 +412,7 @@ const topicLinks = <List<PracticeLink>>[
     PracticeLink('acmp', 'НОД', 'https://acmp.ru/index.asp?main=task&id_task=148'),
     PracticeLink('cf', 'Almost Prime', 'http://codeforces.com/contest/26/problem/A'),
     PracticeLink('spoj', 'Printing Some Primes', 'http://www.spoj.com/problems/TDPRIMES/'),
-    PracticeLink('lc', 'Leetcode - Four Divisors', 'https://leetcode.com/problems/four-divisors/'),
+    PracticeLink('lc', 'Four Divisors', 'https://leetcode.com/problems/four-divisors/'),
     PracticeLink('cf', 'Codeforces: barcha "number theory" masalalari', 'https://codeforces.com/problemset?tags=number%20theory'),
     PracticeLink('robo', 'RoboContest masalalar arxivi', 'https://robocontest.uz/tasks'),
   ],
@@ -474,16 +474,16 @@ const topicLinks = <List<PracticeLink>>[
   [
     PracticeLink('cpa', 'Nazariya: Ternary Search', 'https://cp-algorithms.com/num_methods/ternary_search.html'),
     PracticeLink('cf', 'New Bakery', 'https://codeforces.com/problemset/problem/1978/B'),
-    PracticeLink('spoj', 'Spoj - Building Construction', 'http://www.spoj.com/problems/KOPC12A/'),
+    PracticeLink('spoj', 'Building Construction', 'http://www.spoj.com/problems/KOPC12A/'),
     PracticeLink('codechef', 'Race time', 'https://www.codechef.com/problems/AMCS03'),
     PracticeLink('hackerearth', 'Rescuer', 'https://www.hackerearth.com/problem/algorithm/rescuer-2d2495cb/'),
     PracticeLink('lightoj', 'Closest Distance', 'http://lightoj.com/volume_showproblem.php?problem=1146'),
     PracticeLink('uva', 'Galactic Taxes', 'https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4898'),
-    PracticeLink('timus', 'TIMUS 1058 Chocolate', 'https://acm.timus.ru/problem.aspx?space=1&num=1058'),
+    PracticeLink('timus', '1058 Chocolate', 'https://acm.timus.ru/problem.aspx?space=1&num=1058'),
     PracticeLink('cf', 'Weakness and Poorness', 'http://codeforces.com/problemset/problem/578/C'),
     PracticeLink('codechef', 'Is This JEE', 'https://www.codechef.com/problems/ICM2003'),
     PracticeLink('uva', '12197 - Trick or Treat', 'https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=3349'),
-    PracticeLink('timus', 'TIMUS 1436 Billboard', 'https://acm.timus.ru/problem.aspx?space=1&num=1436'),
+    PracticeLink('timus', '1436 Billboard', 'https://acm.timus.ru/problem.aspx?space=1&num=1436'),
     PracticeLink('cf', 'Dome of Circus (D)', 'http://codeforces.com/gym/101309'),
     PracticeLink('cf', 'Codeforces: barcha "ternary search" masalalari', 'https://codeforces.com/problemset?tags=ternary%20search'),
     PracticeLink('robo', 'RoboContest masalalar arxivi', 'https://robocontest.uz/tasks'),
@@ -499,8 +499,8 @@ const topicLinks = <List<PracticeLink>>[
     PracticeLink('lc', 'Counting Bits', 'https://leetcode.com/problems/counting-bits/'),
     PracticeLink('lc', 'Number of 1 Bits', 'https://leetcode.com/problems/number-of-1-bits/'),
     PracticeLink('cf', 'Raising Bacteria', 'https://codeforces.com/problemset/problem/579/A'),
-    PracticeLink('atcoder', 'Atcoder - Close Group', 'https://atcoder.jp/contests/abc187/tasks/abc187_f'),
-    PracticeLink('uva', 'Uva 1439 - Exclusive Access 2', 'https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4185'),
+    PracticeLink('atcoder', 'Close Group', 'https://atcoder.jp/contests/abc187/tasks/abc187_f'),
+    PracticeLink('uva', '1439 - Exclusive Access 2', 'https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4185'),
     PracticeLink('cf', 'Fedor and New Game', 'https://codeforces.com/problemset/problem/467/B'),
     PracticeLink('uva', '11825 - Hackers\' Crackdown', 'https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2925'),
     PracticeLink('cf', 'Codeforces: barcha "bitmasks" masalalari', 'https://codeforces.com/problemset?tags=bitmasks'),
@@ -768,7 +768,7 @@ const topicLinks = <List<PracticeLink>>[
     PracticeLink('lc', 'Find the City with the Smallest Number of Neighbors at a Threshold Distance', 'https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/'),
     PracticeLink('acmp', 'Алгоритм Флойда', 'https://acmp.ru/index.asp?main=task&id_task=135'),
     PracticeLink('acmp', 'Алгоритм Форда-Беллмана', 'https://acmp.ru/index.asp?main=task&id_task=138'),
-    PracticeLink('cf', 'CODEFORCES: Greg and Graph', 'http://codeforces.com/problemset/problem/295/B'),
+    PracticeLink('cf', 'Greg and Graph', 'http://codeforces.com/problemset/problem/295/B'),
     PracticeLink('spoj', 'Possible Friends', 'http://www.spoj.com/problems/SOCIALNE/'),
     PracticeLink('uva', 'Page Hopping', 'https://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=762'),
     PracticeLink('lightoj', 'Travel Company', 'http://lightoj.com/volume_showproblem.php?problem=1221'),
@@ -985,10 +985,10 @@ const topicLinks = <List<PracticeLink>>[
     PracticeLink('lc', 'Kth Ancestor of a Tree Node', 'https://leetcode.com/problems/kth-ancestor-of-a-tree-node/'),
     PracticeLink('ys', 'Lowest Common Ancestor', 'https://judge.yosupo.jp/problem/lca'),
     PracticeLink('ys', 'Jump On Tree', 'https://judge.yosupo.jp/problem/jump_on_tree'),
-    PracticeLink('cf', 'CODEFORCES: Design Tutorial: Inverse the Problem', 'http://codeforces.com/problemset/problem/472/D'),
+    PracticeLink('cf', 'Design Tutorial: Inverse the Problem', 'http://codeforces.com/problemset/problem/472/D'),
     PracticeLink('spoj', 'LCA', 'http://www.spoj.com/problems/LCA/'),
     PracticeLink('lc', 'Kth Ancestor of a Tree Node', 'https://leetcode.com/problems/kth-ancestor-of-a-tree-node'),
-    PracticeLink('timus', 'TIMUS: 1471. Distance in the Tree', 'http://acm.timus.ru/problem.aspx?space=1&num=1471'),
+    PracticeLink('timus', '1471. Distance in the Tree', 'http://acm.timus.ru/problem.aspx?space=1&num=1471'),
     PracticeLink('cf', 'Codeforces: barcha "trees" masalalari', 'https://codeforces.com/problemset?tags=trees'),
     PracticeLink('robo', 'RoboContest masalalar arxivi', 'https://robocontest.uz/tasks'),
   ],
@@ -999,10 +999,10 @@ const topicLinks = <List<PracticeLink>>[
     PracticeLink('cses', 'Path Queries', 'https://cses.fi/problemset/task/1138'),
     PracticeLink('cses', 'Subordinates', 'https://cses.fi/problemset/task/1674'),
     PracticeLink('ys', 'Vertex Add Subtree Sum', 'https://judge.yosupo.jp/problem/vertex_add_subtree_sum'),
-    PracticeLink('cf', 'CODEFORCES: Design Tutorial: Inverse the Problem', 'http://codeforces.com/problemset/problem/472/D'),
+    PracticeLink('cf', 'Design Tutorial: Inverse the Problem', 'http://codeforces.com/problemset/problem/472/D'),
     PracticeLink('spoj', 'LCA', 'http://www.spoj.com/problems/LCA/'),
-    PracticeLink('timus', 'TIMUS: 1471. Distance in the Tree', 'http://acm.timus.ru/problem.aspx?space=1&num=1471'),
-    PracticeLink('codechef', 'CODECHEF: Lowest Common Ancestor', 'https://www.codechef.com/problems/TALCA'),
+    PracticeLink('timus', '1471. Distance in the Tree', 'http://acm.timus.ru/problem.aspx?space=1&num=1471'),
+    PracticeLink('codechef', 'Lowest Common Ancestor', 'https://www.codechef.com/problems/TALCA'),
     PracticeLink('uva', '12655 - Trucks', 'https://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=4384'),
     PracticeLink('cf', 'Drivers Dissatisfaction', 'http://codeforces.com/contest/733/problem/F'),
     PracticeLink('spoj', 'DISQUERY', 'http://www.spoj.com/problems/DISQUERY/'),
@@ -1231,7 +1231,7 @@ const topicLinks = <List<PracticeLink>>[
     PracticeLink('cpa', 'Nazariya: Divide And Conquer Dp', 'https://cp-algorithms.com/dynamic_programming/divide-and-conquer-dp.html'),
     PracticeLink('cses', 'Subarray Squares', 'https://cses.fi/problemset/task/2086'),
     PracticeLink('cses', 'Houses and Schools', 'https://cses.fi/problemset/task/2087'),
-    PracticeLink('cf', 'CodeForces - Ciel and Gondolas', 'https://codeforces.com/contest/321/problem/E'),
+    PracticeLink('cf', 'Ciel and Gondolas', 'https://codeforces.com/contest/321/problem/E'),
     PracticeLink('spoj', 'ADAMOLD', 'https://www.spoj.com/problems/ADAMOLD/'),
     PracticeLink('atcoder', 'Yakiniku Restaurants', 'https://atcoder.jp/contests/arc067/tasks/arc067_d'),
     PracticeLink('kattis', 'Money (ACM ICPC World Finals 2017)', 'https://open.kattis.com/problems/money'),
@@ -1240,7 +1240,7 @@ const topicLinks = <List<PracticeLink>>[
     PracticeLink('timus', 'Bicolored Horses', 'https://acm.timus.ru/problem.aspx?space=1&num=1167'),
     PracticeLink('usaco', 'Circular Barn', 'https://usaco.org/index.php?page=viewproblem2&cpid=626'),
     PracticeLink('uva', 'Arranging Heaps', 'https://onlinejudge.org/external/125/12524.pdf'),
-    PracticeLink('cf', 'CodeForces - Levels And Regions', 'https://codeforces.com/problemset/problem/673/E'),
+    PracticeLink('cf', 'Levels And Regions', 'https://codeforces.com/problemset/problem/673/E'),
     PracticeLink('cf', 'Codeforces: barcha "divide and conquer" masalalari', 'https://codeforces.com/problemset?tags=divide%20and%20conquer'),
     PracticeLink('robo', 'RoboContest masalalar arxivi', 'https://robocontest.uz/tasks'),
   ],
@@ -1329,7 +1329,7 @@ const topicLinks = <List<PracticeLink>>[
     PracticeLink('ys', 'Counting Primes', 'https://judge.yosupo.jp/problem/counting_primes'),
     PracticeLink('cf', 'Almost Prime', 'http://codeforces.com/contest/26/problem/A'),
     PracticeLink('spoj', 'Printing Some Primes', 'http://www.spoj.com/problems/TDPRIMES/'),
-    PracticeLink('lc', 'Leetcode - Four Divisors', 'https://leetcode.com/problems/four-divisors/'),
+    PracticeLink('lc', 'Four Divisors', 'https://leetcode.com/problems/four-divisors/'),
     PracticeLink('hackerrank', 'Project Euler - Prime pair connection', 'https://www.hackerrank.com/contests/projecteuler/challenges/euler134'),
     PracticeLink('cf', 'Codeforces: barcha "number theory" masalalari', 'https://codeforces.com/problemset?tags=number%20theory'),
     PracticeLink('robo', 'RoboContest masalalar arxivi', 'https://robocontest.uz/tasks'),
@@ -1339,12 +1339,12 @@ const topicLinks = <List<PracticeLink>>[
     PracticeLink('cpa', 'Nazariya: Extended Euclid Algorithm', 'https://cp-algorithms.com/algebra/extended-euclid-algorithm.html'),
     PracticeLink('cpa', 'Nazariya: Chinese Remainder Theorem', 'https://cp-algorithms.com/algebra/chinese-remainder-theorem.html'),
     PracticeLink('cf', '(J) Once Upon A Time', 'http://codeforces.com/gym/100963'),
-    PracticeLink('spoj', 'Spoj - Crucial Equation', 'http://www.spoj.com/problems/CEQU/'),
-    PracticeLink('atcoder', 'Atcoder - F - S = 1', 'https://atcoder.jp/contests/abc340/tasks/abc340_f'),
+    PracticeLink('spoj', 'Crucial Equation', 'http://www.spoj.com/problems/CEQU/'),
+    PracticeLink('atcoder', 'F - S = 1', 'https://atcoder.jp/contests/abc340/tasks/abc340_f'),
     PracticeLink('uva', '10104 - Euclid Problem', 'https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1045'),
     PracticeLink('hackerrank', 'Number of sequences', 'https://www.hackerrank.com/contests/w22/challenges/number-of-sequences'),
     PracticeLink('codechef', 'Get AC in one go', 'https://www.codechef.com/problems/COPR16G'),
-    PracticeLink('lightoj', 'LightOj - Solutions to an equation', 'http://www.lightoj.com/volume_showproblem.php?problem=1306'),
+    PracticeLink('lightoj', 'Solutions to an equation', 'http://www.lightoj.com/volume_showproblem.php?problem=1306'),
     PracticeLink('cf', 'Remainders Game', 'http://codeforces.com/problemset/problem/687/B'),
     PracticeLink('uva', '12775 - Gift Dilemma', 'https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4628'),
     PracticeLink('hackerrank', 'Longest Increasing Subsequence Arrays', 'https://www.hackerrank.com/contests/world-codesprint-5/challenges/longest-increasing-subsequence-arrays'),
@@ -1430,8 +1430,8 @@ const topicLinks = <List<PracticeLink>>[
     PracticeLink('ys', 'Discrete Logarithm Mod', 'https://judge.yosupo.jp/problem/discrete_logarithm_mod'),
     PracticeLink('ys', 'Sqrt Mod', 'https://judge.yosupo.jp/problem/sqrt_mod'),
     PracticeLink('cf', 'Hard Equation', 'https://codeforces.com/gym/101853/problem/G'),
-    PracticeLink('spoj', 'Spoj - Power Modulo Inverted', 'http://www.spoj.com/problems/MOD/'),
-    PracticeLink('topcoder', 'Topcoder - SplittingFoxes3', 'https://community.topcoder.com/stat?c=problem_statement&pm=14386&rd=16801'),
+    PracticeLink('spoj', 'Power Modulo Inverted', 'http://www.spoj.com/problems/MOD/'),
+    PracticeLink('topcoder', 'SplittingFoxes3', 'https://community.topcoder.com/stat?c=problem_statement&pm=14386&rd=16801'),
     PracticeLink('codechef', 'Inverse of a Function', 'https://www.codechef.com/problems/INVXOR/'),
     PracticeLink('codechef', 'Chef and Modular Sequence', 'https://www.codechef.com/problems/CHEFMOD'),
     PracticeLink('ys', 'Kth Root Mod', 'https://judge.yosupo.jp/problem/kth_root_mod'),
@@ -1452,11 +1452,11 @@ const topicLinks = <List<PracticeLink>>[
     PracticeLink('ys', 'System Of Linear Equations', 'https://judge.yosupo.jp/problem/system_of_linear_equations'),
     PracticeLink('ys', 'Matrix Det', 'https://judge.yosupo.jp/problem/matrix_det'),
     PracticeLink('cf', 'No game no life', 'https://codeforces.com/problemset/problem/1411/G'),
-    PracticeLink('spoj', 'Spoj - Xor Maximization', 'http://www.spoj.com/problems/XMAX/'),
+    PracticeLink('spoj', 'Xor Maximization', 'http://www.spoj.com/problems/XMAX/'),
     PracticeLink('codechef', 'Knight Moving', 'https://www.codechef.com/SEP12/problems/KNGHTMOV'),
-    PracticeLink('lightoj', 'Lightoj - Graph Coloring', 'http://lightoj.com/volume_showproblem.php?problem=1279'),
+    PracticeLink('lightoj', 'Graph Coloring', 'http://lightoj.com/volume_showproblem.php?problem=1279'),
     PracticeLink('uva', '12910 - Snakes and Ladders', 'https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4775'),
-    PracticeLink('timus', 'TIMUS1042 Central Heating', 'http://acm.timus.ru/problem.aspx?space=1&num=1042'),
+    PracticeLink('timus', '1042 Central Heating', 'http://acm.timus.ru/problem.aspx?space=1&num=1042'),
     PracticeLink('cf', 'Codeforces: barcha "matrices" masalalari', 'https://codeforces.com/problemset?tags=matrices'),
     PracticeLink('robo', 'RoboContest masalalar arxivi', 'https://robocontest.uz/tasks'),
   ],
@@ -1489,70 +1489,9 @@ const topicLinks = <List<PracticeLink>>[
     PracticeLink('lc', 'Stone Game', 'https://leetcode.com/problems/stone-game/'),
     PracticeLink('lc', 'Can I Win', 'https://leetcode.com/problems/can-i-win/'),
     PracticeLink('atcoder', 'Stones', 'https://atcoder.jp/contests/dp/tasks/dp_k'),
-    PracticeLink('cf', 'CodeForces - Marbles (2018-2019 ACM-ICPC Brazil Subregional)', 'https://codeforces.com/gym/101908/problem/B'),
-    PracticeLink('atcoder', 'Atcoder - ABC368F - Dividing Game', 'https://atcoder.jp/contests/abc368/tasks/abc368_f'),
-    PracticeLink('kattis', '0, p)\$ there exists a reachable vertex with Grundy value \$i\$.
-This means \$v\$ is equivalent to a state of the game of Nim with increases with one pile of size \$p\$.
-In such a game we have transitions to piles of every size smaller than \$p\$ and possibly transitions to piles with sizes greater than \$p\$.
-Therefore, \$p\$ is indeed the desired Grundy value for the currently considered state.
-
-## Application of the theorem
-
-Finally, we describe an algorithm to determine the win/loss outcome of a game, which is applicable to any impartial two-player game.
-
-To calculate the Grundy value of a given state you need to:
-
-* Get all possible transitions from this state
-
-* Each transition can lead to a sum of independent games (one game in the degenerate case).
-Calculate the Grundy value for each independent game and xor-sum them.
-Of course xor does nothing if there is just one game.
-
-* After we calculated Grundy values for each transition we find the state\'s value as the \$\\text{mex}\$ of these numbers.
-
-* If the value is zero, then the current state is losing, otherwise it is winning.
-
-In comparison to the previous section, we take into account the fact that there can be transitions to combined games.
-We consider them a Nim with pile sizes equal to the independent games\' Grundy values.
-We can xor-sum them just like usual Nim according to Bouton\'s theorem.
-
-## Patterns in Grundy values
-
-Very often when solving specific tasks using Grundy values, it may be beneficial to study the table of the values in search of patterns.
-
-In many games, which may seem rather difficult for theoretical analysis,
-the Grundy values turn out to be periodic or of an easily understandable form.
-In the overwhelming majority of cases the observed pattern turns out to be true and can be proved by induction if desired.
-
-However, Grundy values are far from *always* containing such regularities and even for some very simple games, the problem asking if those regularities exist is still open (e.g. "Grundy\'s game").
-
-## Example games
-
-### Crosses-crosses
-
-The rules.
-Consider a checkered strip of size \$1 \\times n\$. In one move, the player must put one cross, but it is forbidden to put two crosses next to each other (in adjacent cells). As usual, the player without a valid move loses.
-
-The solution.
-When a player puts a cross in any cell, we can think of the strip being split into two independent parts:
-to the left of the cross and to the right of it.
-In this case, the cell with a cross, as well as its left and right neighbours are destroyed — nothing more can be put in them.
-Therefore, if we number the cells from \$1\$ to \$n\$ then putting the cross in position \$1 < i < n\$ breaks the strip
-into two strips of length \$i-2\$ and \$n-i-1\$ i.e. we go to the sum of games \$i-2\$ and \$n-i-1\$.
-For the edge case of the cross being marked on position \$1\$ or \$n\$, we go to the game \$n-2\$.
-
-Thus, the Grundy value \$g(n)\$ has the form:
-
-\$\$g(n) = \\text{mex} \\Bigl( \\{ g(n-2) \\} \\cup \\{g(i-2) \\oplus g(n-i-1) \\mid 2 \\leq i \\leq n-1\\} \\Bigr) .\$\$
-
-So we\'ve got a \$O(n^2)\$ solution.
-
-In fact, \$g(n)\$ has a period of length 34 starting with \$n=52\$.
-
-
-## Practice Problems
-
-- [KATTIS S-Nim', 'https://open.kattis.com/problems/snim'),
+    PracticeLink('cf', 'Marbles (2018-2019 ACM-ICPC Brazil Subregional)', 'https://codeforces.com/gym/101908/problem/B'),
+    PracticeLink('atcoder', 'ABC368F - Dividing Game', 'https://atcoder.jp/contests/abc368/tasks/abc368_f'),
+    PracticeLink('kattis', 'S-Nim', 'https://open.kattis.com/problems/snim'),
     PracticeLink('hackerrank', 'Tower Breakers, Revisited!', 'https://www.hackerrank.com/contests/5-days-of-game-theory/challenges/tower-breakers-2'),
     PracticeLink('cf', 'Codeforces: barcha "games" masalalari', 'https://codeforces.com/problemset?tags=games'),
     PracticeLink('robo', 'RoboContest masalalar arxivi', 'https://robocontest.uz/tasks'),
@@ -1677,7 +1616,7 @@ In fact, \$g(n)\$ has a period of length 34 starting with \$n=52\$.
     PracticeLink('ys', 'Number Of Substrings', 'https://judge.yosupo.jp/problem/number_of_substrings'),
     PracticeLink('cf', 'Martian Strings', 'http://codeforces.com/problemset/problem/149/E'),
     PracticeLink('spoj', 'Ada and Terramorphing', 'http://www.spoj.com/problems/ADAPHOTO/'),
-    PracticeLink('uva', 'Uva 760 - DNA Sequencing', 'http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=701'),
+    PracticeLink('uva', '760 - DNA Sequencing', 'http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=701'),
     PracticeLink('codechef', 'Tandem', 'https://www.codechef.com/problems/TANDEM'),
     PracticeLink('vjudge', 'LA 7502 - Suffixes and Palindromes', 'https://vjudge.net/problem/UVALive-7502'),
     PracticeLink('cf', 'Codeforces: barcha "string suffix structures" masalalari', 'https://codeforces.com/problemset?tags=string%20suffix%20structures'),
@@ -1784,7 +1723,7 @@ In fact, \$g(n)\$ has a period of length 34 starting with \$n=52\$.
     PracticeLink('cf', 'I. Birthday', 'https://codeforces.com/contest/2172/problem/I'),
     PracticeLink('kattis', 'Convex Hull', 'https://open.kattis.com/problems/convexhull'),
     PracticeLink('timus', '1185: Wall', 'http://acm.timus.ru/problem.aspx?space=1&num=1185'),
-    PracticeLink('usaco', 'Usaco 2014 January Contest, Gold - Cow Curling', 'http://usaco.org/index.php?page=viewproblem2&cpid=382'),
+    PracticeLink('usaco', '2014 January Contest, Gold - Cow Curling', 'http://usaco.org/index.php?page=viewproblem2&cpid=382'),
     PracticeLink('kattis', 'Keep the Parade Safe', 'https://open.kattis.com/problems/parade'),
     PracticeLink('cf', 'Codeforces: "geometry" 1200–1600', 'https://codeforces.com/problemset?tags=geometry,1200-1600'),
     PracticeLink('cf', 'Codeforces: "geometry" 1600–2000', 'https://codeforces.com/problemset?tags=geometry,1600-2000'),
@@ -1801,10 +1740,10 @@ In fact, \$g(n)\$ has a period of length 34 starting with \$n=52\$.
     PracticeLink('cf', 'I. Birthday', 'https://codeforces.com/contest/2172/problem/I'),
     PracticeLink('kattis', 'Convex Hull', 'https://open.kattis.com/problems/convexhull'),
     PracticeLink('timus', '1185: Wall', 'http://acm.timus.ru/problem.aspx?space=1&num=1185'),
-    PracticeLink('usaco', 'Usaco 2014 January Contest, Gold - Cow Curling', 'http://usaco.org/index.php?page=viewproblem2&cpid=382'),
+    PracticeLink('usaco', '2014 January Contest, Gold - Cow Curling', 'http://usaco.org/index.php?page=viewproblem2&cpid=382'),
     PracticeLink('cf', '87E Mogohu-Rea Idol', 'https://codeforces.com/problemset/problem/87/E'),
     PracticeLink('kattis', 'Keep the Parade Safe', 'https://open.kattis.com/problems/parade'),
-    PracticeLink('timus', 'TIMUS 1894 Non-Flying Weather', 'https://acm.timus.ru/problem.aspx?space=1&num=1894'),
+    PracticeLink('timus', '1894 Non-Flying Weather', 'https://acm.timus.ru/problem.aspx?space=1&num=1894'),
     PracticeLink('cf', '1195F Geometers Anonymous Club', 'https://codeforces.com/contest/1195/problem/F'),
     PracticeLink('cf', 'Codeforces: barcha "geometry" masalalari', 'https://codeforces.com/problemset?tags=geometry'),
     PracticeLink('robo', 'RoboContest masalalar arxivi', 'https://robocontest.uz/tasks'),
@@ -1856,7 +1795,7 @@ In fact, \$g(n)\$ has a period of length 34 starting with \$n=52\$.
     PracticeLink('lc', 'The Skyline Problem', 'https://leetcode.com/problems/the-skyline-problem/'),
     PracticeLink('ys', 'Area Of Union Of Rectangles', 'https://judge.yosupo.jp/problem/area_of_union_of_rectangles'),
     PracticeLink('ys', 'Rectangle Sum', 'https://judge.yosupo.jp/problem/rectangle_sum'),
-    PracticeLink('timus', 'TIMUS 1469 No Smoking!', 'https://acm.timus.ru/problem.aspx?space=1&num=1469'),
+    PracticeLink('timus', '1469 No Smoking!', 'https://acm.timus.ru/problem.aspx?space=1&num=1469'),
     PracticeLink('cf', 'Codeforces: "geometry" 1200–1600', 'https://codeforces.com/problemset?tags=geometry,1200-1600'),
     PracticeLink('cf', 'Codeforces: "geometry" 1600–2000', 'https://codeforces.com/problemset?tags=geometry,1600-2000'),
     PracticeLink('cf', 'Codeforces: "geometry" 2000–2400', 'https://codeforces.com/problemset?tags=geometry,2000-2400'),
@@ -1893,8 +1832,8 @@ In fact, \$g(n)\$ has a period of length 34 starting with \$n=52\$.
     PracticeLink('spoj', 'CIRCINT', 'http://www.spoj.com/problems/CIRCINT/'),
     PracticeLink('topcoder', 'RadarFinder', 'https://community.topcoder.com/stat?c=problem_statement&pm=7766'),
     PracticeLink('uva', '10301 - Rings and Glue', 'https://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=1242'),
-    PracticeLink('timus', 'TIMUS 1429 Biscuits', 'https://acm.timus.ru/problem.aspx?space=1&num=1429'),
-    PracticeLink('codechef', 'CODECHEF: ANDOOR', 'https://www.codechef.com/problems/ANDOOR'),
+    PracticeLink('timus', '1429 Biscuits', 'https://acm.timus.ru/problem.aspx?space=1&num=1429'),
+    PracticeLink('codechef', 'ANDOOR', 'https://www.codechef.com/problems/ANDOOR'),
     PracticeLink('cf', 'ASC 1 Problem F "Get out!"', 'http://codeforces.com/gym/100199/problem/F'),
     PracticeLink('cf', 'Codeforces: barcha "geometry" masalalari', 'https://codeforces.com/problemset?tags=geometry'),
     PracticeLink('robo', 'RoboContest masalalar arxivi', 'https://robocontest.uz/tasks'),

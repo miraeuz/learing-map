@@ -11,7 +11,7 @@ Every link comes from a source verified in this session:
 import json, re, sys
 from urllib.parse import quote
 
-D = '/home/claude/data/'
+D = sys.argv[3] if len(sys.argv) > 3 else '/home/claude/data/'
 cpa = json.load(open(D + 'cpa_links.json'))
 cpa_articles = set(cpa.keys())
 lc_slugs = set(open(D + 'lc_slugs.txt').read().split())
@@ -213,7 +213,7 @@ def site_of(url):
 
 
 def clean_title(t):
-    t = re.sub(r'^\s*(CF|Codeforces|SPOJ|UVA|UVa|Timus|LeetCode|CSES|AtCoder|Kattis|Hackerrank|HackerRank|CodeChef|Codechef|e-olymp|E-olymp|LightOJ|Light OJ|Hackerearth|HackerEarth|CSAcademy|CS Academy|USACO|DMOJ|LOJ|POJ|HDU|TopCoder|Library Checker|GYM|Gym|acm\.timus|Baekjoon|ACMICPC|Toph|AIZU|Aizu|SGU)\s*[-:#]?\s*', '', t).strip()
+    t = re.sub(r'^\s*(CF|Codeforces|SPOJ|UVA|UVa|Timus|LeetCode|CSES|AtCoder|Kattis|Hackerrank|HackerRank|CodeChef|Codechef|e-olymp|E-olymp|LightOJ|Light OJ|Hackerearth|HackerEarth|CSAcademy|CS Academy|USACO|DMOJ|LOJ|POJ|HDU|TopCoder|Library Checker|GYM|Gym|acm\.timus|Baekjoon|ACMICPC|Toph|AIZU|Aizu|SGU)\s*[-:#]?\s*', '', t, flags=re.I).strip()
     t = t.replace('**', '').replace('`', '')
     return t or 'Problem'
 
