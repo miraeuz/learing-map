@@ -38,7 +38,7 @@ jobs:
           python3 tool/analyze_annotate.py analyze.txt
 
       - name: Run tests
-        run: flutter test
+        run: flutter test --reporter github
 
       - name: Build release APK
         run: flutter build apk --release
