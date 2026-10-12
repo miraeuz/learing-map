@@ -7,6 +7,7 @@ interface Saved {
   solved: Record<string, number>; // url -> timestamp
   notes: Record<number, string>;
   learned: Record<string, number>; // "level:item" -> timestamp
+  opened: Record<string, number>; // url -> first time the link was opened
   name: string;
   welcomed: boolean;
 }
@@ -14,7 +15,7 @@ interface Saved {
 const KEY = 'icpc-yoli-v1';
 
 function load(): Saved {
-  const empty: Saved = { status: {}, solved: {}, notes: {}, learned: {}, name: '', welcomed: false };
+  const empty: Saved = { status: {}, solved: {}, notes: {}, learned: {}, opened: {}, name: '', welcomed: false };
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return empty;
@@ -24,6 +25,7 @@ function load(): Saved {
       solved: v.solved ?? {},
       notes: v.notes ?? {},
       learned: v.learned ?? {},
+      opened: v.opened ?? {},
       name: typeof v.name === 'string' ? v.name : '',
       welcomed: !!v.welcomed,
     };
@@ -150,13 +152,22 @@ export function activity(): { today: number; streak: number; week: number[] } {
   return { today, streak, week };
 }
 
+export function markOpened(url: string) {
+  if (app.saved.opened[url] === undefined) {
+    app.saved.opened[url] = Date.now();
+    save();
+  }
+}
+
+export const isOpened = (url: string) => app.saved.opened[url] !== undefined;
+
 export function markWelcomed() {
   app.saved.welcomed = true;
   save();
 }
 
 export function resetAll() {
-  app.saved = { status: {}, solved: {}, notes: {}, learned: {}, name: app.saved.name, welcomed: true };
+  app.saved = { status: {}, solved: {}, notes: {}, learned: {}, opened: {}, name: app.saved.name, welcomed: true };
   app.selected = 0;
   save();
 }
@@ -174,6 +185,7 @@ export function importJson(text: string): boolean {
       solved: v.solved ?? {},
       notes: v.notes ?? {},
       learned: v.learned ?? {},
+      opened: v.opened ?? {},
       name: typeof v.name === 'string' && v.name ? v.name : app.saved.name,
       welcomed: true,
     };

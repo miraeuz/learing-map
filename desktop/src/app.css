@@ -29,8 +29,9 @@
   --radius-l: 1.5rem;
   --shadow: 0 0.5rem 1.5rem rgb(6 50 74 / 0.18);
 
-  --side: 17.5rem;
-  --panel: clamp(25rem, 31vw, 32rem);
+  /* Wider side panels, narrower map: the map is scenery, the panels are where work happens */
+  --side: clamp(18rem, 22vw, 27rem);
+  --panel: clamp(26rem, 41vw, 50rem);
 
   /* Fluid root size: everything below is in rem, so the whole UI scales with the window */
   font-size: clamp(14px, 0.3vw + 10.5px, 17px);

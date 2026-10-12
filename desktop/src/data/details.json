@@ -11,7 +11,9 @@
   "p": [
    "multiset.erase(x) barcha x larni oʻchiradi — bittasi uchun erase(find(x))",
    "map[key] yoʻq kalitni yaratib qoʻyadi — tekshirish uchun count yoki find"
-  ]
+  ],
+  "h": 3,
+  "w": "Deyarli har bir masalada: toʻplam, lugʻat yoki navbat kerak boʻlganda toʻgʻri konteynerni tanlash vaqtni hal qiladi."
  },
  {
   "k": [
@@ -24,7 +26,9 @@
   "p": [
    "Komparator qatʼiy boʻlishi shart: <= ishlatish runtime xato beradi",
    "Katta strukturalarni nusxalamaslik uchun const auto& oling"
-  ]
+  ],
+  "h": 2,
+  "w": "Javob tartibga bogʻliq boʻlsa yoki elementlarni bir nechta mezon boʻyicha joylash kerak boʻlsa."
  },
  {
   "k": [
@@ -37,7 +41,9 @@
   "p": [
    "set uchun std::lower_bound(s.begin(), s.end(), x) — O(n), juda sekin",
    "end() qaytsa, element topilmagan — dereference qilmang"
-  ]
+  ],
+  "h": 2,
+  "w": "\"x dan katta birinchi element\", \"oraliqda nechta son bor\" kabi savollarda."
  },
  {
   "k": [
@@ -50,7 +56,9 @@
   "p": [
    "printf va cout ni sync_with_stdio(false) bilan aralashtirmang",
    "int * int toʻlib ketadi, natijani long long ga yozish yordam bermaydi"
-  ]
+  ],
+  "h": 1,
+  "w": "n ≥ 10⁵ va javoblar 10⁹ dan oshishi mumkin boʻlgan har bir masalada."
  },
  {
   "k": [
@@ -63,7 +71,9 @@
   "p": [
    "Rekursiya chuqurligi stack xotirasini ham yeydi",
    "Bir nechta test boʻlsa, n ning yigʻindisi chegarasiga qarang"
-  ]
+  ],
+  "h": 2,
+  "w": "Har bir masalani oʻqiganda: cheklovlarga qarab qaysi algoritm sigʻishini darhol aniqlash uchun."
  },
  {
   "k": [
@@ -76,7 +86,9 @@
   "p": [
    "Global holatni rekursiyadan qaytishda tiklashni unutish",
    "next_permutation dan oldin massivni saralash kerak"
-  ]
+  ],
+  "h": 4,
+  "w": "n kichik (≤ 20) va barcha variantlarni koʻrib chiqish kerak boʻlganda."
  },
  {
   "k": [
@@ -89,7 +101,9 @@
   "p": [
    "Isbotsiz greedy — WA ning eng koʻp sababi; kichik brute force bilan tekshiring",
    "Saralash kaliti notoʻgʻri tanlanadi (boshi emas, oxiri)"
-  ]
+  ],
+  "h": 4,
+  "w": "\"Eng koʻp nechta…\", \"minimal xarajat\" va tanlov mahalliy jihatdan aniq boʻlganda."
  },
  {
   "k": [
@@ -102,7 +116,9 @@
   "p": [
    "(lo + hi) / 2 toʻlib ketishi — lo + (hi - lo) / 2",
    "lo = mid va hi = mid aralashsa cheksiz sikl"
-  ]
+  ],
+  "h": 2,
+  "w": "Saralangan maʼlumotda qidiruv yoki monoton funksiyaning chegarasini topishda."
  },
  {
   "k": [
@@ -115,7 +131,9 @@
   "p": [
    "Inversiyalar soni n²/2 gacha — long long kerak",
    "Har chaqiriqda yangi vector yaratish sekin — bitta tmp massiv"
-  ]
+  ],
+  "h": 2,
+  "w": "\"Nechta juftlik i < j va a[i] > a[j]\" yoki saralash jarayonini sanash kerak boʻlganda."
  },
  {
   "k": [
@@ -128,7 +146,9 @@
   "p": [
    "Indeks siljishi: 0 yoki 1 dan boshlashni aralashtirish",
    "Yigʻindilar long long talab qiladi"
-  ]
+  ],
+  "h": 2,
+  "w": "Koʻp marta \"[l, r] oraliqdagi yigʻindi\" soʻralganda va massiv oʻzgarmaganda."
  },
  {
   "k": [
@@ -141,7 +161,9 @@
   "p": [
    "Yoʻnaltirilmagan grafda qirrani ikki tomonga qoʻshishni unutish",
    "1-indekslangan kirishni 0-indeksga oʻtkazishni unutish"
-  ]
+  ],
+  "h": 1,
+  "w": "Shaharlar, yoʻllar, doʻstlar, bogʻlanishlar haqida gap ketsa — bu graf."
  },
  {
   "k": [
@@ -154,7 +176,9 @@
   "p": [
    "10⁶ tugunli zanjirda rekursiya stack overflow beradi",
    "Koʻp testli masalalarda visited ni tozalamaslik"
-  ]
+  ],
+  "h": 3,
+  "w": "Bogʻliqlik, komponentalar, \"yetib borish mumkinmi\" savollarida."
  },
  {
   "k": [
@@ -167,7 +191,9 @@
   "p": [
    "Tugunni queue dan olganda emas, qoʻshganda visited qilish kerak",
    "Maydon chegarasini tekshirmaslik"
-  ]
+  ],
+  "h": 3,
+  "w": "Vaznsiz grafda yoki katakli maydonda eng kam qadamlar soni soʻralganda."
  },
  {
   "k": [
@@ -180,7 +206,9 @@
   "p": [
    "Karrali qirralarda ota tekshiruvini qirra indeksi bilan qiling",
    "Graf bogʻlanmagan boʻlsa, har bir komponentadan boshlash"
-  ]
+  ],
+  "h": 2,
+  "w": "\"Ikki guruhga ajratish mumkinmi\", \"aylana bormi\" kabi savollarda."
  },
  {
   "k": [
@@ -193,7 +221,9 @@
   "p": [
    "Manfiy qirralar bilan Dijkstra notoʻgʻri ishlaydi",
    "Masofalar uchun int — toʻlib ketadi, long long va INF = 1e18"
-  ]
+  ],
+  "h": 4,
+  "w": "Musbat vaznli yoʻllar, vaqt yoki narx boʻyicha eng qisqa marshrut soʻralganda."
  },
  {
   "k": [
@@ -206,7 +236,9 @@
   "p": [
    "Birlashtirishdan oldin find qilmaslik",
    "Rekursiv find chuqur zanjirda — siqish bilan muammo emas, lekin iterativ xavfsizroq"
-  ]
+  ],
+  "h": 2,
+  "w": "Elementlar guruhlarga birlashib borsa va \"bir guruhdami\" deb soʻralsa."
  },
  {
   "k": [
@@ -219,7 +251,9 @@
   "p": [
    "Leksikografik eng kichik tartib uchun queue emas, priority_queue",
    "Siklli grafda topologik tartib mavjud emas"
-  ]
+  ],
+  "h": 2,
+  "w": "Vazifalar orasida \"avval … keyin\" bogʻliqliklari boʻlsa."
  },
  {
   "k": [
@@ -232,7 +266,9 @@
   "p": [
    "0/1 da w ni oʻsish tartibida aylanish — element bir necha marta olinadi",
    "dp boshlangʻich qiymatlari: −INF va dp[0] = 0"
-  ]
+  ],
+  "h": 4,
+  "w": "Cheklangan sigʻim ichida eng qimmat yoki eng foydali tanlov kerak boʻlganda."
  },
  {
   "k": [
@@ -245,7 +281,9 @@
   "p": [
    "Sikl tartibini almashtirib boshqa masalani yechib qoʻyish",
    "Yetib boʻlmaydigan summa uchun INF ni toʻgʻri qaytarish"
-  ]
+  ],
+  "h": 3,
+  "w": "Berilgan qismlardan summa yigʻish usullari yoki minimal soni soʻralganda."
  },
  {
   "k": [
@@ -258,7 +296,9 @@
   "p": [
    "tails massivi LIS ning oʻzi emas — tiklash uchun alohida parent",
    "Kamaymaydigan uchun lower_bound oʻrniga upper_bound"
-  ]
+  ],
+  "h": 3,
+  "w": "Ketma-ketlikdan oʻsuvchi yoki tartibli eng uzun qismni tanlash kerak boʻlganda."
  },
  {
   "k": [
@@ -271,7 +311,9 @@
   "p": [
    "5000 × 5000 int massiv — 100 MB; ikki qator yetarli boʻlsa shunday qiling",
    "Boʻsh prefiks uchun 0-qator va 0-ustunni unutish"
-  ]
+  ],
+  "h": 3,
+  "w": "Ikki satrni solishtirish, oʻxshashlik yoki tahrirlash amallari soni soʻralganda."
  },
  {
   "k": [
@@ -284,7 +326,9 @@
   "p": [
    "best ni 0 bilan boshlash — hammasi manfiy boʻlsa notoʻgʻri",
    "Aylanma variantda hammasi manfiy boʻlgan holatni alohida koʻring"
-  ]
+  ],
+  "h": 1,
+  "w": "Eng katta yigʻindili uzluksiz qism massiv soʻralganda."
  },
  {
   "k": [
@@ -297,7 +341,9 @@
   "p": [
    "lcm = a * b / gcd — toʻlib ketadi, avval boʻling",
    "Manfiy son % m manfiy chiqadi: ((x % m) + m) % m"
-  ]
+  ],
+  "h": 5,
+  "w": "Boʻlinish, tub sonlar, EKUB yoki katta darajalar mod boʻyicha soʻralganda."
  },
  {
   "k": [
@@ -310,7 +356,9 @@
   "p": [
    "r+1 massiv chegarasidan chiqmasligi uchun n+1 oʻlcham",
    "Faqat oflayn: soʻrovlar yangilanishlar orasida boʻlsa BIT kerak"
-  ]
+  ],
+  "h": 2,
+  "w": "Koʻp oraliqqa qiymat qoʻshib, oxirida har bir elementni bilish kerak boʻlganda."
  },
  {
   "k": [
@@ -323,7 +371,9 @@
   "p": [
    "Oyna chap chegarasi oʻngdan oʻtib ketishi",
    "Deque da qiymat emas, indeks saqlang"
-  ]
+  ],
+  "h": 4,
+  "w": "Uzluksiz qism massivlar shartga koʻra kengayib-qisqarsa yoki oyna boʻyicha min/max kerak boʻlsa."
  },
  {
   "k": [
@@ -336,7 +386,9 @@
   "p": [
    "hi juda kichik tanlanadi — javob oraliqdan tashqarida",
    "check da toʻlib ketish: katta x bilan yigʻindilar"
-  ]
+  ],
+  "h": 3,
+  "w": "\"Minimal maksimum\" yoki \"maksimal minimum\" soʻralganda va javobni tekshirish oson boʻlsa."
  },
  {
   "k": [
@@ -349,7 +401,9 @@
   "p": [
    "Funksiyada tekis (teng qiymatli) qismlar boʻlsa ternary ishlamaydi",
    "Butun sonlarda oxirgi 3 nomzodni qoʻlda tekshiring"
-  ]
+  ],
+  "h": 2,
+  "w": "Funksiya avval oʻsib, keyin kamaysa va uning ekstremumi kerak boʻlsa."
  },
  {
   "k": [
@@ -362,7 +416,9 @@
   "p": [
    "1 << 40 int da toʻlib ketadi — 1LL << 40",
    "Operatorlar ustuvorligi: (x & 1) == 0, qavslarsiz notoʻgʻri"
-  ]
+  ],
+  "h": 3,
+  "w": "n ≤ 20 atrofida va toʻplam holatlari yoki XOR bilan ishlash kerak boʻlganda."
  },
  {
   "k": [
@@ -375,7 +431,9 @@
   "p": [
    "2^20 ta elementli vector xotirasi — 8 MB, lekin ikkalasi ham saqlanadi",
    "unordered_map anti-xesh testlarda sekinlashadi — saralash xavfsizroq"
-  ]
+  ],
+  "h": 2,
+  "w": "n ≈ 40 va 2ⁿ juda katta, lekin 2^(n/2) sigʻadigan boʻlganda."
  },
  {
   "k": [
@@ -388,7 +446,9 @@
   "p": [
    "Soʻrovlardagi qiymatlarni siqishga qoʻshishni unutish",
    "Oraliqlar uchun r+1 nuqtalarini ham qoʻshish kerak boʻlishi mumkin"
-  ]
+  ],
+  "h": 1,
+  "w": "Qiymatlar 10⁹ gacha, lekin ularning soni kichik va massiv indeksi sifatida kerak boʻlganda."
  },
  {
   "k": [
@@ -401,7 +461,9 @@
   "p": [
    "query va update dan oldin push ni chaqirmaslik",
    "Toʻplash (+=) va oʻrnatish (=) lazy larini aralashtirishda tartib"
-  ]
+  ],
+  "h": 8,
+  "w": "Massiv oʻzgarib turadi va oraliq soʻrovlari (yigʻindi, min, max) koʻp boʻlganda."
  },
  {
   "k": [
@@ -414,7 +476,9 @@
   "p": [
    "BIT 1-indekslangan — 0 indeks bilan cheksiz sikl",
    "2D BIT xotirasi n² — n ≤ 2000 da"
-  ]
+  ],
+  "h": 3,
+  "w": "Prefiks yigʻindilar oʻzgaruvchan massivda kerak boʻlganda — segment treedan qisqaroq."
  },
  {
   "k": [
@@ -427,7 +491,9 @@
   "p": [
    "Yigʻindi uchun ustma-ust oraliq ishlamaydi",
    "Yangilanishlar boʻlsa sparse table yaramaydi"
-  ]
+  ],
+  "h": 2,
+  "w": "Massiv oʻzgarmaydi va oraliq min/max juda koʻp soʻralganda."
  },
  {
   "k": [
@@ -440,7 +506,9 @@
   "p": [
    "Yoʻl siqish rollback ni buzadi — ishlatmang",
    "Qaytarish tartibi teskari boʻlishi shart"
-  ]
+  ],
+  "h": 4,
+  "w": "Grafga qirralar qoʻshilib-oʻchiriladi va javob oflayn berilishi mumkin boʻlganda."
  },
  {
   "k": [
@@ -453,7 +521,9 @@
   "p": [
    "Xotira: n log n tugun — massivni oldindan yetarli oʻlchamda oling",
    "Koordinatalarni avval siqish kerak"
-  ]
+  ],
+  "h": 6,
+  "w": "Oldingi versiyalarga soʻrov yoki \"oraliqdagi k-chi eng kichik\" soʻralganda."
  },
  {
   "k": [
@@ -466,7 +536,9 @@
   "p": [
    "Merge sort tree yangilanishlarni qoʻllab-quvvatlamaydi",
    "Wavelet tree indekslari off-by-one ga juda sezgir"
-  ]
+  ],
+  "h": 4,
+  "w": "Statik massivda \"[l, r] da x dan kichiklar soni\" kabi soʻrovlar boʻlganda."
  },
  {
   "k": [
@@ -479,7 +551,9 @@
   "p": [
    "Har amaldan keyin size ni yangilashni unutish",
    "Reverse flag ni split dan oldin push qilmaslik"
-  ]
+  ],
+  "h": 6,
+  "w": "Massivda qism kesib olish, joyini almashtirish yoki aylantirish amallari boʻlganda."
  },
  {
   "k": [
@@ -492,7 +566,9 @@
   "p": [
    "Juft-toq bloklar uchun r ni teskari saralash — 2 barobar tezroq",
    "Oyna kengaytirish va qisqartirish tartibi (avval kengaytirish)"
-  ]
+  ],
+  "h": 5,
+  "w": "Oflayn oraliq soʻrovlari va javobni elementma-element yangilash oson boʻlganda."
  },
  {
   "k": [
@@ -505,7 +581,9 @@
   "p": [
    "Ikkinchi max ni −INF bilan toʻgʻri boshlash",
    "Lazy teglar tartibi: avval qoʻshish, keyin chmin"
-  ]
+  ],
+  "h": 6,
+  "w": "Oraliqqa \"min(a[i], x)\" kabi amallar va yigʻindi soʻrovlari birga boʻlganda."
  },
  {
   "k": [
@@ -518,7 +596,9 @@
   "p": [
    "Koʻpaytmada toʻlib ketish: k · x ni long long da",
    "Koordinatalar oraligʻini soʻrov nuqtalaridan katta oling"
-  ]
+  ],
+  "h": 3,
+  "w": "Toʻgʻri chiziqlar qoʻshiladi va nuqtadagi eng kichik qiymat soʻraladi."
  },
  {
   "k": [
@@ -531,7 +611,9 @@
   "p": [
    "less_equal bilan multiset yasash — erase va find notoʻgʻri ishlaydi",
    "Faqat GCC da ishlaydi"
-  ]
+  ],
+  "h": 1,
+  "w": "Tartib statistikasi kerak va kod yozishga vaqt kam boʻlganda."
  },
  {
   "k": [
@@ -544,7 +626,9 @@
   "p": [
    "Tugunni deque dan bir necha marta olish mumkin — dist bilan tekshiring",
    "Vaznlar 0/1 dan boshqa boʻlsa Dijkstra kerak"
-  ]
+  ],
+  "h": 2,
+  "w": "Qirralar faqat 0 yoki 1 vaznga ega boʻlsa — masalan, devorni buzish narxi."
  },
  {
   "k": [
@@ -557,7 +641,9 @@
   "p": [
    "Floyd da k ni ichki siklga qoʻyish — notoʻgʻri natija",
    "INF + manfiy son INF dan kichik boʻlib qoladi — INF ni tekshiring"
-  ]
+  ],
+  "h": 4,
+  "w": "Manfiy vaznlar, manfiy sikl yoki barcha juftliklar orasidagi masofalar kerak boʻlganda."
  },
  {
   "k": [
@@ -570,7 +656,9 @@
   "p": [
    "low ni faqat stack dagi tugunlar boʻyicha yangilash",
    "Rekursiya chuqurligi — katta graflarda iterativ variant"
-  ]
+  ],
+  "h": 4,
+  "w": "Yoʻnaltirilgan grafda \"bir-biriga yetib boradigan\" guruhlar yoki DAG ga keltirish kerak boʻlganda."
  },
  {
   "k": [
@@ -583,7 +671,9 @@
   "p": [
    "Karrali qirralar: ota tugunni emas, ota qirrani oʻtkazib yuboring",
    "Ildiz artikulyatsiya — faqat 2+ bolasi boʻlsa"
-  ]
+  ],
+  "h": 4,
+  "w": "\"Qaysi yoʻl yoki shahar oʻchirilsa graf uziladi\" deb soʻralganda."
  },
  {
   "k": [
@@ -596,7 +686,9 @@
   "p": [
    "Implikatsiyaning ikkinchi qirrasini unutish",
    "Kosaraju va Tarjan da komponenta tartibi teskari"
-  ]
+  ],
+  "h": 4,
+  "w": "Har bir oʻzgaruvchi ikki holatli va \"a yoki b\" shartlari berilganda."
  },
  {
   "k": [
@@ -609,7 +701,9 @@
   "p": [
    "Graf bogʻlanmagan boʻlsa — MST yoʻq, qirralar sonini tekshiring",
    "Vaznlar yigʻindisi long long"
-  ]
+  ],
+  "h": 3,
+  "w": "Barcha nuqtalarni minimal umumiy xarajat bilan bogʻlash kerak boʻlganda."
  },
  {
   "k": [
@@ -622,7 +716,9 @@
   "p": [
    "Qirralarni qayta ishlatmaslik uchun har tugunda koʻrsatkich",
    "Grafning bogʻliqligini tekshirishni unutish"
-  ]
+  ],
+  "h": 3,
+  "w": "Har bir yoʻldan aynan bir marta oʻtish yoki ketma-ketlik qurish kerak boʻlganda."
  },
  {
   "k": [
@@ -635,7 +731,9 @@
   "p": [
    "Teskari qirra indeksini notoʻgʻri saqlash",
    "Har BFS dan keyin ptr ni nolga qaytarmaslik"
-  ]
+  ],
+  "h": 8,
+  "w": "Quvurlar, tarmoq sigʻimi, taqsimlash — yoki juftlash masalasini oqimga keltirish mumkin boʻlganda."
  },
  {
   "k": [
@@ -648,7 +746,9 @@
   "p": [
    "Cheksiz sigʻimni juda katta, lekin toʻlmaydigan son bilan bering",
    "Kesim qirralari — toʻyingan va bir tomondan yetib boriladigan"
-  ]
+  ],
+  "h": 5,
+  "w": "\"Minimal narxda ajratish\", \"qaysi qirralarni kesish\" kabi savollarda."
  },
  {
   "k": [
@@ -661,7 +761,9 @@
   "p": [
    "Potensiallarsiz Dijkstra manfiy narxlarda notoʻgʻri",
    "Oqim va narxni long long da saqlash"
-  ]
+  ],
+  "h": 6,
+  "w": "Tayinlash yoki taqsimlashda har bir birlikning narxi boʻlganda."
  },
  {
   "k": [
@@ -674,7 +776,9 @@
   "p": [
    "Kuhn da visited ni har chap tugun uchun tozalash",
    "Maksimal narx uchun Venger da narxlarni manfiy qiling"
-  ]
+  ],
+  "h": 6,
+  "w": "Ishchilar-vazifalar, talabalar-loyihalar kabi ikki guruh orasida juftlash kerak boʻlganda."
  },
  {
   "k": [
@@ -687,7 +791,9 @@
   "p": [
    "Faqat ikki boʻlakli graflar uchun toʻgʻri",
    "Yoʻl qoplamasida tugunlarni ikkiga boʻlishni unutish"
-  ]
+  ],
+  "h": 2,
+  "w": "Ikki boʻlakli grafda minimal qoplama yoki maksimal mustaqil toʻplam soʻralganda."
  },
  {
   "k": [
@@ -700,7 +806,9 @@
   "p": [
    "t → s cheksiz qirrasini qoʻshishni unutish",
    "Talablar yigʻindisi toʻla qoplanmasa — yechim yoʻq"
-  ]
+  ],
+  "h": 4,
+  "w": "Har bir qirrada minimal va maksimal oqim talab qilinganda."
  },
  {
   "k": [
@@ -713,7 +821,9 @@
   "p": [
    "Ildizning otasini oʻzi qilib qoʻyish kerak",
    "log ni n dan katta tanlang (masalan 20)"
-  ]
+  ],
+  "h": 4,
+  "w": "Daraxtda ikki tugun orasidagi masofa yoki umumiy ajdod soʻralganda."
  },
  {
   "k": [
@@ -726,7 +836,9 @@
   "p": [
    "tout ni oxirgi bolaning tin i sifatida emas, DFS chiqishida yozing",
    "Indekslarni tugun raqami bilan aralashtirish"
-  ]
+  ],
+  "h": 3,
+  "w": "Qism daraxt boʻyicha yigʻindi yoki yangilash soʻrovlari boʻlganda."
  },
  {
   "k": [
@@ -739,7 +851,9 @@
   "p": [
    "Qirra soʻrovlarida LCA tugunining oʻzini hisobga olmaslik",
    "Ogʻir bolani birinchi DFS da aniqlashni unutish"
-  ]
+  ],
+  "h": 8,
+  "w": "Daraxtdagi yoʻl boʻyicha yangilash va soʻrovlar koʻp boʻlganda."
  },
  {
   "k": [
@@ -752,7 +866,9 @@
   "p": [
    "Har bosqichda qism daraxt oʻlchamlarini qayta hisoblash",
    "Bir xil qism daraxtdan ikki yoʻlni birlashtirib qoʻyish"
-  ]
+  ],
+  "h": 6,
+  "w": "Daraxtdagi barcha yoʻllar orasidan xossaga egalarini sanash kerak boʻlganda."
  },
  {
   "k": [
@@ -765,7 +881,9 @@
   "p": [
    "Nusxa olish — swap yoki koʻrsatkichdan foydalaning",
    "Javobni toʻplam birlashtirilgandan keyin yozish"
-  ]
+  ],
+  "h": 3,
+  "w": "Har bir qism daraxt uchun turli rang yoki qiymatlar soni soʻralganda."
  },
  {
   "k": [
@@ -778,7 +896,9 @@
   "p": [
    "Bolaning oʻz hissasini ota javobidan ayirishni unutish",
    "Rekursiya chuqurligi — iterativ BFS tartibi"
-  ]
+  ],
+  "h": 4,
+  "w": "Har bir tugun ildiz boʻlgandagi javob kerak boʻlganda."
  },
  {
   "k": [
@@ -791,7 +911,9 @@
   "p": [
    "Har soʻrovdan keyin virtual daraxtni tozalash",
    "Qirra vaznlari: asl daraxtdagi masofalar"
-  ]
+  ],
+  "h": 5,
+  "w": "Koʻp soʻrov va har birida daraxtning faqat k ta tuguni muhim boʻlganda."
  },
  {
   "k": [
@@ -804,7 +926,9 @@
   "p": [
    "Splay dan oldin push ni yuqoridan pastga bajarish",
    "Ildiz emasligini isRoot bilan toʻgʻri tekshirish"
-  ]
+  ],
+  "h": 10,
+  "w": "Daraxt oʻzgaradi: qirralar qoʻshiladi va oʻchiriladi, yoʻl soʻrovlari bilan birga."
  },
  {
   "k": [
@@ -817,7 +941,9 @@
   "p": [
    "n = 20 da dp[2²⁰][20] int — 80 MB, xotiraga qarang",
    "Boshlangʻich holatni toʻgʻri qoʻyish (dp[1 << s][s])"
-  ]
+  ],
+  "h": 6,
+  "w": "n ≤ 20 va qaysi elementlar ishlatilgani muhim boʻlganda."
  },
  {
   "k": [
@@ -830,7 +956,9 @@
   "p": [
    "L = 0 da f(L − 1) — alohida koʻring",
    "Boshlovchi nollarni raqam sifatida sanab qoʻyish"
-  ]
+  ],
+  "h": 5,
+  "w": "\"L dan R gacha nechta son …\" va R 10¹⁸ gacha boʻlganda."
  },
  {
   "k": [
@@ -843,7 +971,9 @@
   "p": [
    "Sikl tartibi: avval qisqa oraliqlar",
    "Memoizatsiyada −1 bilan belgilash va 0 javobni aralashtirish"
-  ]
+  ],
+  "h": 5,
+  "w": "Oraliqni boʻlish, birlashtirish yoki ikki uchidan olish haqida boʻlganda."
  },
  {
   "k": [
@@ -856,7 +986,9 @@
   "p": [
    "Ryukzakda min(size, k) chegarasi bilan murakkablikni saqlash",
    "Chuqur daraxtlarda rekursiya"
-  ]
+  ],
+  "h": 5,
+  "w": "Daraxtda optimal tanlov: mustaqil toʻplam, qoplama yoki qism daraxt ryukzagi."
  },
  {
   "k": [
@@ -869,7 +1001,9 @@
   "p": [
    "Sikllar tartibi: bit tashqarida boʻlishi shart",
    "Yigʻindilar uchun long long"
-  ]
+  ],
+  "h": 3,
+  "w": "Har bir maska uchun uning barcha qism maskalari boʻyicha yigʻindi kerak boʻlganda."
  },
  {
   "k": [
@@ -882,7 +1016,9 @@
   "p": [
    "Kesishishni double bilan solishtirish — aniqlik xatosi",
    "Teng qiyalikli chiziqlarni toʻgʻri olib tashlash"
-  ]
+  ],
+  "h": 5,
+  "w": "DP oʻtishi dp[j] + a[i]·b[j] koʻrinishida va n 10⁵ atrofida boʻlganda."
  },
  {
   "k": [
@@ -895,7 +1031,9 @@
   "p": [
    "Monotonlik shartini tekshirmasdan qoʻllash",
    "Xarajat funksiyasi sekin boʻlsa yutuq yoʻqoladi"
-  ]
+  ],
+  "h": 4,
+  "w": "Massivni k qismga boʻlish va xarajat funksiyasi \"yaxshi\" boʻlganda."
  },
  {
   "k": [
@@ -908,7 +1046,9 @@
   "p": [
    "Shart bajarilmasa — notoʻgʻri javob",
    "opt ni uzunlik 1 uchun toʻgʻri boshlash"
-  ]
+  ],
+  "h": 3,
+  "w": "Oraliq DP n ≈ 5000 da va O(n³) sigʻmaganda."
  },
  {
   "k": [
@@ -921,7 +1061,9 @@
   "p": [
    "Teng holatlarda elementlar sonini min yoki max qilib tanlash",
    "Qavariqlik boʻlmasa usul ishlamaydi"
-  ]
+  ],
+  "h": 5,
+  "w": "\"Aynan k ta tanlang\" sharti DP ni juda kattalashtirganda."
  },
  {
   "k": [
@@ -934,7 +1076,9 @@
   "p": [
    "Profilni qator emas, kichik oʻlcham boʻyicha tanlang",
    "Mod boʻyicha olishni unutish"
-  ]
+  ],
+  "h": 5,
+  "w": "Katakli maydonni figuralar bilan toʻldirish usullari soni soʻralganda."
  },
  {
   "k": [
@@ -947,7 +1091,9 @@
   "p": [
    "Koʻpaytmada har qadamda mod olish",
    "Birlik matritsani toʻgʻri boshlash"
-  ]
+  ],
+  "h": 3,
+  "w": "Rekurrent formula va n 10¹⁸ gacha boʻlganda."
  },
  {
   "k": [
@@ -960,7 +1106,9 @@
   "p": [
    "10⁷ int massiv — 40 MB, xotira chegarasiga qarang",
    "i · p toʻlib ketishi — long long yoki chegara tekshiruvi"
-  ]
+  ],
+  "h": 3,
+  "w": "10⁷ gacha barcha sonlar uchun boʻluvchilar yoki multiplikativ funksiyalar kerak boʻlganda."
  },
  {
   "k": [
@@ -973,7 +1121,9 @@
   "p": [
    "Teskari element faqat gcd(a, m) = 1 da mavjud",
    "XQT da koʻpaytmalar toʻlib ketadi — __int128"
-  ]
+  ],
+  "h": 4,
+  "w": "Modul boʻyicha teskari, taqqoslamalar tizimi yoki ax + by = c kerak boʻlganda."
  },
  {
   "k": [
@@ -986,7 +1136,9 @@
   "p": [
    "μ ni notoʻgʻri hisoblash: kvadrat boʻluvchi bor boʻlsa 0",
    "Natija ishorasi: ayirmalarni mod da musbatga keltirish"
-  ]
+  ],
+  "h": 6,
+  "w": "EKUB bilan bogʻliq yigʻindilar yoki oʻzaro tub juftliklar soni soʻralganda."
  },
  {
   "k": [
@@ -999,7 +1151,9 @@
   "p": [
    "inv_fact ni oxiridan Fermat bilan hisoblang",
    "k < 0 yoki k > n da 0 qaytarish"
-  ]
+  ],
+  "h": 6,
+  "w": "\"Nechta usul bilan\" soʻralganda — deyarli har doim kombinatorika."
  },
  {
   "k": [
@@ -1012,7 +1166,9 @@
   "p": [
    "Guruh oʻlchamiga boʻlishda mod teskari element kerak",
    "Juft va toq n da aks ettirishlar farqlanadi"
-  ]
+  ],
+  "h": 4,
+  "w": "Burish yoki aks ettirishda bir xil hisoblanadigan obyektlarni sanashda."
  },
  {
   "k": [
@@ -1025,7 +1181,9 @@
   "p": [
    "a · b mod m da 64-bit toʻlib ketishi",
    "Kichik sonlarni (≤ 10⁶) gʻalvir bilan alohida koʻring"
-  ]
+  ],
+  "h": 4,
+  "w": "10¹⁸ gacha sonni tublikka tekshirish yoki koʻpaytuvchilarga ajratish kerak boʻlganda."
  },
  {
   "k": [
@@ -1038,7 +1196,9 @@
   "p": [
    "unordered_map anti-xesh — oʻz hash yoki saralash",
    "x = 0 javobini alohida tekshirish"
-  ]
+  ],
+  "h": 3,
+  "w": "aˣ ≡ b (mod m) koʻrinishida nomaʼlum daraja boʻlganda."
  },
  {
   "k": [
@@ -1051,7 +1211,9 @@
   "p": [
    "Haqiqiy sonlarda eps ni tekshirmaslik",
    "XOR bazisda eng katta bitdan boshlash"
-  ]
+  ],
+  "h": 5,
+  "w": "Chiziqli tenglamalar tizimi yoki XOR bilan maksimal qiymat soʻralganda."
  },
  {
   "k": [
@@ -1064,7 +1226,9 @@
   "p": [
    "FFT da yaxlitlash xatosi katta qiymatlarda — NTT afzal",
    "Oʻlchamni 2 ning darajasiga yetkazishni unutish"
-  ]
+  ],
+  "h": 8,
+  "w": "Ikki koʻphadni koʻpaytirish yoki barcha juft yigʻindilar sonini topish kerak boʻlganda."
  },
  {
   "k": [
@@ -1077,7 +1241,9 @@
   "p": [
    "mex ni sekin hisoblash — kichik massiv yetarli",
    "Misère oʻyinlarda oxirgi qoida boshqacha"
-  ]
+  ],
+  "h": 4,
+  "w": "Ikki oʻyinchi navbatma-navbat oʻynaydi va gʻolib aniqlanadi."
  },
  {
   "k": [
@@ -1090,7 +1256,9 @@
   "p": [
    "Mustaqil boʻlmagan hodisalar ehtimolini koʻpaytirish",
    "Double da aniqlik — kerakli raqamlar sonini chop eting"
-  ]
+  ],
+  "h": 5,
+  "w": "Tasodifiy jarayon va \"kutilgan qiymat\" yoki ehtimollik soʻralganda."
  },
  {
   "k": [
@@ -1103,7 +1271,9 @@
   "p": [
    "Ajratuvchi belgi satrda uchramasligi kerak",
    "j = pi[j − 1] qaytishini while bilan yozish"
-  ]
+  ],
+  "h": 3,
+  "w": "Matnda namunani qidirish, davr yoki chegaralar kerak boʻlganda."
  },
  {
   "k": [
@@ -1116,7 +1286,9 @@
   "p": [
    "z[0] ni ishlatmang (tushuncha boʻyicha n)",
    "r ni yangilashni unutish — O(n²) ga tushadi"
-  ]
+  ],
+  "h": 2,
+  "w": "Har bir pozitsiyadan boshlanuvchi prefiks moslik kerak boʻlganda."
  },
  {
   "k": [
@@ -1129,7 +1301,9 @@
   "p": [
    "mod 2⁶⁴ (unsigned overflow) anti-xesh testlarda buziladi",
    "Tasodifiy asos B tanlang — oldindan maʼlum asos xavfli"
-  ]
+  ],
+  "h": 3,
+  "w": "Qism satrlarni tez solishtirish yoki eng uzun umumiy qism kerak boʻlganda."
  },
  {
   "k": [
@@ -1142,7 +1316,9 @@
   "p": [
    "Xotira: tugunlar soni = jami uzunlik, massivni oldindan oling",
    "Binar trie da bitlarni yuqoridan pastga yurish"
-  ]
+  ],
+  "h": 2,
+  "w": "Koʻp soʻzlar prefikslari yoki maksimal XOR juftlik soʻralganda."
  },
  {
   "k": [
@@ -1155,7 +1331,9 @@
   "p": [
    "Uchrashlarni naive sanash O(n · k) — failure daraxti ustida yigʻing",
    "BFS tartibida linklarni hisoblash shart"
-  ]
+  ],
+  "h": 5,
+  "w": "Bir vaqtda koʻp namunani qidirish kerak boʻlganda."
  },
  {
   "k": [
@@ -1168,7 +1346,9 @@
   "p": [
    "Oxiriga eng kichik belgi qoʻshishni unutish",
    "Saralashda radix sort oʻrniga std::sort — O(n log² n)"
-  ]
+  ],
+  "h": 6,
+  "w": "Turli qism satrlar soni, leksikografik k-chi qism satr kerak boʻlganda."
  },
  {
   "k": [
@@ -1181,7 +1361,9 @@
   "p": [
    "Clone ga oʻtishlarni nusxalashni unutish",
    "next ni map emas massivda saqlash — tezroq"
-  ]
+  ],
+  "h": 8,
+  "w": "Barcha qism satrlar haqida savollar va n 10⁵–10⁶ boʻlganda."
  },
  {
   "k": [
@@ -1194,7 +1376,9 @@
   "p": [
    "Juft va toq markazlar indekslarini aralashtirish",
    "Chegarani tekshirmasdan kengaytirish"
-  ]
+  ],
+  "h": 2,
+  "w": "Palindromik qism satrlar haqida savollarda."
  },
  {
   "k": [
@@ -1207,7 +1391,9 @@
   "p": [
    "Yangi tugun linkini topishda notoʻgʻri boshlangʻich tugun",
    "Tugunlar soni n + 2 dan oshmaydi — massiv oʻlchami"
-  ]
+  ],
+  "h": 4,
+  "w": "Barcha turli palindromlar va ularning soni kerak boʻlganda."
  },
  {
   "k": [
@@ -1220,7 +1406,9 @@
   "p": [
    "Koʻpaytmalarda toʻlib ketish — 10⁹ koordinatada __int128",
    "double ni == bilan solishtirish"
-  ]
+  ],
+  "h": 3,
+  "w": "Har qanday geometrik masalada — nuqtalar, toʻgʻri chiziqlar va burilish yoʻnalishi."
  },
  {
   "k": [
@@ -1233,7 +1421,9 @@
   "p": [
    "Kollinear va uchlari ustma-ust tushgan holatlar",
    "Nuqta chegarada yotganini alohida qaytarish"
-  ]
+  ],
+  "h": 4,
+  "w": "Kesmalar kesishadimi yoki nuqta koʻpburchak ichidami deb soʻralganda."
  },
  {
   "k": [
@@ -1246,7 +1436,9 @@
   "p": [
    "Barcha nuqtalar bir chiziqda yoki bitta nuqta",
    "Takroriy nuqtalarni olib tashlash"
-  ]
+  ],
+  "h": 3,
+  "w": "Nuqtalar toʻplamini oʻrab oluvchi eng kichik qavariq shakl kerak boʻlganda."
  },
  {
   "k": [
@@ -1259,7 +1451,9 @@
   "p": [
    "Qobiqni avval toʻgʻri tartibda qurish",
    "Kvadrat masofani solishtirib, ildizni oxirida oling"
-  ]
+  ],
+  "h": 3,
+  "w": "Eng uzoq ikki nuqta yoki minimal kenglik soʻralganda."
  },
  {
   "k": [
@@ -1272,7 +1466,9 @@
   "p": [
    "Ishorani modul bilan olish (soat yoʻnalishi)",
    "2S ni butun saqlab, oxirida boʻling"
-  ]
+  ],
+  "h": 2,
+  "w": "Koʻpburchak yuzi yoki ichidagi butun nuqtalar soni soʻralganda."
  },
  {
   "k": [
@@ -1285,7 +1481,9 @@
   "p": [
    "Tasmani har safar qayta saralash — O(n log² n)",
    "Masofa kvadrati long long"
-  ]
+  ],
+  "h": 3,
+  "w": "Eng yaqin ikki nuqta orasidagi masofa soʻralganda."
  },
  {
   "k": [
@@ -1298,7 +1496,9 @@
   "p": [
    "Bir xil x dagi ochilish/yopilish tartibi",
    "Set komparatori sweep pozitsiyasiga bogʻliq"
-  ]
+  ],
+  "h": 5,
+  "w": "Koʻp toʻgʻri toʻrtburchak yoki kesmalar ustma-ust tushganda."
  },
  {
   "k": [
@@ -1311,7 +1511,9 @@
   "p": [
    "Parallel chiziqlarni toʻgʻri qayta ishlash",
    "Cheksiz holat uchun katta bounding box qoʻshish"
-  ]
+  ],
+  "h": 5,
+  "w": "Bir nechta shart (yarim tekislik) bajariladigan soha kerak boʻlganda."
  },
  {
   "k": [
@@ -1324,7 +1526,9 @@
   "p": [
    "Welzl dan oldin nuqtalarni aralashtirish (shuffle)",
    "sqrt ichida kichik manfiy son — max(0, x)"
-  ]
+  ],
+  "h": 4,
+  "w": "Aylanalar kesishishi, urinmalar yoki minimal qamrovchi aylana kerak boʻlganda."
  },
  {
   "k": [
@@ -1337,7 +1541,9 @@
   "p": [
    "acos(1.0000001) — NaN; argumentni [−1, 1] ga qisqartiring",
    "−0.000 chop etilishi — kichik qiymatni 0 ga yaxlitlang"
-  ]
+  ],
+  "h": 2,
+  "w": "Har bir haqiqiy sonli geometriya masalasida."
  },
  {
   "k": [
@@ -1350,7 +1556,9 @@
   "p": [
    "BIT ni har bosqichdan keyin tozalash (faqat oʻzgarganlarini)",
    "Teng kalitlarni CDQ da toʻgʻri tartiblash"
-  ]
+  ],
+  "h": 8,
+  "w": "Koʻp soʻrov va har biri uchun alohida ikkilik qidiruv juda sekin boʻlganda."
  },
  {
   "k": [
@@ -1363,7 +1571,9 @@
   "p": [
    "Yoʻl siqishli DSU — rollback buziladi",
    "Oʻchirilmagan qirralar oxirigacha yashaydi"
-  ]
+  ],
+  "h": 6,
+  "w": "Qirralar qoʻshiladi va oʻchiriladi, bogʻliqlik soʻrovlari oflayn berilganda."
  },
  {
   "k": [
@@ -1376,7 +1586,9 @@
   "p": [
    "Mustaqillik oracle ni samarali yozish",
    "Vaznli variantda Bellman-Ford kerak"
-  ]
+  ],
+  "h": 10,
+  "w": "Ikki xil cheklov ostida maksimal toʻplam tanlash kerak boʻlganda."
  },
  {
   "k": [
@@ -1389,7 +1601,9 @@
   "p": [
    "Blossom siqishda base massivini yangilash",
    "Faqat juftlik oʻlchami kerak boʻlsa — Tutte usuli soddaroq"
-  ]
+  ],
+  "h": 10,
+  "w": "Ikki boʻlakli boʻlmagan grafda maksimal juftlik soʻralganda."
  },
  {
   "k": [
@@ -1402,7 +1616,9 @@
   "p": [
    "DFS daraxtidan yetib boʻlmaydigan tugunlarni hisobga olmaslik",
    "Semi-dominator va dominatorni aralashtirish"
-  ]
+  ],
+  "h": 6,
+  "w": "\"Qaysi tugun oʻchirilsa, manbadan yetib boʻlmaydi\" deb soʻralganda."
  },
  {
   "k": [
@@ -1415,7 +1631,9 @@
   "p": [
    "Yetarli had bermaslik — notoʻgʻri rekurrent",
    "Modul tub boʻlmasa usul ishlamaydi"
-  ]
+  ],
+  "h": 4,
+  "w": "Ketma-ketlikning birinchi hadlari maʼlum va n-chi had katta n uchun kerak boʻlganda."
  },
  {
   "k": [
@@ -1428,7 +1646,9 @@
   "p": [
    "eps siz double — cheksiz sikl",
    "Chegaralanmagan va mumkin boʻlmagan holatlarni ajratish"
-  ]
+  ],
+  "h": 8,
+  "w": "Bir nechta chiziqli cheklov ostida maqsad funksiyasini optimallash kerak boʻlganda."
  },
  {
   "k": [
@@ -1441,7 +1661,9 @@
   "p": [
    "rand() — kichik oraliq va sekin, mt19937 dan foydalaning",
    "Qatʼiy seed — xaker testlari sizga qarshi tayyorlanadi"
-  ]
+  ],
+  "h": 3,
+  "w": "Deterministik yechim murakkab, lekin tasodifiy yondashuv katta ehtimollik bilan ishlaganda."
  },
  {
   "k": [
@@ -1454,7 +1676,9 @@
   "p": [
    "Internetdan tekshirmasdan nusxa olingan kod",
    "Kontestda TRD dan qayta yozishda xato — oldindan mashq qiling"
-  ]
+  ],
+  "h": 10,
+  "w": "ICPC finalidan oldin — kodni tez va xatosiz koʻchirish uchun."
  },
  {
   "k": [
@@ -1467,7 +1691,9 @@
   "p": [
    "Bitta qiyin masalaga butun jamoa yopishib qolishi",
    "Masala shartini oxirigacha oʻqimaslik — chegaralar va formatlar"
-  ]
+  ],
+  "h": 3,
+  "w": "Har bir kontest boshida — birinchi 20 daqiqa natijani belgilaydi."
  },
  {
   "k": [
@@ -1480,7 +1706,9 @@
   "p": [
    "Tekshirmasdan qayta yuborish",
    "Oxirgi soatda tavakkal yuborishlarning narxini hisoblamaslik"
-  ]
+  ],
+  "h": 2,
+  "w": "Har bir yuborishdan oldin — jarima vaqti reytingni hal qiladi."
  },
  {
   "k": [
@@ -1493,7 +1721,9 @@
   "p": [
    "Brute force ham xato boʻlishi — juda sodda yozing",
    "Generator chegaraviy holatlarni bermaydi — kichik n ham sinang"
-  ]
+  ],
+  "h": 3,
+  "w": "WA olganda va xatoni koʻz bilan topib boʻlmaganda."
  },
  {
   "k": [
@@ -1506,7 +1736,9 @@
   "p": [
    "Virtual kontestni toʻxtatib-toʻxtatib yechish",
    "Natijani tahlil qilmasdan keyingisiga oʻtish"
-  ]
+  ],
+  "h": 5,
+  "w": "Haftalik — jamoa ishlashini mashq qilish uchun."
  },
  {
   "k": [
@@ -1519,6 +1751,8 @@
   "p": [
    "Tahlilni oʻqib, kod yozmasdan qoldirish",
    "Faqat oson masalalarni upsolve qilish"
-  ]
+  ],
+  "h": 5,
+  "w": "Har bir kontestdan keyin — oʻsishning eng tez yoʻli."
  }
 ]

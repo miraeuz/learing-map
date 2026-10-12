@@ -8,4 +8,13 @@ contextBridge.exposeInMainWorld('icpc', {
     verify: (code) => ipcRenderer.invoke('license:verify', String(code)),
     rename: (name) => ipcRenderer.invoke('license:rename', String(name)),
   },
+  window: {
+    toggleFullscreen: () => ipcRenderer.invoke('window:toggleFullscreen'),
+    isFullscreen: () => ipcRenderer.invoke('window:isFullscreen'),
+    onFullscreen: (cb) => {
+      const handler = (_e, v) => cb(Boolean(v));
+      ipcRenderer.on('window:fullscreen', handler);
+      return () => ipcRenderer.removeListener('window:fullscreen', handler);
+    },
+  },
 });

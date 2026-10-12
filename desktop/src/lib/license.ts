@@ -24,6 +24,11 @@ interface Bridge {
     verify(code: string): Promise<VerifyResult>;
     rename(name: string): Promise<{ ok: boolean }>;
   };
+  window?: {
+    toggleFullscreen(): Promise<boolean>;
+    isFullscreen(): Promise<boolean>;
+    onFullscreen(cb: (v: boolean) => void): () => void;
+  };
 }
 
 declare global {

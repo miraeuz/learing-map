@@ -3,6 +3,7 @@
 const { app, BrowserWindow, shell, Menu, ipcMain } = require('electron');
 const path = require('path');
 const os = require('os');
+const fs = require('fs');
 const { createLicenseManager, decodeSecret } = require('./license.cjs');
 
 let config = { tokenEncoded: '', tokenKey: '', chatId: '' };
@@ -32,9 +33,35 @@ function setupLicense() {
   ipcMain.handle('license:request', (_e, name) => license.requestCode(name));
   ipcMain.handle('license:verify', (_e, code) => license.verify(code));
   ipcMain.handle('license:rename', (_e, name) => license.rename(name));
+  ipcMain.handle('window:toggleFullscreen', () => toggleFullscreen());
+  ipcMain.handle('window:isFullscreen', () => Boolean(win && win.isFullScreen()));
+}
+
+// Window preference: full screen by default, remembered between launches.
+const stateFile = () => path.join(app.getPath('userData'), 'window-state.json');
+function readWindowState() {
+  try {
+    return { fullscreen: true, ...JSON.parse(fs.readFileSync(stateFile(), 'utf8')) };
+  } catch {
+    return { fullscreen: true };
+  }
+}
+function writeWindowState(state) {
+  try {
+    fs.writeFileSync(stateFile(), JSON.stringify(state));
+  } catch {
+    /* not critical */
+  }
+}
+
+function toggleFullscreen() {
+  if (!win) return false;
+  win.setFullScreen(!win.isFullScreen());
+  return !win.isFullScreen();
 }
 
 function createWindow() {
+  const state = readWindowState();
   win = new BrowserWindow({
     width: 1440,
     height: 900,
@@ -55,7 +82,23 @@ function createWindow() {
   });
 
   win.loadFile(path.join(__dirname, '..', 'dist', 'index.html'));
-  win.once('ready-to-show', () => win.show());
+  win.once('ready-to-show', () => {
+    win.maximize();
+    if (state.fullscreen) win.setFullScreen(true);
+    win.show();
+  });
+
+  const sendFs = () => win.webContents.send('window:fullscreen', win.isFullScreen());
+  win.on('enter-full-screen', () => { writeWindowState({ fullscreen: true }); sendFs(); });
+  win.on('leave-full-screen', () => { writeWindowState({ fullscreen: false }); sendFs(); });
+
+  // F11 toggles full screen (there is no menu bar to provide the shortcut).
+  win.webContents.on('before-input-event', (event, input) => {
+    if (input.type === 'keyDown' && input.key === 'F11') {
+      event.preventDefault();
+      toggleFullscreen();
+    }
+  });
 
   // Problem links open in the user's normal browser, never inside the app.
   win.webContents.setWindowOpenHandler(({ url }) => {

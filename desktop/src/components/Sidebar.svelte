@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { stages, stageStart, topics } from '../lib/data';
   import { app, totals, stageTotals, select, currentIndex, exportJson, importJson, activity } from '../lib/store.svelte';
   import { showToast } from '../lib/ui.svelte';
@@ -14,6 +15,15 @@
   const weekMax = $derived(Math.max(1, ...act.week));
   const firstName = $derived(app.saved.name.trim().split(/\s+/)[0] ?? '');
   let fileInput: HTMLInputElement;
+
+  // Full screen toggle (desktop app only).
+  const winApi = typeof window !== 'undefined' ? window.icpc?.window : undefined;
+  let fullscreen = $state(false);
+  onMount(() => {
+    if (!winApi) return;
+    winApi.isFullscreen().then((v) => (fullscreen = v));
+    return winApi.onFullscreen((v) => (fullscreen = v));
+  });
 
   function goStage(id: number) {
     select(stageStart[id]);
@@ -129,6 +139,17 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01" /></svg>
       <span class="label">Yordam</span>
     </button>
+    {#if winApi}
+      <button onclick={() => winApi.toggleFullscreen()} title="Toʻliq ekran (F11)">
+        {#if fullscreen}
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" /></svg>
+          <span class="label">Oyna</span>
+        {:else}
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg>
+          <span class="label">Ekran</span>
+        {/if}
+      </button>
+    {/if}
     <button onclick={doReset} title="Barcha natijalarni tozalash">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3m-8 0 1 13h8l1-13" /></svg>
       <span class="label">Tozalash</span>
@@ -233,7 +254,7 @@
   .count { font-size: 0.78rem; font-weight: 800; color: var(--ink-2); font-variant-numeric: tabular-nums; }
   .stage.active .count { color: rgb(255 255 255 / 0.9); }
 
-  .tools { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.35rem; }
+  .tools { display: grid; grid-template-columns: repeat(auto-fit, minmax(3.4rem, 1fr)); gap: 0.3rem; }
   .tools button {
     display: grid; justify-items: center; gap: 0.2rem;
     padding: 0.5rem 0.2rem;

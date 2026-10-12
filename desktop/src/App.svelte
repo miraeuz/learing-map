@@ -108,7 +108,7 @@
   </div>
 
   <SearchPalette onJump={jump} />
-  <StudyModal />
+  <StudyModal onJump={jump} />
   <ConfirmReset />
   <ProfileModal />
 {/if}
@@ -136,7 +136,7 @@
     .shell { grid-template-columns: var(--side) minmax(0, 1fr); }
     .panel-slot {
       position: fixed; top: 0; right: 0; bottom: 0; z-index: 30;
-      width: min(30rem, calc(100vw - 5.5rem));
+      width: min(34rem, calc(100vw - 5.5rem));
       transform: translateX(calc(100% + 3rem));
       transition: transform 0.28s cubic-bezier(0.3, 0.8, 0.3, 1);
     }

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { topics, stages, siteOf } from '../lib/data';
-  import { app, statusOf, isLocked, isSolved, solvedCount, toggleSolved, answer, clearAnswer, setNote, select, learnedCount } from '../lib/store.svelte';
-  import details from '../data/details.json';
+  import { app, statusOf, isLocked, isSolved, solvedCount, toggleSolved, answer, clearAnswer, setNote, select, learnedCount, isLearned, markOpened } from '../lib/store.svelte';
+  import { detailOf, lessonSteps, hoursText } from '../lib/lesson';
   import { burst, showToast } from '../lib/ui.svelte';
 
   let { onJump }: { onJump: (i: number) => void } = $props();
@@ -13,8 +13,11 @@
   const locked = $derived(isLocked(i));
   const solved = $derived(solvedCount(i));
   const total = $derived(topic.links.length);
-  const learnTotal = $derived((details[i] as { k: string[] }).k.length);
+  const detail = $derived(detailOf(i));
+  const learnTotal = $derived(detail.k.length);
   const learned = $derived(learnedCount(i, learnTotal));
+  const steps = $derived(lessonSteps(i));
+  const stepsDone = $derived(steps.filter((s) => s.done).length);
   let filter = $state<'all' | 'open'>('all');
   const shown = $derived(
     topic.links.map((l, k) => ({ l, k })).filter(({ l }) => filter === 'all' || !isSolved(l.url)),
@@ -79,11 +82,32 @@
 
   <div class="body">
     <section class="learn-card">
-      <h3>Nimani oʻrganishim kerak</h3>
+      <div class="lc-head">
+        <h3>Nimani oʻrganishim kerak?</h3>
+        <span class="time" title="Taxminiy oʻrganish vaqti">⏱ {hoursText(detail.h)}</span>
+      </div>
       <p class="info">{topic.info}</p>
+
+      <div class="signal">
+        <span class="bulb" aria-hidden="true">💡</span>
+        <p><b>Qachon kerak boʻladi:</b> {detail.w}</p>
+      </div>
+
+      <ul class="keys" aria-label="Asosiy gʻoyalar">
+        {#each detail.k.slice(0, 3) as item, j}
+          <li class:on={isLearned(i, j)}>{item}</li>
+        {/each}
+        {#if detail.k.length > 3}
+          <li class="more-items">yana {detail.k.length - 3} ta gʻoya, murakkablik va koʻp uchraydigan xatolar — Batafsil boʻlimida</li>
+        {/if}
+      </ul>
+
       <button class="more" onclick={() => (app.studyOpen = true)}>
-        <span>Batafsil</span>
-        <small>{learned}/{learnTotal} oʻrganildi</small>
+        <span class="more-title">Batafsil: dars rejasi</span>
+        <span class="dots" aria-label={`${stepsDone} / ${steps.length} qadam bajarildi`}>
+          {#each steps as st}<i class:done={st.done}></i>{/each}
+        </span>
+        <small>{stepsDone}/{steps.length} qadam</small>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg>
       </button>
     </section>
@@ -112,7 +136,7 @@
               <span class="box"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg></span>
             </label>
             <span class="badge" style:background={site.color}>{site.badge}</span>
-            <a href={l.url} target="_blank" rel="noopener noreferrer" class="title">
+            <a href={l.url} target="_blank" rel="noopener noreferrer" class="title" onclick={() => markOpened(l.url)}>
               <span class="t">{l.title.replace(/^Nazariya: /, '')}</span>
               <span class="s">{l.title.startsWith('Nazariya: ') ? 'Nazariya, cp-algorithms' : site.name}</span>
             </a>
@@ -194,16 +218,50 @@
   .body { overflow-y: auto; padding: 1.1rem 1.25rem 1.25rem; display: grid; align-content: start; gap: 1.4rem; }
   h3 { margin: 0 0 0.45rem; font-size: 1rem; font-weight: 900; }
   .info { margin: 0; font-size: 1.02rem; line-height: 1.55; font-weight: 600; max-width: 38rem; }
-  .more {
-    display: flex; align-items: center; gap: 0.6rem; width: 100%;
-    margin-top: 0.8rem; padding: 0.7rem 0.9rem;
-    border: 1.5px solid var(--line); border-radius: var(--radius-m);
-    background: #fff; text-align: left;
+  .learn-card {
+    padding: 1.1rem 1.15rem 1rem;
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-l);
   }
-  .more:hover { border-color: var(--c); }
-  .more span { font-weight: 900; color: var(--c); font-size: 1rem; }
-  .more small { flex: 1; text-align: right; color: var(--ink-2); font-weight: 800; font-size: 0.85rem; }
-  .more svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: var(--c); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+  .lc-head { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.35rem; }
+  .lc-head h3 { margin: 0; font-size: 1.12rem; }
+  .time { flex: none; padding: 0.15rem 0.6rem; border-radius: 1rem; background: var(--paper-2); font-size: 0.82rem; font-weight: 800; color: var(--ink-2); }
+  .signal {
+    display: grid; grid-template-columns: auto 1fr; gap: 0.6rem; align-items: start;
+    margin: 0.85rem 0 0.75rem; padding: 0.75rem 0.85rem;
+    border-radius: var(--radius-m);
+    background: #fff7dc;
+  }
+  .signal p { margin: 0; line-height: 1.5; font-weight: 700; font-size: 0.96rem; }
+  .signal b { font-weight: 900; }
+  .bulb { font-size: 1.15rem; line-height: 1.3; }
+  .keys { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
+  .keys li { position: relative; padding-left: 1.5rem; font-weight: 700; font-size: 0.95rem; line-height: 1.45; }
+  .keys li::before {
+    content: ''; position: absolute; left: 0.2rem; top: 0.45rem;
+    width: 0.6rem; height: 0.6rem; border-radius: 50%;
+    border: 2px solid var(--c);
+  }
+  .keys li.on { color: var(--ink-2); }
+  .keys li.on::before { content: '✓'; top: 0.05rem; width: auto; height: auto; border: 0; color: var(--teal); font-weight: 900; font-size: 0.95rem; }
+  .keys li.more-items { padding-left: 1.5rem; color: var(--ink-2); font-size: 0.86rem; font-weight: 700; }
+  .keys li.more-items::before { content: '+'; border: 0; top: 0; width: auto; height: auto; color: var(--ink-2); font-weight: 900; }
+  .more {
+    display: flex; align-items: center; gap: 0.7rem; width: 100%;
+    margin-top: 0.95rem; padding: 0.75rem 0.9rem;
+    border: 0; border-radius: var(--radius-m);
+    background: var(--c); color: #fff; text-align: left;
+    box-shadow: 0 0.22rem 0 rgb(0 0 0 / 0.18);
+  }
+  .more:hover { filter: brightness(1.06); }
+  .more:active { transform: translateY(0.15rem); box-shadow: none; }
+  .more-title { font-weight: 900; font-size: 1rem; }
+  .dots { flex: 1; display: flex; justify-content: flex-end; gap: 0.3rem; }
+  .dots i { width: 0.55rem; height: 0.55rem; border-radius: 50%; background: rgb(255 255 255 / 0.35); }
+  .dots i.done { background: #fff; }
+  .more small { color: rgb(255 255 255 / 0.9); font-weight: 800; font-size: 0.85rem; }
+  .more svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
 
   .progress-head { display: flex; justify-content: space-between; align-items: baseline; }
   .count { font-size: 0.9rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
