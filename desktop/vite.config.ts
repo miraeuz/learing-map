@@ -34,7 +34,7 @@ export default defineConfig({
     target: 'chrome120',
     modulePreload: false,
     rollupOptions: {
-      output: { format: 'iife', inlineDynamicImports: true },
+      output: { format: 'iife' },
     },
   },
 });

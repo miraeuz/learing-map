@@ -1,7 +1,7 @@
 {
   "name": "icpc-yoli",
   "productName": "ICPC yoʻli",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "ICPC tayyorgarlik yoʻl xaritasi — kompyuter uchun",
   "author": "muhammadiev",
   "license": "MIT",
@@ -62,7 +62,7 @@
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "artifactName": "ICPC-yoli-${version}-setup.${ext}",
-      "license": "resources/license_uz.txt",
+      "license": "resources/installer-terms.txt",
       "perMachine": false,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,

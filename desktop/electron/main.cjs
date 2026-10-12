@@ -13,6 +13,29 @@ try {
   /* dev run without generated config: activation reports "not configured" */
 }
 
+// The display name "ICPC yoʻli" contains ʻ, which makes Electron fall back to the shared
+// app-data folder itself (e.g. %APPDATA% or ~/.config). Use an explicit ASCII folder instead,
+// and copy data written there by earlier versions so nobody loses progress or activation.
+const DATA_DIR_NAME = 'ICPC-yoli';
+function setupDataDir() {
+  const appData = app.getPath('appData');
+  const dataDir = path.join(appData, DATA_DIR_NAME);
+  try {
+    const legacyMarker = ['license.json', 'window-state.json'].some((f) => fs.existsSync(path.join(appData, f)));
+    if (!fs.existsSync(dataDir) && legacyMarker) {
+      fs.mkdirSync(dataDir, { recursive: true });
+      for (const item of ['Local Storage', 'license.json', 'window-state.json']) {
+        const from = path.join(appData, item);
+        if (fs.existsSync(from)) fs.cpSync(from, path.join(dataDir, item), { recursive: true });
+      }
+    }
+  } catch {
+    /* migration is best effort; the app still starts with a fresh profile */
+  }
+  app.setPath('userData', dataDir);
+}
+setupDataDir();
+
 if (!app.requestSingleInstanceLock()) {
   app.quit();
 }
