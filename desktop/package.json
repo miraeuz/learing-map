@@ -31,7 +31,7 @@
     "artifactName": "ICPC-yoli-${version}-${os}-${arch}.${ext}",
     "directories": {
       "output": "release",
-      "buildResources": "build"
+      "buildResources": "resources"
     },
     "files": [
       "dist/**",
@@ -43,7 +43,7 @@
         { "target": "nsis", "arch": ["x64"] },
         { "target": "portable", "arch": ["x64"] }
       ],
-      "icon": "build/icon.png"
+      "icon": "resources/icon.png"
     },
     "nsis": {
       "oneClick": false,
@@ -55,12 +55,12 @@
     },
     "mac": {
       "target": [{ "target": "dmg", "arch": ["universal"] }],
-      "icon": "build/icon.png",
+      "icon": "resources/icon.png",
       "category": "public.app-category.education"
     },
     "linux": {
       "target": ["AppImage", "deb"],
-      "icon": "build/icon.png",
+      "icon": "resources/icon.png",
       "category": "Education",
       "maintainer": "muhammadiev <nldgooner@gmail.com>"
     }
