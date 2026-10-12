@@ -6,13 +6,15 @@ interface Saved {
   status: Record<number, Status>;
   solved: Record<string, number>; // url -> timestamp
   notes: Record<number, string>;
+  learned: Record<string, number>; // "level:item" -> timestamp
+  name: string;
   welcomed: boolean;
 }
 
 const KEY = 'icpc-yoli-v1';
 
 function load(): Saved {
-  const empty: Saved = { status: {}, solved: {}, notes: {}, welcomed: false };
+  const empty: Saved = { status: {}, solved: {}, notes: {}, learned: {}, name: '', welcomed: false };
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return empty;
@@ -21,6 +23,8 @@ function load(): Saved {
       status: v.status ?? {},
       solved: v.solved ?? {},
       notes: v.notes ?? {},
+      learned: v.learned ?? {},
+      name: typeof v.name === 'string' ? v.name : '',
       welcomed: !!v.welcomed,
     };
   } catch {
@@ -34,6 +38,9 @@ export const app = $state({
   searchOpen: false,
   welcomeOpen: false,
   helpOpen: false,
+  studyOpen: false,
+  resetOpen: false,
+  profileOpen: false,
   panelOpen: false, // used on narrow windows where the panel is a drawer
 });
 
@@ -96,13 +103,60 @@ export function select(i: number) {
   app.panelOpen = true;
 }
 
+export function setName(name: string) {
+  app.saved.name = name.trim().slice(0, 60);
+  save();
+}
+
+export const isLearned = (i: number, j: number) => app.saved.learned[`${i}:${j}`] !== undefined;
+
+export function toggleLearned(i: number, j: number) {
+  const key = `${i}:${j}`;
+  if (app.saved.learned[key] !== undefined) delete app.saved.learned[key];
+  else app.saved.learned[key] = Date.now();
+  save();
+}
+
+export function learnedCount(i: number, total: number): number {
+  let n = 0;
+  for (let j = 0; j < total; j++) if (app.saved.learned[`${i}:${j}`] !== undefined) n++;
+  return n;
+}
+
+/** Local calendar day key, e.g. 2026-10-12. */
+const dayKey = (t: number) => {
+  const d = new Date(t);
+  return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+};
+
+/** Problems ticked today and the streak of consecutive days with at least one tick. */
+export function activity(): { today: number; streak: number; week: number[] } {
+  const days = new Map<string, number>();
+  for (const t of Object.values(app.saved.solved)) {
+    const k = dayKey(t);
+    days.set(k, (days.get(k) ?? 0) + 1);
+  }
+  const DAY = 86400000;
+  const now = Date.now();
+  const today = days.get(dayKey(now)) ?? 0;
+  let streak = 0;
+  // A streak survives until the end of today even if nothing is ticked yet today.
+  let t = today > 0 ? now : now - DAY;
+  while (days.has(dayKey(t))) {
+    streak++;
+    t -= DAY;
+  }
+  const week = Array.from({ length: 7 }, (_, k) => days.get(dayKey(now - (6 - k) * DAY)) ?? 0);
+  return { today, streak, week };
+}
+
 export function markWelcomed() {
   app.saved.welcomed = true;
   save();
 }
 
 export function resetAll() {
-  app.saved = { status: {}, solved: {}, notes: {}, welcomed: true };
+  app.saved = { status: {}, solved: {}, notes: {}, learned: {}, name: app.saved.name, welcomed: true };
   app.selected = 0;
   save();
 }
@@ -115,7 +169,14 @@ export function importJson(text: string): boolean {
   try {
     const v = JSON.parse(text);
     if (typeof v !== 'object' || v === null || typeof v.status !== 'object') return false;
-    app.saved = { status: v.status ?? {}, solved: v.solved ?? {}, notes: v.notes ?? {}, welcomed: true };
+    app.saved = {
+      status: v.status ?? {},
+      solved: v.solved ?? {},
+      notes: v.notes ?? {},
+      learned: v.learned ?? {},
+      name: typeof v.name === 'string' && v.name ? v.name : app.saved.name,
+      welcomed: true,
+    };
     save();
     return true;
   } catch {

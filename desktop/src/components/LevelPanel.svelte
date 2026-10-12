@@ -1,6 +1,7 @@
 <script lang="ts">
   import { topics, stages, siteOf } from '../lib/data';
-  import { app, statusOf, isLocked, isSolved, solvedCount, toggleSolved, answer, clearAnswer, setNote, select } from '../lib/store.svelte';
+  import { app, statusOf, isLocked, isSolved, solvedCount, toggleSolved, answer, clearAnswer, setNote, select, learnedCount } from '../lib/store.svelte';
+  import details from '../data/details.json';
   import { burst, showToast } from '../lib/ui.svelte';
 
   let { onJump }: { onJump: (i: number) => void } = $props();
@@ -12,6 +13,8 @@
   const locked = $derived(isLocked(i));
   const solved = $derived(solvedCount(i));
   const total = $derived(topic.links.length);
+  const learnTotal = $derived((details[i] as { k: string[] }).k.length);
+  const learned = $derived(learnedCount(i, learnTotal));
   let filter = $state<'all' | 'open'>('all');
   const shown = $derived(
     topic.links.map((l, k) => ({ l, k })).filter(({ l }) => filter === 'all' || !isSolved(l.url)),
@@ -75,9 +78,14 @@
   </header>
 
   <div class="body">
-    <section>
-      <h3>Nimani oʻrganish kerak</h3>
+    <section class="learn-card">
+      <h3>Nimani oʻrganishim kerak</h3>
       <p class="info">{topic.info}</p>
+      <button class="more" onclick={() => (app.studyOpen = true)}>
+        <span>Batafsil</span>
+        <small>{learned}/{learnTotal} oʻrganildi</small>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg>
+      </button>
     </section>
 
     <section class="progress">
@@ -186,6 +194,16 @@
   .body { overflow-y: auto; padding: 1.1rem 1.25rem 1.25rem; display: grid; align-content: start; gap: 1.4rem; }
   h3 { margin: 0 0 0.45rem; font-size: 1rem; font-weight: 900; }
   .info { margin: 0; font-size: 1.02rem; line-height: 1.55; font-weight: 600; max-width: 38rem; }
+  .more {
+    display: flex; align-items: center; gap: 0.6rem; width: 100%;
+    margin-top: 0.8rem; padding: 0.7rem 0.9rem;
+    border: 1.5px solid var(--line); border-radius: var(--radius-m);
+    background: #fff; text-align: left;
+  }
+  .more:hover { border-color: var(--c); }
+  .more span { font-weight: 900; color: var(--c); font-size: 1rem; }
+  .more small { flex: 1; text-align: right; color: var(--ink-2); font-weight: 800; font-size: 0.85rem; }
+  .more svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: var(--c); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
 
   .progress-head { display: flex; justify-content: space-between; align-items: baseline; }
   .count { font-size: 0.9rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }

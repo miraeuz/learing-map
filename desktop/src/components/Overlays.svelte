@@ -66,6 +66,7 @@
     ['← →', 'Oldingi / keyingi daraja'],
     ['Y', 'Ha, bilaman'],
     ['N', 'Hali yoʻq'],
+    ['B', 'Batafsil: oʻrganish roʻyxati'],
     ['C', 'Joriy darajaga oʻtish'],
     ['Ctrl K yoki /', 'Mavzu qidirish'],
     ['Esc', 'Oynani yopish'],

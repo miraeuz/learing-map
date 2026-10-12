@@ -35,3 +35,12 @@ Oʻrnatuvchilar har bir push dan keyin **Actions → Build desktop → Artifacts
 
 Ishlab chiqish: `cd desktop && npm install && npm run dev`.
 Maʼlumotlar mobil ilova bilan bir xil: `python3 tool/export_json.py` → `desktop/src/data/roadmap.json`.
+
+### Faollashtirish (Telegram)
+
+Birinchi ishga tushirishda foydalanuvchi ismini kiritadi, ilova bir martalik 6 xonali kodni
+Telegram botga yuboradi, kod kiritilgach ilova shu kompyuterda faollashadi.
+Kod 10 daqiqa amal qiladi, 5 ta notoʻgʻri urinishdan keyin bekor boʻladi.
+
+Bot tokeni kodda saqlanmaydi. GitHub repository → **Settings → Secrets and variables → Actions** da
+`TELEGRAM_BOT_TOKEN` (va ixtiyoriy `TELEGRAM_CHAT_ID`) secretini qoʻshing — oʻrnatuvchilar shundan yigʻiladi.

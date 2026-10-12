@@ -13,7 +13,9 @@
     "build": "vite build",
     "preview": "vite preview --port 4173",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "dist": "vite build && electron-builder --publish never"
+    "dist": "node scripts/write-config.cjs --strict && vite build && electron-builder --publish never",
+    "config": "node scripts/write-config.cjs",
+    "test": "node scripts/test-license.cjs"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^7.3.1",

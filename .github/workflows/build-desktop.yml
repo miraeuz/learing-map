@@ -38,10 +38,25 @@ jobs:
       - name: Type check
         run: npm run check
 
+      - name: Activation tests
+        run: npm test
+
+      - name: Check Telegram secret
+        shell: bash
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ]; then
+            echo "::error title=TELEGRAM_BOT_TOKEN yoʻq::Repository Settings → Secrets and variables → Actions → New repository secret: TELEGRAM_BOT_TOKEN (va ixtiyoriy TELEGRAM_CHAT_ID). Keyin bu workflowni qayta ishga tushiring."
+            exit 1
+          fi
+
       - name: Build installers
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID || '8795480827' }}
         run: npm run dist
 
       - name: Upload

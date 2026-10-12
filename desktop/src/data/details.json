@@ -1,0 +1,1524 @@
+[
+ {
+  "k": [
+   "vector: push_back, emplace_back, resize, reserve va iteratorlar",
+   "set/multiset va map: insert, erase, find, lower_bound — hammasi O(log n)",
+   "unordered_map: oʻrtacha O(1), lekin anti-xesh testlarga qarshi custom hash",
+   "priority_queue: max-heap standart, min-heap uchun greater<>",
+   "deque, stack, queue — qachon qaysi biri kerakligi"
+  ],
+  "c": "set/map: O(log n), unordered_map: oʻrtacha O(1), vector push_back: amortizatsiyalangan O(1)",
+  "p": [
+   "multiset.erase(x) barcha x larni oʻchiradi — bittasi uchun erase(find(x))",
+   "map[key] yoʻq kalitni yaratib qoʻyadi — tekshirish uchun count yoki find"
+  ]
+ },
+ {
+  "k": [
+   "std::sort va lambda komparator: [](auto& a, auto& b){ return ... }",
+   "Bir nechta kalit: tie(a.x, a.y) < tie(b.x, b.y)",
+   "stable_sort va teng elementlar tartibi",
+   "pair va tuple avtomatik leksikografik saralanishi"
+  ],
+  "c": "O(n log n)",
+  "p": [
+   "Komparator qatʼiy boʻlishi shart: <= ishlatish runtime xato beradi",
+   "Katta strukturalarni nusxalamaslik uchun const auto& oling"
+  ]
+ },
+ {
+  "k": [
+   "lower_bound: birinchi >= x element, upper_bound: birinchi > x element",
+   "Saralangan vector da std::lower_bound(v.begin(), v.end(), x)",
+   "set da s.lower_bound(x) — aʼzo funksiya",
+   "x ning soni: upper_bound - lower_bound"
+  ],
+  "c": "O(log n)",
+  "p": [
+   "set uchun std::lower_bound(s.begin(), s.end(), x) — O(n), juda sekin",
+   "end() qaytsa, element topilmagan — dereference qilmang"
+  ]
+ },
+ {
+  "k": [
+   "ios::sync_with_stdio(false); cin.tie(nullptr); — har doim birinchi qatorda",
+   "endl oʻrniga '\\n' — endl har safar bufferni boʻshatadi",
+   "int ≈ 2·10⁹, long long ≈ 9·10¹⁸ chegaralari",
+   "Koʻpaytmada 1LL*a*b, modul boʻyicha har qadamda % MOD"
+  ],
+  "c": "I/O: 10⁶ son taxminan 0.1 s ichida",
+  "p": [
+   "printf va cout ni sync_with_stdio(false) bilan aralashtirmang",
+   "int * int toʻlib ketadi, natijani long long ga yozish yordam bermaydi"
+  ]
+ },
+ {
+  "k": [
+   "Cheklovlardan kerakli murakkablikni topish: n=10⁵ → O(n log n)",
+   "Sekundiga ~10⁸ oddiy amal qoidasi",
+   "Xotira: 256 MB ≈ 6·10⁷ ta int",
+   "Doimiy koʻpaytuvchi: set va map vector dan ancha sekin"
+  ],
+  "c": "n≤12: n!, n≤20: 2ⁿ, n≤500: n³, n≤5000: n², n≤10⁶: n log n, katta n: O(n) yoki O(log n)",
+  "p": [
+   "Rekursiya chuqurligi stack xotirasini ham yeydi",
+   "Bir nechta test boʻlsa, n ning yigʻindisi chegarasiga qarang"
+  ]
+ },
+ {
+  "k": [
+   "Qism toʻplamlarni rekursiya yoki bitmask bilan hosil qilish",
+   "Oʻrin almashtirishlar: next_permutation yoki rekursiya",
+   "Backtracking: tanlov → rekursiya → tanlovni bekor qilish",
+   "Kesish (pruning): javob yaxshilanmaydigan shoxlarni erta tashlash"
+  ],
+  "c": "Qism toʻplamlar O(2ⁿ), oʻrin almashtirishlar O(n!)",
+  "p": [
+   "Global holatni rekursiyadan qaytishda tiklashni unutish",
+   "next_permutation dan oldin massivni saralash kerak"
+  ]
+ },
+ {
+  "k": [
+   "Intervallarni oxiri boʻyicha saralab tanlash (activity selection)",
+   "Exchange argument: ikki elementni almashtirish yaxshilamasligini isbotlash",
+   "Greedy + priority_queue: deadline masalalari",
+   "Greedy notoʻgʻri boʻlganda kontrmisol topish"
+  ],
+  "c": "Odatda O(n log n) — saralash",
+  "p": [
+   "Isbotsiz greedy — WA ning eng koʻp sababi; kichik brute force bilan tekshiring",
+   "Saralash kaliti notoʻgʻri tanlanadi (boshi emas, oxiri)"
+  ]
+ },
+ {
+  "k": [
+   "Yarim ochiq oraliq [lo, hi) invarianti",
+   "while (lo < hi) { mid = lo + (hi - lo) / 2; ... }",
+   "Birinchi true ni topish (monoton predikat)",
+   "Haqiqiy sonlarda: 100 iteratsiya yoki epsilon"
+  ],
+  "c": "O(log n)",
+  "p": [
+   "(lo + hi) / 2 toʻlib ketishi — lo + (hi - lo) / 2",
+   "lo = mid va hi = mid aralashsa cheksiz sikl"
+  ]
+ },
+ {
+  "k": [
+   "Merge sort: boʻlish, rekursiv saralash, birlashtirish",
+   "Birlashtirishda inversiyalarni sanash: mid - i + 1",
+   "Fenwick bilan inversiyalar — muqobil usul",
+   "Merge sort barqaror (stable)"
+  ],
+  "c": "O(n log n) vaqt, O(n) qoʻshimcha xotira",
+  "p": [
+   "Inversiyalar soni n²/2 gacha — long long kerak",
+   "Har chaqiriqda yangi vector yaratish sekin — bitta tmp massiv"
+  ]
+ },
+ {
+  "k": [
+   "pre[i+1] = pre[i] + a[i]; oraliq yigʻindi = pre[r+1] - pre[l]",
+   "2D prefiks: pre[i][j] inklyuziya-eksklyuziya bilan",
+   "Prefiks + hash map: yigʻindisi k ga teng qism massivlar",
+   "Prefiks XOR, prefiks min/max (faqat statik)"
+  ],
+  "c": "Qurish O(n), soʻrov O(1)",
+  "p": [
+   "Indeks siljishi: 0 yoki 1 dan boshlashni aralashtirish",
+   "Yigʻindilar long long talab qiladi"
+  ]
+ },
+ {
+  "k": [
+   "Qoʻshnilik roʻyxati: vector<vector<int>> g(n)",
+   "Vaznli: vector<vector<pair<int,int>>>",
+   "Qirralar roʻyxati — Kruskal va Bellman-Ford uchun",
+   "Matritsa — n ≤ 2000 va Floyd uchun"
+  ],
+  "c": "Roʻyxat: O(n + m) xotira, matritsa: O(n²)",
+  "p": [
+   "Yoʻnaltirilmagan grafda qirrani ikki tomonga qoʻshishni unutish",
+   "1-indekslangan kirishni 0-indeksga oʻtkazishni unutish"
+  ]
+ },
+ {
+  "k": [
+   "Rekursiv DFS va visited massiv",
+   "Bogʻliq komponentalarni sanash",
+   "Kirish/chiqish vaqtlari (tin/tout) — ajdodlikni tekshirish",
+   "Iterativ DFS (stack bilan) — chuqur graflar uchun"
+  ],
+  "c": "O(n + m)",
+  "p": [
+   "10⁶ tugunli zanjirda rekursiya stack overflow beradi",
+   "Koʻp testli masalalarda visited ni tozalamaslik"
+  ]
+ },
+ {
+  "k": [
+   "queue bilan BFS, dist massiv −1 bilan",
+   "Katakli maydon: dx[] = {1,-1,0,0}, dy[] = {0,0,1,-1}",
+   "Koʻp manbali BFS: barcha manbalarni boshida queue ga qoʻshish",
+   "Yoʻlni tiklash: parent massiv"
+  ],
+  "c": "O(n + m) yoki katakli maydonda O(R·C)",
+  "p": [
+   "Tugunni queue dan olganda emas, qoʻshganda visited qilish kerak",
+   "Maydon chegarasini tekshirmaslik"
+  ]
+ },
+ {
+  "k": [
+   "Yoʻnaltirilgan graf: oq/kulrang/qora rangli DFS",
+   "Yoʻnaltirilmagan graf: ota tugundan boshqa tashrif buyurilgan qoʻshni = sikl",
+   "Siklni tiklash: parent zanjiri boʻylab",
+   "Ikki boʻlaklilik: BFS bilan 2 rangga boʻyash"
+  ],
+  "c": "O(n + m)",
+  "p": [
+   "Karrali qirralarda ota tekshiruvini qirra indeksi bilan qiling",
+   "Graf bogʻlanmagan boʻlsa, har bir komponentadan boshlash"
+  ]
+ },
+ {
+  "k": [
+   "priority_queue<pair<ll,int>, vector<...>, greater<>>",
+   "Dangasa oʻchirish: if (d > dist[u]) continue;",
+   "Yoʻlni tiklash va bir nechta manba",
+   "Holatli Dijkstra: (tugun, qoʻshimcha holat) — masalan chegirma kuponi"
+  ],
+  "c": "O((n + m) log n)",
+  "p": [
+   "Manfiy qirralar bilan Dijkstra notoʻgʻri ishlaydi",
+   "Masofalar uchun int — toʻlib ketadi, long long va INF = 1e18"
+  ]
+ },
+ {
+  "k": [
+   "find yoʻl siqish bilan: p[x] = find(p[x])",
+   "Oʻlcham boʻyicha birlashtirish",
+   "Komponentalar soni va oʻlchamini yuritish",
+   "Kruskal va oflayn bogʻliqlik soʻrovlarida qoʻllash"
+  ],
+  "c": "Deyarli O(1) amortizatsiyalangan (α(n))",
+  "p": [
+   "Birlashtirishdan oldin find qilmaslik",
+   "Rekursiv find chuqur zanjirda — siqish bilan muammo emas, lekin iterativ xavfsizroq"
+  ]
+ },
+ {
+  "k": [
+   "Kahn algoritmi: kirish darajasi 0 boʻlgan tugunlar queue da",
+   "DFS post-order teskarisi",
+   "Sikl bor-yoʻqligini aniqlash: tartiblangan tugunlar soni < n",
+   "Topologik tartibda DP: eng uzun yoʻl, yoʻllar soni"
+  ],
+  "c": "O(n + m)",
+  "p": [
+   "Leksikografik eng kichik tartib uchun queue emas, priority_queue",
+   "Siklli grafda topologik tartib mavjud emas"
+  ]
+ },
+ {
+  "k": [
+   "0/1: dp[w] = max(dp[w], dp[w - wt] + val), w teskari yoʻnalishda",
+   "Cheksiz: w toʻgʻri yoʻnalishda",
+   "Vazn juda katta boʻlsa: qiymat boʻyicha DP",
+   "bitset bilan qism yigʻindi tezlashtirish"
+  ],
+  "c": "O(n · W)",
+  "p": [
+   "0/1 da w ni oʻsish tartibida aylanish — element bir necha marta olinadi",
+   "dp boshlangʻich qiymatlari: −INF va dp[0] = 0"
+  ]
+ },
+ {
+  "k": [
+   "Usullar soni: tanga tashqi siklda — kombinatsiyalar",
+   "Tanga ichki siklda — oʻrin almashtirishlar (tartib muhim)",
+   "Eng kam tangalar: dp[x] = min(dp[x - c] + 1)",
+   "Natijani mod boʻyicha olish"
+  ],
+  "c": "O(n · X)",
+  "p": [
+   "Sikl tartibini almashtirib boshqa masalani yechib qoʻyish",
+   "Yetib boʻlmaydigan summa uchun INF ni toʻgʻri qaytarish"
+  ]
+ },
+ {
+  "k": [
+   "O(n²): dp[i] = 1 + max(dp[j]), j < i va a[j] < a[i]",
+   "O(n log n): tails massivi va lower_bound",
+   "Qatʼiy oʻsuvchi vs kamaymaydigan: lower_bound vs upper_bound",
+   "Ketma-ketlikning oʻzini tiklash"
+  ],
+  "c": "O(n log n)",
+  "p": [
+   "tails massivi LIS ning oʻzi emas — tiklash uchun alohida parent",
+   "Kamaymaydigan uchun lower_bound oʻrniga upper_bound"
+  ]
+ },
+ {
+  "k": [
+   "LCS: dp[i][j] = dp[i-1][j-1] + 1 yoki max(dp[i-1][j], dp[i][j-1])",
+   "Edit distance: qoʻshish, oʻchirish, almashtirish",
+   "Javobni orqaga qaytib tiklash",
+   "Xotirani ikki qatorga qisqartirish"
+  ],
+  "c": "O(n · m)",
+  "p": [
+   "5000 × 5000 int massiv — 100 MB; ikki qator yetarli boʻlsa shunday qiling",
+   "Boʻsh prefiks uchun 0-qator va 0-ustunni unutish"
+  ]
+ },
+ {
+  "k": [
+   "cur = max(a[i], cur + a[i]); best = max(best, cur)",
+   "Hammasi manfiy boʻlgan holat",
+   "Aylanma massiv: jami − minimal qism massiv",
+   "Kamida L uzunlikdagi qism massiv — prefiks bilan"
+  ],
+  "c": "O(n)",
+  "p": [
+   "best ni 0 bilan boshlash — hammasi manfiy boʻlsa notoʻgʻri",
+   "Aylanma variantda hammasi manfiy boʻlgan holatni alohida koʻring"
+  ]
+ },
+ {
+  "k": [
+   "Evklid algoritmi: gcd(a, b) = gcd(b, a % b); lcm = a / gcd * b",
+   "√n gacha tublikni tekshirish va faktorizatsiya",
+   "Eratosfen gʻalviri n ≤ 10⁷",
+   "Tez darajaga koʻtarish: a^b mod m O(log b) da"
+  ],
+  "c": "gcd: O(log n), gʻalvir: O(n log log n), daraja: O(log b)",
+  "p": [
+   "lcm = a * b / gcd — toʻlib ketadi, avval boʻling",
+   "Manfiy son % m manfiy chiqadi: ((x % m) + m) % m"
+  ]
+ },
+ {
+  "k": [
+   "Oraliqqa +v: d[l] += v, d[r+1] -= v, soʻng prefiks yigʻindi",
+   "2D ayirmalar massivi — toʻgʻri toʻrtburchakka qoʻshish",
+   "Hodisalar usuli: intervallar ustma-ustligi",
+   "Ikkinchi tartibli ayirma — arifmetik progressiya qoʻshish"
+  ],
+  "c": "Yangilash O(1), yakuniy hisob O(n)",
+  "p": [
+   "r+1 massiv chegarasidan chiqmasligi uchun n+1 oʻlcham",
+   "Faqat oflayn: soʻrovlar yangilanishlar orasida boʻlsa BIT kerak"
+  ]
+ },
+ {
+  "k": [
+   "Ikki koʻrsatkich: shart monoton boʻlganda oynani kengaytirish/qisqartirish",
+   "Sirpanuvchi oyna minimumi: monoton deque",
+   "Monoton stack: eng yaqin kichik element",
+   "Eng katta toʻgʻri toʻrtburchak (histogramma)"
+  ],
+  "c": "O(n) amortizatsiyalangan",
+  "p": [
+   "Oyna chap chegarasi oʻngdan oʻtib ketishi",
+   "Deque da qiymat emas, indeks saqlang"
+  ]
+ },
+ {
+  "k": [
+   "Monoton predikat yozish: check(x) → bool",
+   "Javob chegaralarini toʻgʻri tanlash: lo va hi",
+   "Minimal maksimum / maksimal minimum masalalari",
+   "check ichida greedy"
+  ],
+  "c": "O(log(javob oraligʻi) · check)",
+  "p": [
+   "hi juda kichik tanlanadi — javob oraliqdan tashqarida",
+   "check da toʻlib ketish: katta x bilan yigʻindilar"
+  ]
+ },
+ {
+  "k": [
+   "Unimodal funksiya: avval oʻsadi, keyin kamayadi",
+   "Butun sonlarda: m1, m2 nuqtalar yoki hosila boʻyicha ikkilik qidiruv",
+   "Haqiqiy sonlarda 100 iteratsiya",
+   "Oltin kesim — funksiya chaqiriqlarini tejash"
+  ],
+  "c": "O(log((hi − lo) / eps))",
+  "p": [
+   "Funksiyada tekis (teng qiymatli) qismlar boʻlsa ternary ishlamaydi",
+   "Butun sonlarda oxirgi 3 nomzodni qoʻlda tekshiring"
+  ]
+ },
+ {
+  "k": [
+   "x & (x − 1) — eng kichik bitni oʻchirish, x & −x — uni ajratish",
+   "Qism maskalarni aylanish: for (s = m; s; s = (s − 1) & m)",
+   "__builtin_popcount, __builtin_ctz, __builtin_clz (ll uchun ...ll)",
+   "XOR xossalari: a ^ a = 0, prefiks XOR"
+  ],
+  "c": "Barcha maskalar boʻyicha qism maskalar: O(3ⁿ)",
+  "p": [
+   "1 << 40 int da toʻlib ketadi — 1LL << 40",
+   "Operatorlar ustuvorligi: (x & 1) == 0, qavslarsiz notoʻgʻri"
+  ]
+ },
+ {
+  "k": [
+   "Toʻplamni ikki yarmiga boʻlish va har birida barcha yigʻindilar",
+   "Bir yarmini saralab, ikkinchisidan ikkilik qidiruv",
+   "Juftliklarni hash map bilan birlashtirish",
+   "4 ta son yigʻindisi masalasi"
+  ],
+  "c": "O(2^(n/2) · n)",
+  "p": [
+   "2^20 ta elementli vector xotirasi — 8 MB, lekin ikkalasi ham saqlanadi",
+   "unordered_map anti-xesh testlarda sekinlashadi — saralash xavfsizroq"
+  ]
+ },
+ {
+  "k": [
+   "Nusxa olish, sort, unique, erase",
+   "Indeks: lower_bound(all.begin(), all.end(), x) − all.begin()",
+   "Soʻrov qiymatlarini ham oldindan qoʻshish",
+   "Siqilgan koordinatalarda BIT va segment tree"
+  ],
+  "c": "O(n log n)",
+  "p": [
+   "Soʻrovlardagi qiymatlarni siqishga qoʻshishni unutish",
+   "Oraliqlar uchun r+1 nuqtalarini ham qoʻshish kerak boʻlishi mumkin"
+  ]
+ },
+ {
+  "k": [
+   "Massivli segment tree: 4n xotira, rekursiv build/update/query",
+   "Lazy: push(v) bolalarga kechiktirilgan qiymatni tushirish",
+   "Assotsiativ amallar: yigʻindi, min, max, gcd va kompozitsiya",
+   "Segment tree ustida tushish: k-chi element, birinchi ≥ x"
+  ],
+  "c": "Qurish O(n), soʻrov va yangilash O(log n)",
+  "p": [
+   "query va update dan oldin push ni chaqirmaslik",
+   "Toʻplash (+=) va oʻrnatish (=) lazy larini aralashtirishda tartib"
+  ]
+ },
+ {
+  "k": [
+   "update(i, v): i += i & −i; query(i): i −= i & −i",
+   "Oraliq yigʻindi: query(r) − query(l − 1)",
+   "Oraliqqa qoʻshish va nuqta soʻrovi — ayirmalar ustida BIT",
+   "BIT ustida ikkilik tushish: k-chi element O(log n)"
+  ],
+  "c": "O(log n), xotira O(n)",
+  "p": [
+   "BIT 1-indekslangan — 0 indeks bilan cheksiz sikl",
+   "2D BIT xotirasi n² — n ≤ 2000 da"
+  ]
+ },
+ {
+  "k": [
+   "st[k][i] = min(st[k−1][i], st[k−1][i + 2^(k−1)])",
+   "Soʻrov: ikki ustma-ust oraliq min — O(1)",
+   "log jadvalini oldindan hisoblash",
+   "Faqat idempotent amallar (min, max, gcd) uchun O(1)"
+  ],
+  "c": "Qurish O(n log n), soʻrov O(1)",
+  "p": [
+   "Yigʻindi uchun ustma-ust oraliq ishlamaydi",
+   "Yangilanishlar boʻlsa sparse table yaramaydi"
+  ]
+ },
+ {
+  "k": [
+   "Yoʻl siqishsiz, faqat oʻlcham boʻyicha birlashtirish",
+   "Har bir oʻzgarishni stack ga yozish va qaytarish",
+   "Vaqt ustidagi segment tree bilan birga ishlatish",
+   "Bipartitlikni rollback bilan tekshirish"
+  ],
+  "c": "O(log n) amal",
+  "p": [
+   "Yoʻl siqish rollback ni buzadi — ishlatmang",
+   "Qaytarish tartibi teskari boʻlishi shart"
+  ]
+ },
+ {
+  "k": [
+   "Yangilanishda faqat yoʻldagi O(log n) tugunni nusxalash",
+   "Versiyalar ildizlari massivi",
+   "k-chi eng kichik: ikki versiya ayirmasida tushish",
+   "Daraxtda yoʻl uchun: ota versiyadan qurish (COT)"
+  ],
+  "c": "Har bir yangilash O(log n) vaqt va xotira",
+  "p": [
+   "Xotira: n log n tugun — massivni oldindan yetarli oʻlchamda oling",
+   "Koordinatalarni avval siqish kerak"
+  ]
+ },
+ {
+  "k": [
+   "Har bir tugunda saralangan qism massiv",
+   "[l, r] da ≤ x soni: O(log² n)",
+   "Wavelet tree: bitlar boʻyicha boʻlish, O(log σ)",
+   "Fractional cascading — log ni bittaga tushirish"
+  ],
+  "c": "Merge sort tree: xotira O(n log n), soʻrov O(log² n)",
+  "p": [
+   "Merge sort tree yangilanishlarni qoʻllab-quvvatlamaydi",
+   "Wavelet tree indekslari off-by-one ga juda sezgir"
+  ]
+ },
+ {
+  "k": [
+   "Kalit + tasodifiy ustuvorlik, split(t, k) va merge(a, b)",
+   "Implicit treap: kalit — pozitsiya (qism daraxt oʻlchami)",
+   "Lazy reverse flag bilan qism massivni aylantirish",
+   "Kesib qoʻyish (cut & paste) — uchta split va merge"
+  ],
+  "c": "Kutilma boʻyicha O(log n)",
+  "p": [
+   "Har amaldan keyin size ni yangilashni unutish",
+   "Reverse flag ni split dan oldin push qilmaslik"
+  ]
+ },
+ {
+  "k": [
+   "Massivni √n blokka boʻlish, har blok uchun yigʻindi",
+   "Mo: soʻrovlarni (l/blok, r) boʻyicha saralash",
+   "add/remove funksiyalari O(1) boʻlishi kerak",
+   "Mo + yangilanishlar: blok n^(2/3)"
+  ],
+  "c": "Mo: O((n + q)√n)",
+  "p": [
+   "Juft-toq bloklar uchun r ni teskari saralash — 2 barobar tezroq",
+   "Oyna kengaytirish va qisqartirish tartibi (avval kengaytirish)"
+  ]
+ },
+ {
+  "k": [
+   "Har tugunda max, ikkinchi max va max soni",
+   "chmin: agar x > ikkinchi max — faqat max ni yangilash",
+   "Aks holda rekursiv pastga tushish (amortizatsiya)",
+   "Qoʻshish va chmin/chmax ni birga yuritish"
+  ],
+  "c": "Amortizatsiyalangan O(log² n) yoki O(log n)",
+  "p": [
+   "Ikkinchi max ni −INF bilan toʻgʻri boshlash",
+   "Lazy teglar tartibi: avval qoʻshish, keyin chmin"
+  ]
+ },
+ {
+  "k": [
+   "Har tugunda bitta chiziq, oʻrtada solishtirib almashtirish",
+   "Nuqtadagi min: ildizdan bargacha yurish",
+   "Kesmalarni qoʻshish: O(log² n)",
+   "Dinamik (pointerli) Li Chao — katta koordinatalar uchun"
+  ],
+  "c": "Qoʻshish va soʻrov O(log C)",
+  "p": [
+   "Koʻpaytmada toʻlib ketish: k · x ni long long da",
+   "Koordinatalar oraligʻini soʻrov nuqtalaridan katta oling"
+  ]
+ },
+ {
+  "k": [
+   "#include <ext/pb_ds/assoc_container.hpp> va tree<...> shabloni",
+   "find_by_order(k) va order_of_key(x)",
+   "Takrorlar uchun pair<int,int> (qiymat, indeks)",
+   "Josephus, sirpanuvchi median va inversiyalar"
+  ],
+  "c": "O(log n)",
+  "p": [
+   "less_equal bilan multiset yasash — erase va find notoʻgʻri ishlaydi",
+   "Faqat GCC da ishlaydi"
+  ]
+ },
+ {
+  "k": [
+   "deque: vazn 0 boʻlsa oldiga, 1 boʻlsa orqaga qoʻshish",
+   "dist massivi va yangilanganda qayta qoʻshish",
+   "Katakli maydonda: devorni buzish = 1, oddiy yurish = 0",
+   "Holatlar grafini qurish (tugun × yoʻnalish)"
+  ],
+  "c": "O(n + m)",
+  "p": [
+   "Tugunni deque dan bir necha marta olish mumkin — dist bilan tekshiring",
+   "Vaznlar 0/1 dan boshqa boʻlsa Dijkstra kerak"
+  ]
+ },
+ {
+  "k": [
+   "Bellman-Ford: n − 1 marta barcha qirralarni yumshatish",
+   "n-chi iteratsiyada yumshasa — manfiy sikl",
+   "Floyd-Warshall: k tashqi sikl, d[i][j] = min(d[i][k] + d[k][j])",
+   "Manfiy sikldan yetib boriladigan tugunlarni topish"
+  ],
+  "c": "Bellman-Ford O(n·m), Floyd O(n³)",
+  "p": [
+   "Floyd da k ni ichki siklga qoʻyish — notoʻgʻri natija",
+   "INF + manfiy son INF dan kichik boʻlib qoladi — INF ni tekshiring"
+  ]
+ },
+ {
+  "k": [
+   "Tarjan: tin, low va stack",
+   "Kosaraju: ikki DFS va teskari graf",
+   "Kondensatsiya DAG i va topologik tartib",
+   "SCC ustida DP: har komponentaning yigʻindisi"
+  ],
+  "c": "O(n + m)",
+  "p": [
+   "low ni faqat stack dagi tugunlar boʻyicha yangilash",
+   "Rekursiya chuqurligi — katta graflarda iterativ variant"
+  ]
+ },
+ {
+  "k": [
+   "low[v] = min(tin[v], tin[ajdodlar], low[bolalar])",
+   "Koʻprik: low[to] > tin[v]",
+   "Artikulyatsiya: low[to] ≥ tin[v] (ildiz uchun alohida qoida)",
+   "2-qirra bogʻliq komponentalar va block-cut daraxt"
+  ],
+  "c": "O(n + m)",
+  "p": [
+   "Karrali qirralar: ota tugunni emas, ota qirrani oʻtkazib yuboring",
+   "Ildiz artikulyatsiya — faqat 2+ bolasi boʻlsa"
+  ]
+ },
+ {
+  "k": [
+   "Har oʻzgaruvchi uchun x va ¬x tugunlari",
+   "(a ∨ b) → (¬a → b) va (¬b → a) qirralari",
+   "x va ¬x bitta SCC da — yechim yoʻq",
+   "Qiymat: comp[x] > comp[¬x] (Tarjan tartibida)"
+  ],
+  "c": "O(n + m)",
+  "p": [
+   "Implikatsiyaning ikkinchi qirrasini unutish",
+   "Kosaraju va Tarjan da komponenta tartibi teskari"
+  ]
+ },
+ {
+  "k": [
+   "Kruskal: qirralarni saralash + DSU",
+   "Prim: priority_queue bilan, zich graflarda O(n²)",
+   "Boruvka: har komponentaning eng arzon qirrasi",
+   "MST xossalari: kesim va sikl qoidalari, ikkinchi eng yaxshi MST"
+  ],
+  "c": "Kruskal O(m log m), Prim O(m log n)",
+  "p": [
+   "Graf bogʻlanmagan boʻlsa — MST yoʻq, qirralar sonini tekshiring",
+   "Vaznlar yigʻindisi long long"
+  ]
+ },
+ {
+  "k": [
+   "Mavjudlik: hamma darajalar juft yoki aniq 2 ta toq",
+   "Yoʻnaltirilgan: kirish = chiqish (boshlanish va oxirdan tashqari)",
+   "Hierholzer: stack bilan, ishlatilgan qirralarni belgilash",
+   "De Bruijn ketma-ketligi — Eyler sikli sifatida"
+  ],
+  "c": "O(n + m)",
+  "p": [
+   "Qirralarni qayta ishlatmaslik uchun har tugunda koʻrsatkich",
+   "Grafning bogʻliqligini tekshirishni unutish"
+  ]
+ },
+ {
+  "k": [
+   "Qoldiq graf va teskari qirralar (sigʻim 0)",
+   "BFS bilan darajalar grafi, DFS bilan blocking flow",
+   "ptr massivi — oʻlik qirralarni qayta koʻrmaslik",
+   "Bir manba / bir oqim yigʻuvchi qoʻshib modellash"
+  ],
+  "c": "O(V²·E), birlik sigʻimda O(E·√V)",
+  "p": [
+   "Teskari qirra indeksini notoʻgʻri saqlash",
+   "Har BFS dan keyin ptr ni nolga qaytarmaslik"
+  ]
+ },
+ {
+  "k": [
+   "Max-flow = min-cut teoremasi",
+   "Kesimni topish: qoldiq grafda manbadan yetib boriladigan tugunlar",
+   "Proyekt tanlash (project selection) modellash",
+   "Tugun sigʻimi: tugunni ikkiga boʻlish"
+  ],
+  "c": "Oqim algoritmi bilan bir xil",
+  "p": [
+   "Cheksiz sigʻimni juda katta, lekin toʻlmaydigan son bilan bering",
+   "Kesim qirralari — toʻyingan va bir tomondan yetib boriladigan"
+  ]
+ },
+ {
+  "k": [
+   "Har qadamda narx boʻyicha eng qisqa yoʻl (SPFA yoki Dijkstra)",
+   "Jonson potensiallari — manfiy narxlarni Dijkstra ga moslash",
+   "Teskari qirra narxi = −narx",
+   "Tayinlash masalasi MCMF sifatida"
+  ],
+  "c": "O(F · m log n) Dijkstra bilan",
+  "p": [
+   "Potensiallarsiz Dijkstra manfiy narxlarda notoʻgʻri",
+   "Oqim va narxni long long da saqlash"
+  ]
+ },
+ {
+  "k": [
+   "Kuhn algoritmi (DFS) — sodda, O(V·E)",
+   "Hopcroft-Karp: BFS qatlamlar + DFS, O(E√V)",
+   "Venger algoritmi: n×n narx matritsasi, O(n³)",
+   "Juftlikni tiklash va minimal tugun qoplamasi"
+  ],
+  "c": "Hopcroft-Karp O(E√V), Venger O(n³)",
+  "p": [
+   "Kuhn da visited ni har chap tugun uchun tozalash",
+   "Maksimal narx uchun Venger da narxlarni manfiy qiling"
+  ]
+ },
+ {
+  "k": [
+   "Minimal tugun qoplamasi = maksimal juftlik",
+   "Maksimal mustaqil toʻplam = V − juftlik",
+   "Qoplamani tiklash: qoldiq grafda chapdan yetib boriladiganlar",
+   "DAG ning minimal yoʻl qoplamasi — juftlik orqali"
+  ],
+  "c": "Juftlik algoritmi bilan bir xil",
+  "p": [
+   "Faqat ikki boʻlakli graflar uchun toʻgʻri",
+   "Yoʻl qoplamasida tugunlarni ikkiga boʻlishni unutish"
+  ]
+ },
+ {
+  "k": [
+   "Har qirra uchun [l, r] chegaralar",
+   "Talab: qirra sigʻimi r − l, uchlarga ±l talab",
+   "Super manba va super yigʻuvchi orqali tekshirish",
+   "Min/max oqim quyi chegaralar bilan"
+  ],
+  "c": "Bitta yoki ikkita maks-oqim",
+  "p": [
+   "t → s cheksiz qirrasini qoʻshishni unutish",
+   "Talablar yigʻindisi toʻla qoplanmasa — yechim yoʻq"
+  ]
+ },
+ {
+  "k": [
+   "up[k][v] = up[k−1][up[k−1][v]], depth massivi",
+   "Avval chuqurlikni tenglash, keyin birga koʻtarilish",
+   "Euler tour + sparse table bilan O(1) soʻrov",
+   "Masofa: depth[u] + depth[v] − 2·depth[lca]"
+  ],
+  "c": "Qurish O(n log n), soʻrov O(log n)",
+  "p": [
+   "Ildizning otasini oʻzi qilib qoʻyish kerak",
+   "log ni n dan katta tanlang (masalan 20)"
+  ]
+ },
+ {
+  "k": [
+   "tin[v] va tout[v]: qism daraxt = [tin, tout] oraliq",
+   "Qism daraxt yigʻindisi — BIT ustida oraliq soʻrov",
+   "Yoʻl soʻrovlari: tin da +x, tout da −x",
+   "Ajdodlikni O(1) da tekshirish"
+  ],
+  "c": "O(n) qurish, soʻrovlar O(log n)",
+  "p": [
+   "tout ni oxirgi bolaning tin i sifatida emas, DFS chiqishida yozing",
+   "Indekslarni tugun raqami bilan aralashtirish"
+  ]
+ },
+ {
+  "k": [
+   "Ogʻir bola: eng katta qism daraxtli bola",
+   "head[v], pos[v] — har zanjir segment tree da uzluksiz",
+   "Yoʻl soʻrovi: head lar teng boʻlguncha koʻtarilish",
+   "Qirra qiymatlarini pastki tugunga yozish"
+  ],
+  "c": "Soʻrov O(log² n)",
+  "p": [
+   "Qirra soʻrovlarida LCA tugunining oʻzini hisobga olmaslik",
+   "Ogʻir bolani birinchi DFS da aniqlashni unutish"
+  ]
+ },
+ {
+  "k": [
+   "Sentroid: olib tashlanganda har qism ≤ n/2",
+   "Rekursiv: sentroidni topish, belgilash, qismlarga boʻlish",
+   "Har sentroid orqali oʻtadigan yoʻllarni sanash",
+   "Sentroid daraxti — eng yaqin belgilangan tugun soʻrovlari"
+  ],
+  "c": "O(n log n) yoki O(n log² n)",
+  "p": [
+   "Har bosqichda qism daraxt oʻlchamlarini qayta hisoblash",
+   "Bir xil qism daraxtdan ikki yoʻlni birlashtirib qoʻyish"
+  ]
+ },
+ {
+  "k": [
+   "Har tugun uchun bolalarning toʻplamlari (map yoki set)",
+   "Eng katta toʻplamni saqlab, kichiklarini unga qoʻshish",
+   "swap bilan O(1) da toʻplam almashtirish",
+   "Ogʻir bola bilan sack usuli (DSU on tree)"
+  ],
+  "c": "O(n log n) yoki map bilan O(n log² n)",
+  "p": [
+   "Nusxa olish — swap yoki koʻrsatkichdan foydalaning",
+   "Javobni toʻplam birlashtirilgandan keyin yozish"
+  ]
+ },
+ {
+  "k": [
+   "1-DFS: pastga qaragan javoblar (qism daraxtlar)",
+   "2-DFS: otadan kelgan javobni bolaga uzatish",
+   "Prefiks/suffiks bilan bolalar ustidan birlashtirish",
+   "Barcha tugunlarga masofalar yigʻindisi"
+  ],
+  "c": "O(n)",
+  "p": [
+   "Bolaning oʻz hissasini ota javobidan ayirishni unutish",
+   "Rekursiya chuqurligi — iterativ BFS tartibi"
+  ]
+ },
+ {
+  "k": [
+   "Muhim tugunlarni tin boʻyicha saralash",
+   "Qoʻshni juftlar LCA larini qoʻshish",
+   "Stack bilan virtual daraxtni qurish",
+   "Virtual daraxtda DP — har soʻrov O(k log k)"
+  ],
+  "c": "Har soʻrov O(k log n)",
+  "p": [
+   "Har soʻrovdan keyin virtual daraxtni tozalash",
+   "Qirra vaznlari: asl daraxtdagi masofalar"
+  ]
+ },
+ {
+  "k": [
+   "Splay daraxt va access(v) amali",
+   "make_root, link, cut",
+   "Yoʻl agregatlari va lazy reverse",
+   "Dinamik MST va bogʻliqlik masalalari"
+  ],
+  "c": "Amortizatsiyalangan O(log n)",
+  "p": [
+   "Splay dan oldin push ni yuqoridan pastga bajarish",
+   "Ildiz emasligini isRoot bilan toʻgʻri tekshirish"
+  ]
+ },
+ {
+  "k": [
+   "dp[mask][i]: mask toʻplamni koʻrib, i da tugash",
+   "Oʻtish: keyingi elementni maskaga qoʻshish",
+   "Qism maskalar ustida DP — O(3ⁿ)",
+   "Profil emas, toʻplam holati: tayinlash, TSP, lift"
+  ],
+  "c": "O(2ⁿ · n²)",
+  "p": [
+   "n = 20 da dp[2²⁰][20] int — 80 MB, xotiraga qarang",
+   "Boshlangʻich holatni toʻgʻri qoʻyish (dp[1 << s][s])"
+  ]
+ },
+ {
+  "k": [
+   "Holat: (pozitsiya, tight, qoʻshimcha maʼlumot)",
+   "f(R) − f(L − 1) shaklida javob",
+   "Boshlovchi nollar uchun started flag",
+   "Memoizatsiya: tight = 0 holatlarini qayta ishlatish"
+  ],
+  "c": "O(raqamlar · holatlar · 10)",
+  "p": [
+   "L = 0 da f(L − 1) — alohida koʻring",
+   "Boshlovchi nollarni raqam sifatida sanab qoʻyish"
+  ]
+ },
+ {
+  "k": [
+   "dp[l][r] — uzunlik boʻyicha oʻsish tartibida",
+   "Boʻlish nuqtasi k boʻyicha minimum",
+   "Palindromlar, qavslar, toshlarni birlashtirish",
+   "Oxirgi amal gʻoyasi (burst balloons)"
+  ],
+  "c": "Odatda O(n³)",
+  "p": [
+   "Sikl tartibi: avval qisqa oraliqlar",
+   "Memoizatsiyada −1 bilan belgilash va 0 javobni aralashtirish"
+  ]
+ },
+ {
+  "k": [
+   "dp[v][0/1]: v olingan yoki olinmagan",
+   "Qism daraxt ryukzagi: bolalarni birma-bir birlashtirish",
+   "O(n²) bahosi: oʻlchamlar koʻpaytmasi",
+   "Diametr va eng uzun yoʻl"
+  ],
+  "c": "Odatda O(n) yoki O(n²)",
+  "p": [
+   "Ryukzakda min(size, k) chegarasi bilan murakkablikni saqlash",
+   "Chuqur daraxtlarda rekursiya"
+  ]
+ },
+ {
+  "k": [
+   "F[mask] = barcha qism maskalar yigʻindisi",
+   "Bit boʻyicha: for i, for mask: if (mask >> i & 1) F[mask] += F[mask ^ (1 << i)]",
+   "Super maskalar boʻyicha teskari yoʻnalish",
+   "Myobius almashtirish — teskari amal"
+  ],
+  "c": "O(n · 2ⁿ)",
+  "p": [
+   "Sikllar tartibi: bit tashqarida boʻlishi shart",
+   "Yigʻindilar uchun long long"
+  ]
+ },
+ {
+  "k": [
+   "dp[i] = min(dp[j] + b[j] · a[i])",
+   "Monoton qiyaliklar: deque bilan O(n)",
+   "Monoton emas: Li Chao yoki ikkilik qidiruv",
+   "Kesishish nuqtasini kasr emas, koʻpaytma bilan solishtirish"
+  ],
+  "c": "O(n) yoki O(n log n)",
+  "p": [
+   "Kesishishni double bilan solishtirish — aniqlik xatosi",
+   "Teng qiyalikli chiziqlarni toʻgʻri olib tashlash"
+  ]
+ },
+ {
+  "k": [
+   "opt(i) monoton: opt(i) ≤ opt(i + 1)",
+   "compute(l, r, optl, optr) rekursiyasi",
+   "Har qatlam uchun O(n log n)",
+   "Xarajat funksiyasini O(1) da hisoblash (prefikslar)"
+  ],
+  "c": "O(k · n log n)",
+  "p": [
+   "Monotonlik shartini tekshirmasdan qoʻllash",
+   "Xarajat funksiyasi sekin boʻlsa yutuq yoʻqoladi"
+  ]
+ },
+ {
+  "k": [
+   "opt[i][j−1] ≤ opt[i][j] ≤ opt[i+1][j]",
+   "Faqat shu oraliqda k ni aylanish",
+   "Toʻrtburchak tengsizligi sharti",
+   "Optimal BST va toshlarni birlashtirish"
+  ],
+  "c": "O(n²)",
+  "p": [
+   "Shart bajarilmasa — notoʻgʻri javob",
+   "opt ni uzunlik 1 uchun toʻgʻri boshlash"
+  ]
+ },
+ {
+  "k": [
+   "Har element uchun jarima λ qoʻshish",
+   "λ boʻyicha ikkilik qidiruv: ishlatilgan elementlar soni k ga teng",
+   "Javob: dp(λ) + λ · k",
+   "Funksiya qavariq boʻlishi sharti"
+  ],
+  "c": "O(n log C)",
+  "p": [
+   "Teng holatlarda elementlar sonini min yoki max qilib tanlash",
+   "Qavariqlik boʻlmasa usul ishlamaydi"
+  ]
+ },
+ {
+  "k": [
+   "Holat: joriy ustun profili (bitmask)",
+   "Katakma-katak oʻtish — O(n · m · 2^m)",
+   "Domino bilan toʻldirish",
+   "Mumkin boʻlgan oʻtishlarni oldindan hisoblash"
+  ],
+  "c": "O(n · m · 2^m)",
+  "p": [
+   "Profilni qator emas, kichik oʻlcham boʻyicha tanlang",
+   "Mod boʻyicha olishni unutish"
+  ]
+ },
+ {
+  "k": [
+   "Rekurrentni matritsa koʻpaytmasiga aylantirish",
+   "Matritsani tez darajaga koʻtarish",
+   "Graf yoʻllari soni: qoʻshnilik matritsasi darajasi",
+   "Min-plus koʻpaytma — eng qisqa k qirrali yoʻl"
+  ],
+  "c": "O(k³ log n)",
+  "p": [
+   "Koʻpaytmada har qadamda mod olish",
+   "Birlik matritsani toʻgʻri boshlash"
+  ]
+ },
+ {
+  "k": [
+   "Har son faqat eng kichik tub boʻluvchisi orqali belgilanadi",
+   "spf (eng kichik tub boʻluvchi) massivi — O(log n) faktorizatsiya",
+   "φ va μ ni gʻalvir ichida hisoblash",
+   "Multiplikativ funksiyalar: boʻluvchilar soni va yigʻindisi"
+  ],
+  "c": "O(n)",
+  "p": [
+   "10⁷ int massiv — 40 MB, xotira chegarasiga qarang",
+   "i · p toʻlib ketishi — long long yoki chegara tekshiruvi"
+  ]
+ },
+ {
+  "k": [
+   "ax + by = gcd(a, b) koeffitsientlarini topish",
+   "Ixtiyoriy modul uchun teskari element",
+   "Chiziqli Diofant tenglamalari va barcha yechimlar",
+   "XQT: oʻzaro tub boʻlmagan modullar bilan birlashtirish"
+  ],
+  "c": "O(log n)",
+  "p": [
+   "Teskari element faqat gcd(a, m) = 1 da mavjud",
+   "XQT da koʻpaytmalar toʻlib ketadi — __int128"
+  ]
+ },
+ {
+  "k": [
+   "φ(n) = n · Π(1 − 1/p)",
+   "1..n gacha φ ni gʻalvir bilan",
+   "Myobius inversiyasi: [gcd = 1] = Σ μ(d)",
+   "Σ gcd(i, n) va oʻzaro tub juftliklar"
+  ],
+  "c": "Gʻalvir O(n log log n), yigʻindi O(n log n)",
+  "p": [
+   "μ ni notoʻgʻri hisoblash: kvadrat boʻluvchi bor boʻlsa 0",
+   "Natija ishorasi: ayirmalarni mod da musbatga keltirish"
+  ]
+ },
+ {
+  "k": [
+   "fact va inv_fact massivlari, C(n, k) O(1) da",
+   "Lukas teoremasi — katta n, kichik tub p",
+   "Yulduz va tayoqchalar: C(n + k − 1, k − 1)",
+   "Katalan sonlari va kiritish-chiqarish formulasi"
+  ],
+  "c": "Tayyorgarlik O(n), soʻrov O(1)",
+  "p": [
+   "inv_fact ni oxiridan Fermat bilan hisoblang",
+   "k < 0 yoki k > n da 0 qaytarish"
+  ]
+ },
+ {
+  "k": [
+   "Bernsayd lemmasi: orbitalar soni = qoʻzgʻalmas nuqtalar oʻrtachasi",
+   "Burilishlar guruhi: k ta burilishda gcd(k, n) ta sikl",
+   "Poya: rang^(sikllar soni)",
+   "Aks ettirishlarni qoʻshish (diedral guruh)"
+  ],
+  "c": "Odatda O(n log n)",
+  "p": [
+   "Guruh oʻlchamiga boʻlishda mod teskari element kerak",
+   "Juft va toq n da aks ettirishlar farqlanadi"
+  ]
+ },
+ {
+  "k": [
+   "Miller-Rabin: deterministik asoslar 64-bit uchun",
+   "Koʻpaytma uchun __int128",
+   "Pollard Rho: Floyd yoki Brent sikl topish",
+   "Rekursiv toʻliq faktorizatsiya"
+  ],
+  "c": "Miller-Rabin O(k log³ n), Pollard Rho ≈ O(n^(1/4))",
+  "p": [
+   "a · b mod m da 64-bit toʻlib ketishi",
+   "Kichik sonlarni (≤ 10⁶) gʻalvir bilan alohida koʻring"
+  ]
+ },
+ {
+  "k": [
+   "a^x = b: x = i·m − j, m = ⌈√p⌉",
+   "Kichik qadamlar hash map da",
+   "gcd(a, m) ≠ 1 holatini qayta ishlash",
+   "Primitiv ildiz va diskret ildiz bilan bogʻliqlik"
+  ],
+  "c": "O(√m)",
+  "p": [
+   "unordered_map anti-xesh — oʻz hash yoki saralash",
+   "x = 0 javobini alohida tekshirish"
+  ]
+ },
+ {
+  "k": [
+   "Bosh elementni tanlash (partial pivoting)",
+   "Yechimlar soni: 0, 1 yoki cheksiz",
+   "mod p da teskari element bilan boʻlish",
+   "mod 2: bitset bilan va XOR bazis"
+  ],
+  "c": "O(n³), mod 2 da O(n³ / 64)",
+  "p": [
+   "Haqiqiy sonlarda eps ni tekshirmaslik",
+   "XOR bazisda eng katta bitdan boshlash"
+  ]
+ },
+ {
+  "k": [
+   "Kompleks FFT: rekursiyasiz, bit-reversal",
+   "NTT: mod 998244353 va primitiv ildiz 3",
+   "Svyortka: koʻphadlarni koʻpaytirish",
+   "Ixtiyoriy mod uchun uch NTT + XQT"
+  ],
+  "c": "O(n log n)",
+  "p": [
+   "FFT da yaxlitlash xatosi katta qiymatlarda — NTT afzal",
+   "Oʻlchamni 2 ning darajasiga yetkazishni unutish"
+  ]
+ },
+ {
+  "k": [
+   "Nim: XOR 0 boʻlsa yutqazadi",
+   "Grandi soni: mex(keyingi holatlar)",
+   "Mustaqil oʻyinlar yigʻindisi — Grandi XOR",
+   "Naqshlarni topish: kichik holatlar uchun brute force"
+  ],
+  "c": "Holatlar soni × oʻtishlar",
+  "p": [
+   "mex ni sekin hisoblash — kichik massiv yetarli",
+   "Misère oʻyinlarda oxirgi qoida boshqacha"
+  ]
+ },
+ {
+  "k": [
+   "Kutilmaning chiziqliligi: E[X + Y] = E[X] + E[Y]",
+   "Indikator oʻzgaruvchilar",
+   "Kutilma DP: oxiridan boshiga",
+   "Ehtimollikni mod p da kasr sifatida"
+  ],
+  "c": "Masalaga bogʻliq, odatda DP",
+  "p": [
+   "Mustaqil boʻlmagan hodisalar ehtimolini koʻpaytirish",
+   "Double da aniqlik — kerakli raqamlar sonini chop eting"
+  ]
+ },
+ {
+  "k": [
+   "pi[i]: s[0..i] ning eng uzun xos prefiks-suffiksi",
+   "Qidiruv: pattern + '#' + text",
+   "Davr: n − pi[n − 1]",
+   "KMP avtomati — DP bilan birga"
+  ],
+  "c": "O(n + m)",
+  "p": [
+   "Ajratuvchi belgi satrda uchramasligi kerak",
+   "j = pi[j − 1] qaytishini while bilan yozish"
+  ]
+ },
+ {
+  "k": [
+   "z[i]: s va s[i..] umumiy prefiksi",
+   "[l, r] oynasi bilan O(n)",
+   "Qidiruv: pattern + '$' + text",
+   "Satr davrlari va siqish"
+  ],
+  "c": "O(n)",
+  "p": [
+   "z[0] ni ishlatmang (tushuncha boʻyicha n)",
+   "r ni yangilashni unutish — O(n²) ga tushadi"
+  ]
+ },
+ {
+  "k": [
+   "h[i] = h[i−1] · B + s[i] mod M",
+   "Qism satr xeshi: h[r] − h[l] · B^(r−l)",
+   "Ikki modul yoki mod 2⁶¹ − 1",
+   "Xesh + ikkilik qidiruv: eng uzun umumiy qism satr"
+  ],
+  "c": "Tayyorgarlik O(n), soʻrov O(1)",
+  "p": [
+   "mod 2⁶⁴ (unsigned overflow) anti-xesh testlarda buziladi",
+   "Tasodifiy asos B tanlang — oldindan maʼlum asos xavfli"
+  ]
+ },
+ {
+  "k": [
+   "Trie tuguni: next[26] va end flag",
+   "Prefiks soni va soʻz qidirish",
+   "Binar trie: maksimal XOR juftlik",
+   "Trie ustida DP (soʻzlarga boʻlish)"
+  ],
+  "c": "Har amal O(uzunlik)",
+  "p": [
+   "Xotira: tugunlar soni = jami uzunlik, massivni oldindan oling",
+   "Binar trie da bitlarni yuqoridan pastga yurish"
+  ]
+ },
+ {
+  "k": [
+   "Trie + failure linklar (BFS bilan)",
+   "Goto funksiyasi — toʻliq avtomat",
+   "Har namunaning uchrashlari soni: dict linklar",
+   "Avtomat holatlari ustida DP"
+  ],
+  "c": "Qurish O(Σ|p| · alfavit), qidiruv O(n)",
+  "p": [
+   "Uchrashlarni naive sanash O(n · k) — failure daraxti ustida yigʻing",
+   "BFS tartibida linklarni hisoblash shart"
+  ]
+ },
+ {
+  "k": [
+   "Prefiks ikkilantirish: O(n log n)",
+   "Kasai algoritmi bilan LCP",
+   "Turli qism satrlar soni: n(n+1)/2 − Σ LCP",
+   "LCP ustida sparse table — ixtiyoriy suffikslar LCP i"
+  ],
+  "c": "O(n log n)",
+  "p": [
+   "Oxiriga eng kichik belgi qoʻshishni unutish",
+   "Saralashda radix sort oʻrniga std::sort — O(n log² n)"
+  ]
+ },
+ {
+  "k": [
+   "Holat: endpos ekvivalentlik sinfi, link va len",
+   "Qoʻshish: clone yaratish holati",
+   "Turli qism satrlar: Σ (len[v] − len[link[v]])",
+   "Uchrashlar soni — link daraxtida yigʻish"
+  ],
+  "c": "O(n) holatlar (≤ 2n)",
+  "p": [
+   "Clone ga oʻtishlarni nusxalashni unutish",
+   "next ni map emas massivda saqlash — tezroq"
+  ]
+ },
+ {
+  "k": [
+   "d1 (toq) va d2 (juft) palindromlar",
+   "Oyna [l, r] bilan O(n)",
+   "Yoki satrga '#' qoʻshib bitta massiv",
+   "Palindromik qism satrlar soni"
+  ],
+  "c": "O(n)",
+  "p": [
+   "Juft va toq markazlar indekslarini aralashtirish",
+   "Chegarani tekshirmasdan kengaytirish"
+  ]
+ },
+ {
+  "k": [
+   "Ikki ildiz: uzunlik −1 va 0",
+   "Har tugun — bitta turli palindrom",
+   "Suffiks link boʻylab qoʻshish",
+   "Uchrashlar soni va palindromik faktorizatsiya"
+  ],
+  "c": "O(n)",
+  "p": [
+   "Yangi tugun linkini topishda notoʻgʻri boshlangʻich tugun",
+   "Tugunlar soni n + 2 dan oshmaydi — massiv oʻlchami"
+  ]
+ },
+ {
+  "k": [
+   "Point strukturasi: +, −, skalyar va vektor koʻpaytma",
+   "cross(b − a, c − a) ishorasi — orientatsiya",
+   "Masofa, burchak va proyeksiya",
+   "Iloji boricha butun sonlar (long long)"
+  ],
+  "c": "O(1)",
+  "p": [
+   "Koʻpaytmalarda toʻlib ketish — 10⁹ koordinatada __int128",
+   "double ni == bilan solishtirish"
+  ]
+ },
+ {
+  "k": [
+   "Kesmalar kesishishi: orientatsiyalar + bounding box",
+   "Toʻgʻri chiziqlar kesishish nuqtasi",
+   "Nuqta koʻpburchakda: nur tashlash",
+   "Qavariq koʻpburchakda: O(log n) ikkilik qidiruv"
+  ],
+  "c": "O(1) yoki O(n)",
+  "p": [
+   "Kollinear va uchlari ustma-ust tushgan holatlar",
+   "Nuqta chegarada yotganini alohida qaytarish"
+  ]
+ },
+ {
+  "k": [
+   "Andrew: saralash, pastki va yuqori zanjir",
+   "cross ≤ 0 yoki < 0 — kollinear nuqtalarni olish/olmaslik",
+   "Graham scan — muqobil",
+   "Qobiq perimetri va yuzi"
+  ],
+  "c": "O(n log n)",
+  "p": [
+   "Barcha nuqtalar bir chiziqda yoki bitta nuqta",
+   "Takroriy nuqtalarni olib tashlash"
+  ]
+ },
+ {
+  "k": [
+   "Ikki koʻrsatkich qobiq boʻylab aylanadi",
+   "Diametr — eng uzoq nuqtalar juftligi",
+   "Minimal kenglik va qamrab oluvchi toʻgʻri toʻrtburchak",
+   "Ikki qobiq orasidagi masofa"
+  ],
+  "c": "Qobiqdan keyin O(n)",
+  "p": [
+   "Qobiqni avval toʻgʻri tartibda qurish",
+   "Kvadrat masofani solishtirib, ildizni oxirida oling"
+  ]
+ },
+ {
+  "k": [
+   "Shoelace: 2S = Σ (xᵢ·yᵢ₊₁ − xᵢ₊₁·yᵢ)",
+   "Pik: S = I + B/2 − 1",
+   "Chegaradagi nuqtalar: gcd(|dx|, |dy|)",
+   "Ichki panjara nuqtalari soni"
+  ],
+  "c": "O(n)",
+  "p": [
+   "Ishorani modul bilan olish (soat yoʻnalishi)",
+   "2S ni butun saqlab, oxirida boʻling"
+  ]
+ },
+ {
+  "k": [
+   "Boʻlib-hukmronlik: chap, oʻng va oʻrtadagi tasma",
+   "Tasmada y boʻyicha saralash va 7 qoʻshni",
+   "Set bilan sweep — muqobil",
+   "Kvadrat masofalar bilan butun sonlarda"
+  ],
+  "c": "O(n log n)",
+  "p": [
+   "Tasmani har safar qayta saralash — O(n log² n)",
+   "Masofa kvadrati long long"
+  ]
+ },
+ {
+  "k": [
+   "Hodisalarni x boʻyicha saralash",
+   "Set da faol kesmalar",
+   "Toʻgʻri toʻrtburchaklar birlashmasi — segment tree bilan",
+   "Kesmalar kesishishini aniqlash (Shamos-Hoey)"
+  ],
+  "c": "O(n log n)",
+  "p": [
+   "Bir xil x dagi ochilish/yopilish tartibi",
+   "Set komparatori sweep pozitsiyasiga bogʻliq"
+  ]
+ },
+ {
+  "k": [
+   "Har yarim tekislik — yoʻnaltirilgan toʻgʻri chiziq",
+   "Burchak boʻyicha saralash va deque",
+   "Boʻsh yoki cheksiz kesishmani aniqlash",
+   "Koʻpburchak yadrosi (kernel)"
+  ],
+  "c": "O(n log n)",
+  "p": [
+   "Parallel chiziqlarni toʻgʻri qayta ishlash",
+   "Cheksiz holat uchun katta bounding box qoʻshish"
+  ]
+ },
+ {
+  "k": [
+   "Aylana-toʻgʻri kesishmasi: proyeksiya va Pifagor",
+   "Aylana-aylana: radikal oʻq",
+   "Urinmalar: nuqtadan va ikki aylanaga",
+   "Welzl algoritmi — minimal qamrovchi aylana"
+  ],
+  "c": "Welzl: kutilma boʻyicha O(n)",
+  "p": [
+   "Welzl dan oldin nuqtalarni aralashtirish (shuffle)",
+   "sqrt ichida kichik manfiy son — max(0, x)"
+  ]
+ },
+ {
+  "k": [
+   "eps = 1e-9 va sgn(x) funksiyasi",
+   "long double va hypot",
+   "Butun sonli geometriya — koʻpaytma bilan solishtirish",
+   "Javobni kerakli aniqlikda chop etish (setprecision)"
+  ],
+  "c": "—",
+  "p": [
+   "acos(1.0000001) — NaN; argumentni [−1, 1] ga qisqartiring",
+   "−0.000 chop etilishi — kichik qiymatni 0 ga yaxlitlang"
+  ]
+ },
+ {
+  "k": [
+   "CDQ: vaqt boʻyicha boʻlish, chap yangilanishlar oʻng soʻrovlarga",
+   "3D dominance sanash — CDQ + BIT",
+   "Parallel ikkilik qidiruv: hamma soʻrovlar bir vaqtda",
+   "Har iteratsiyada maʼlumot tuzilmasini qayta ishlatish"
+  ],
+  "c": "O(n log² n)",
+  "p": [
+   "BIT ni har bosqichdan keyin tozalash (faqat oʻzgarganlarini)",
+   "Teng kalitlarni CDQ da toʻgʻri tartiblash"
+  ]
+ },
+ {
+  "k": [
+   "Har qirraning yashash oraligʻi [qoʻshilgan, oʻchirilgan)",
+   "Oraliqni vaqt segment tree siga qoʻyish",
+   "DFS: kirishda birlashtirish, chiqishda rollback",
+   "Bargda soʻrovga javob"
+  ],
+  "c": "O((n + q) log q log n)",
+  "p": [
+   "Yoʻl siqishli DSU — rollback buziladi",
+   "Oʻchirilmagan qirralar oxirigacha yashaydi"
+  ]
+ },
+ {
+  "k": [
+   "Matroid tushunchasi: mustaqil toʻplamlar aksiomalari",
+   "Ikki matroid kesishmasi — almashuv grafi",
+   "Qisqa yoʻl boʻylab kengaytirish",
+   "Rangli qirralar bilan qamrab oluvchi daraxt"
+  ],
+  "c": "O(r · n · oracle)",
+  "p": [
+   "Mustaqillik oracle ni samarali yozish",
+   "Vaznli variantda Bellman-Ford kerak"
+  ]
+ },
+ {
+  "k": [
+   "Augmenting path va toq sikl (blossom) ni siqish",
+   "Edmonds algoritmi",
+   "Tasodifiy Tutte matritsasi — rang = 2 · juftlik",
+   "Umumiy graflarda minimal qirra qoplamasi"
+  ],
+  "c": "O(V³)",
+  "p": [
+   "Blossom siqishda base massivini yangilash",
+   "Faqat juftlik oʻlchami kerak boʻlsa — Tutte usuli soddaroq"
+  ]
+ },
+ {
+  "k": [
+   "Dominator: s → v har bir yoʻlida uchraydigan tugun",
+   "DAG uchun: LCA bilan oddiy usul",
+   "Lengauer-Tarjan: semi-dominatorlar",
+   "Kritik tugunlar va qirralar masalalari"
+  ],
+  "c": "O(m α(n))",
+  "p": [
+   "DFS daraxtidan yetib boʻlmaydigan tugunlarni hisobga olmaslik",
+   "Semi-dominator va dominatorni aralashtirish"
+  ]
+ },
+ {
+  "k": [
+   "Birinchi 2k hadni hisoblash (DP yoki brute force)",
+   "Berlekamp-Massey — eng qisqa rekurrent",
+   "k-chi hadni Kitamasa yoki matritsa bilan",
+   "mod tub boʻlishi sharti"
+  ],
+  "c": "BM: O(n²), keyin O(k² log n)",
+  "p": [
+   "Yetarli had bermaslik — notoʻgʻri rekurrent",
+   "Modul tub boʻlmasa usul ishlamaydi"
+  ]
+ },
+ {
+  "k": [
+   "Standart shakl: max cᵀx, Ax ≤ b, x ≥ 0",
+   "Pivot amali va Bland qoidasi",
+   "Ikki bosqichli simpleks — boshlangʻich yechim",
+   "Duallik: oqim va qoplama masalalari"
+  ],
+  "c": "Amalda tez, eng yomon holatda eksponensial",
+  "p": [
+   "eps siz double — cheksiz sikl",
+   "Chegaralanmagan va mumkin boʻlmagan holatlarni ajratish"
+  ]
+ },
+ {
+  "k": [
+   "mt19937 va chrono asosidagi seed",
+   "shuffle — eng yomon holatdan qochish",
+   "Tasodifiy xeshlash: toʻplamlarni solishtirish",
+   "Monte-Karlo tekshiruvlar: matritsa koʻpaytmasi (Freivalds)"
+  ],
+  "c": "Kutilma boʻyicha",
+  "p": [
+   "rand() — kichik oraliq va sekin, mt19937 dan foydalaning",
+   "Qatʼiy seed — xaker testlari sizga qarshi tayyorlanadi"
+  ]
+ },
+ {
+  "k": [
+   "Faqat sinovdan oʻtgan kodlar: har birini masalada tekshiring",
+   "Boʻlimlar: shablon, maʼlumot tuzilmalari, graflar, satrlar, matematika, geometriya",
+   "Har kod yonida murakkablik va foydalanish misoli",
+   "Kichik shrift, 2 ustun, 25 sahifa chegarasi"
+  ],
+  "c": "—",
+  "p": [
+   "Internetdan tekshirmasdan nusxa olingan kod",
+   "Kontestda TRD dan qayta yozishda xato — oldindan mashq qiling"
+  ]
+ },
+ {
+  "k": [
+   "Boshlanishda har kishi oʻz qismini oʻqiydi",
+   "Reyting jadvali: koʻp jamoa yechgan masala — oson",
+   "Har masalaga taxminiy qiyinlik va gʻoya yozish",
+   "1 soatdan keyin strategiyani qayta koʻrib chiqish"
+  ],
+  "c": "—",
+  "p": [
+   "Bitta qiyin masalaga butun jamoa yopishib qolishi",
+   "Masala shartini oxirigacha oʻqimaslik — chegaralar va formatlar"
+  ]
+ },
+ {
+  "k": [
+   "Jarima: har notoʻgʻri urinish +20 daqiqa",
+   "Osonlarini birinchi va tez yuborish",
+   "Yuborishdan oldin namunalar va chegaraviy testlar",
+   "WA dan keyin chop etib, kompyuterni boʻshatish"
+  ],
+  "c": "—",
+  "p": [
+   "Tekshirmasdan qayta yuborish",
+   "Oxirgi soatda tavakkal yuborishlarning narxini hisoblamaslik"
+  ]
+ },
+ {
+  "k": [
+   "Brute force yechim — sekin, lekin aniq",
+   "Tasodifiy test generatori",
+   "Bash yoki Python skript: farq topilguncha takrorlash",
+   "Topilgan testni kichraytirish"
+  ],
+  "c": "—",
+  "p": [
+   "Brute force ham xato boʻlishi — juda sodda yozing",
+   "Generator chegaraviy holatlarni bermaydi — kichik n ham sinang"
+  ]
+ },
+ {
+  "k": [
+   "Codeforces Gym dagi ICPC toʻplamlari, 5 soat",
+   "Bitta kompyuter qoidasi — kim qachon yozadi",
+   "Kontestdan keyin 30 daqiqalik tahlil",
+   "Haftasiga kamida bitta toʻliq kontest"
+  ],
+  "c": "—",
+  "p": [
+   "Virtual kontestni toʻxtatib-toʻxtatib yechish",
+   "Natijani tahlil qilmasdan keyingisiga oʻtish"
+  ]
+ },
+ {
+  "k": [
+   "Har kontestdan keyin yechilmagan masalalar roʻyxati",
+   "Avval oʻzingiz, 30–60 daqiqadan keyin tahlilni oʻqing",
+   "Yangi usulni TRD ga qoʻshish",
+   "Bir haftadan keyin qayta yechib koʻrish"
+  ],
+  "c": "—",
+  "p": [
+   "Tahlilni oʻqib, kod yozmasdan qoldirish",
+   "Faqat oson masalalarni upsolve qilish"
+  ]
+ }
+]

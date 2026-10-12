@@ -1,6 +1,6 @@
 <script lang="ts">
   import { stages, stageStart, topics } from '../lib/data';
-  import { app, totals, stageTotals, select, currentIndex, exportJson, importJson, resetAll } from '../lib/store.svelte';
+  import { app, totals, stageTotals, select, currentIndex, exportJson, importJson, activity } from '../lib/store.svelte';
   import { showToast } from '../lib/ui.svelte';
   import BrandMark from './BrandMark.svelte';
   import Ring from './Ring.svelte';
@@ -10,6 +10,9 @@
   const t = $derived(totals());
   const activeStage = $derived(topics[app.selected].stage);
   const perStage = $derived(stages.map((s) => stageTotals(s.id)));
+  const act = $derived(activity());
+  const weekMax = $derived(Math.max(1, ...act.week));
+  const firstName = $derived(app.saved.name.trim().split(/\s+/)[0] ?? '');
   let fileInput: HTMLInputElement;
 
   function goStage(id: number) {
@@ -42,10 +45,7 @@
   }
 
   function doReset() {
-    if (confirm('Barcha natijalar, belgilangan masalalar va eslatmalar oʻchiriladi. Davom etasizmi?')) {
-      resetAll();
-      showToast('Natijalar tozalandi', 'ink');
-    }
+    app.resetOpen = true;
   }
 </script>
 
@@ -54,7 +54,14 @@
     <BrandMark />
     <div class="brand-text">
       <h1>ICPC yoʻli</h1>
-      <p>Asoslardan finalgacha</p>
+      {#if firstName}
+        <button class="hello" onclick={() => (app.profileOpen = true)} title="Ismni oʻzgartirish">
+          Salom, {firstName}
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4Zm10-14 4 4" /></svg>
+        </button>
+      {:else}
+        <p>Asoslardan finalgacha</p>
+      {/if}
     </div>
   </header>
 
@@ -67,9 +74,15 @@
       </div>
     </div>
     <dl class="label">
-      <div><dd>{t.solved}</dd><dt>masala yechildi</dt></div>
-      <div><dd>{t.practice}</dd><dt>mashqda</dt></div>
+      <div><dd>{t.solved}</dd><dt>masala</dt></div>
+      <div class:hot={act.streak > 0}><dd>{act.streak > 0 ? "🔥" : ""}{act.streak}</dd><dt title="Ketma-ket kunlar">seriya</dt></div>
+      <div><dd>{act.today}</dd><dt>bugun</dt></div>
     </dl>
+    <div class="label week" aria-label="Oxirgi 7 kunda yechilgan masalalar">
+      {#each act.week as n, k}
+        <span class:today={k === 6} style:height={`${Math.max(8, (n / weekMax) * 100)}%`} class:zero={n === 0} title={`${n} ta masala`}></span>
+      {/each}
+    </div>
   </section>
 
   <div class="quick">
@@ -152,10 +165,23 @@
   .stats-head { display: grid; line-height: 1.2; }
   .stats-head b { font-size: 1.2rem; font-weight: 900; font-variant-numeric: tabular-nums; }
   .stats-head span { font-size: 0.82rem; color: var(--ink-2); }
-  dl { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-  dl div { padding: 0.5rem 0.65rem; border-radius: var(--radius-s); background: var(--paper); }
+  dl { margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; }
+  dl div.hot { background: #fff1e0; }
+  .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.25rem; align-items: end; height: 1.6rem; }
+  .week span { display: block; border-radius: 0.25rem; background: var(--teal); }
+  .week span.zero { background: var(--paper-2); }
+  .week span.today { box-shadow: inset 0 0 0 2px var(--teal-2); }
+  .hello {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    margin-top: 0.1rem; padding: 0; border: 0; background: none;
+    font-size: 0.85rem; font-weight: 800; color: var(--ink-2);
+  }
+  .hello svg { width: 0.85rem; height: 0.85rem; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linejoin: round; opacity: 0; transition: opacity 0.15s; }
+  .hello:hover { color: var(--ink); }
+  .hello:hover svg { opacity: 1; }
+  dl div { padding: 0.45rem 0.5rem; border-radius: var(--radius-s); background: var(--paper); min-width: 0; }
   dd { margin: 0; font-weight: 900; font-size: 1.1rem; font-variant-numeric: tabular-nums; }
-  dt { font-size: 0.78rem; color: var(--ink-2); font-weight: 700; }
+  dt { font-size: 0.72rem; color: var(--ink-2); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
   .quick { display: grid; gap: 0.5rem; }
   .quick button {
