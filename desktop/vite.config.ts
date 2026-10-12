@@ -1,9 +1,35 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 
-// base './' so the built files load from file:// inside Electron.
+/**
+ * Electron loads the app from file://, where module scripts and `crossorigin`
+ * requests are blocked. Emit one classic deferred script instead.
+ */
+function fileProtocolFriendly(): Plugin {
+  return {
+    name: 'file-protocol-friendly',
+    apply: 'build',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html) {
+        return html
+          .replace(/<script type="module" crossorigin/g, '<script defer')
+          .replace(/ crossorigin(="[^"]*")?/g, '');
+      },
+    },
+  };
+}
+
 export default defineConfig({
   base: './',
-  plugins: [svelte()],
-  build: { outDir: 'dist', emptyOutDir: true, target: 'chrome120' },
+  plugins: [svelte(), fileProtocolFriendly()],
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+    target: 'chrome120',
+    modulePreload: false,
+    rollupOptions: {
+      output: { format: 'iife', inlineDynamicImports: true },
+    },
+  },
 });

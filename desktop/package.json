@@ -40,8 +40,18 @@
     ],
     "win": {
       "target": [
-        { "target": "nsis", "arch": ["x64"] },
-        { "target": "portable", "arch": ["x64"] }
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
       ],
       "icon": "resources/icon.png"
     },
@@ -54,15 +64,31 @@
       "artifactName": "ICPC-yoli-${version}-portable.${ext}"
     },
     "mac": {
-      "target": [{ "target": "dmg", "arch": ["universal"] }],
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
       "icon": "resources/icon.png",
       "category": "public.app-category.education"
     },
     "linux": {
-      "target": ["AppImage", "deb"],
+      "target": [
+        "AppImage",
+        "deb"
+      ],
       "icon": "resources/icon.png",
       "category": "Education",
       "maintainer": "muhammadiev <nldgooner@gmail.com>"
-    }
-  }
+    },
+    "publish": null
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/miraeuz/learing-map.git"
+  },
+  "homepage": "https://github.com/miraeuz/learing-map"
 }
