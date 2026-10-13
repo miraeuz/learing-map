@@ -14,6 +14,7 @@
     maxHeight = '28rem',
     placeholder = '',
     errorLine = null,
+    lang = 'py',
     onRun,
     onCheck,
   }: {
@@ -23,6 +24,8 @@
     maxHeight?: string;
     placeholder?: string;
     errorLine?: number | null;
+    /** 'py' — Python highlighting; anything else — plain text (shell, HTML, CSV...). */
+    lang?: string;
     onRun?: () => void;
     onCheck?: () => void;
   } = $props();
@@ -84,7 +87,7 @@
           indentUnit.of('    '),
           EditorState.tabSize.of(4),
           keymap.of([indentWithTab, ...defaultKeymap, ...historyKeymap]),
-          python(),
+          lang === 'py' ? python() : [],
           syntaxHighlighting(style),
           theme,
           ph(placeholder),

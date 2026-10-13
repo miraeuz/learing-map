@@ -45,14 +45,19 @@ def Q(question, right, *wrong, why=None, code=None, lv=1):
             "code": code.strip("\n") if code else None, "lv": lv}
 
 
-def F(title, prompt, solution, *calls, hint=None, starter=None, lv=2):
+def _files(files):
+    """files: {"name.py": "code", ...} — helper modules given to the student (read-only tabs)."""
+    return [{"name": k, "code": v.strip("\n") + "\n"} for k, v in (files or {}).items()]
+
+
+def F(title, prompt, solution, *calls, hint=None, starter=None, lv=2, files=None):
     return {"kind": "func", "title": title, "prompt": prompt, "solution": solution.strip("\n"),
-            "calls": list(calls), "hint": hint, "starter": starter, "lv": lv}
+            "calls": list(calls), "hint": hint, "starter": starter, "lv": lv, "files": _files(files)}
 
 
-def PR(title, prompt, solution, *stdins, hint=None, starter=None, lv=1):
+def PR(title, prompt, solution, *stdins, hint=None, starter=None, lv=1, files=None):
     return {"kind": "prog", "title": title, "prompt": prompt, "solution": solution.strip("\n"),
-            "stdins": list(stdins) or [""], "hint": hint, "starter": starter, "lv": lv}
+            "stdins": list(stdins) or [""], "hint": hint, "starter": starter, "lv": lv, "files": _files(files)}
 
 
 def L(site, ref, title=None, note=None):

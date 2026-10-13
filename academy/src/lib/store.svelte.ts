@@ -19,13 +19,15 @@ export interface Saved {
   exams: Record<string, ExamRecord>;
   last: { topic: string; tab: 'dars' | 'mashq'; ex: number } | null;
   playground: string;
+  notes: Record<string, string>;       // topic id → the learner's own notes
+  sideCollapsed: boolean;
   createdAt: number;
 }
 
 function fresh(): Saved {
   return {
     v: VERSION, name: '', theme: 'dark', solved: {}, revealed: {}, attempts: {}, drafts: {}, read: {},
-    xp: 0, activity: {}, exams: {}, last: null,
+    xp: 0, activity: {}, exams: {}, last: null, notes: {}, sideCollapsed: false,
     playground: '# Bu yerda erkin tajriba qiling\nism = input("Ismingiz: ")\nfor i in range(3):\n    print(f"{i + 1}. Salom, {ism}!")\n',
     createdAt: Date.now(),
   };
@@ -141,7 +143,7 @@ export function setTheme(t: 'dark' | 'light') {
 }
 
 export function resetProgress() {
-  const keep = { name: app.saved.name, theme: app.saved.theme };
+  const keep = { name: app.saved.name, theme: app.saved.theme, notes: app.saved.notes, sideCollapsed: app.saved.sideCollapsed };
   app.saved = { ...fresh(), ...keep };
   try { localStorage.setItem(KEY, JSON.stringify(app.saved)); } catch { /* ignore */ }
 }

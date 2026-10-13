@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { app } from './lib/store.svelte';
+  import { app, save } from './lib/store.svelte';
   import { nav } from './lib/nav.svelte';
   import { hasBridge, bridge, type LicenseStatus } from './lib/license';
   import { warmUp } from './lib/python.svelte';
@@ -36,10 +36,20 @@
     setTimeout(() => warmUp().catch(() => {}), 600);
   }
 
+  function toggleSide() {
+    app.saved.sideCollapsed = !app.saved.sideCollapsed;
+    save();
+  }
+
   function onKey(e: KeyboardEvent) {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k' && phase === 'app') {
+    if (!(e.ctrlKey || e.metaKey) || phase !== 'app') return;
+    const k = e.key.toLowerCase();
+    if (k === 'k') {
       e.preventDefault();
       search = !search;
+    } else if (k === 'b' && !(e.target as HTMLElement)?.closest?.('.cm-editor, input, textarea')) {
+      e.preventDefault();
+      toggleSide();
     }
   }
 </script>
@@ -51,8 +61,14 @@
 {:else if phase === 'gate'}
   <Gate {status} onDone={() => { phase = 'app'; startPython(); }} />
 {:else}
-  <div class="shell">
-    <Sidebar onSearch={() => (search = true)} />
+  <div class="shell" class:collapsed={app.saved.sideCollapsed}>
+    {#if app.saved.sideCollapsed}
+      <button class="reopen" onclick={toggleSide} title="Yon panelni ochish (Ctrl+B)" aria-label="Yon panelni ochish">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+    {:else}
+      <Sidebar onSearch={() => (search = true)} onCollapse={toggleSide} />
+    {/if}
     <main>
       {#if nav.route.name === 'home'}
         <Home />
@@ -77,6 +93,14 @@
   .boot { position: fixed; inset: 0; display: grid; place-items: center; background: var(--bg); animation: breathe 1.4s ease-in-out infinite; }
   @keyframes breathe { 50% { opacity: 0.6; transform: scale(0.97); } }
   .shell { display: grid; grid-template-columns: var(--side) minmax(0, 1fr); height: 100vh; }
+  .shell.collapsed { grid-template-columns: minmax(0, 1fr); }
+  .reopen {
+    position: fixed; z-index: 20; top: 0.9rem; left: 0.9rem; width: 2.5rem; height: 2.5rem; display: grid; place-items: center;
+    border-radius: 0.75rem; border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 88%, transparent);
+    backdrop-filter: blur(8px); color: var(--text-2); box-shadow: 0 0.5rem 1.4rem rgb(0 0 0 / 0.2);
+  }
+  .reopen:hover { color: var(--text); border-color: var(--lapis); }
+  .reopen svg { width: 1.2rem; height: 1.2rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
   main {
     height: 100vh; overflow-y: auto; overflow-x: hidden;
     background:

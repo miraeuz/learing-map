@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { sections, BANDS } from '../lib/course';
+  import { sections, bandOf } from '../lib/course';
   import { app, topicProgress } from '../lib/store.svelte';
   import { go } from '../lib/nav.svelte';
   import Ring from './Ring.svelte';
@@ -28,7 +28,7 @@
       <article class:passed={r?.passed}>
         <span class="emo">{s.emoji}</span>
         <div class="info">
-          <small>{s.num}-boʻlim · {BANDS[s.num].label}</small>
+          <small>{s.num}-boʻlim · {bandOf(s.num).label}</small>
           <h3>{s.title}</h3>
           <p>{rd < 0.5 ? `Tavsiya: avval darslarni oʻqing (${Math.round(rd * 100)}% oʻqilgan)` : `${Math.round(rd * 100)}% darslar oʻqilgan — tayyorsiz!`}</p>
         </div>

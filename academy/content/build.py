@@ -26,13 +26,17 @@ sys.path.insert(0, HERE)
 import dsl  # noqa: E402
 from sources.judges import ACMP, CSES  # noqa: E402
 
-COURSE_FILES = ["s2_asoslar", "s3_operatorlar", "s4_oqim", "s5_funksiyalar", "s6_tuzilmalar", "s6b_tuzilmalar", "s7_istisnolar"]
+COURSE_FILES = [
+    "s2_asoslar", "s3_operatorlar", "s4_oqim", "s5_funksiyalar", "s6_tuzilmalar", "s6b_tuzilmalar", "s7_istisnolar",
+    "s8_oop", "s9_modullar", "s10_stdlib", "s10b_stdlib", "s11_paketlar", "s12_paketlar", "s13_django",
+]
 EX_PER_TOPIC = 20
 
 H = runpy.run_path(os.path.join(ROOT, "public", "harness.py"))
 EXERCISM = json.load(open(os.path.join(HERE, "sources", "exercism.json"), encoding="utf-8"))
 LC = json.load(open(os.path.join(HERE, "sources", "leetcode.json"), encoding="utf-8"))
 LC_SLUGS = set(LC["slugs"])
+DOCS = json.load(open(os.path.join(HERE, "sources", "docs.json"), encoding="utf-8"))
 
 errors = []
 
@@ -54,9 +58,9 @@ def time_limit(sec):
         signal.signal(signal.SIGALRM, old)
 
 
-def run(code, stdin=""):
+def run(code, stdin="", files=None):
     with time_limit(5):
-        r = json.loads(H["run_program"](code, stdin))
+        r = json.loads(H["run_program"](code, stdin, json.dumps(files or [])))
     return r["stdout"], r["error"]
 
 
@@ -69,10 +73,17 @@ def shown_output(code, stdin=""):
 
 # ---------- inline + lesson markdown ----------
 def inline(text):
+    """Escape HTML, then `code` and **bold**. Code spans are protected so `**kwargs` or `2 ** n` stay intact."""
     s = html.escape(text.strip(), quote=False)
-    s = re.sub(r"`([^`]+)`", lambda m: f"<code>{m.group(1)}</code>", s)
+    codes = []
+
+    def keep(m):
+        codes.append(m.group(1))
+        return f"\x00{len(codes) - 1}\x00"
+
+    s = re.sub(r"`([^`]+)`", keep, s)
     s = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", s)
-    return s
+    return re.sub(r"\x00(\d+)\x00", lambda m: f"<code>{codes[int(m.group(1))]}</code>", s)
 
 
 def parse_lesson(body, where):
@@ -80,6 +91,8 @@ def parse_lesson(body, where):
     lines = body.strip("\n").split("\n")
     i = 0
     para = []
+
+    pending_files = []
 
     def flush():
         if para:
@@ -99,13 +112,23 @@ def parse_lesson(body, where):
                 i += 1
             i += 1
             src = "\n".join(code)
+            lang = (info.split() or ["py"])[0]
+            mfile = re.search(r"file=(\S+)", info)
+            if mfile:
+                # A helper file shown as a tab next to the following runnable block.
+                pending_files.append({"name": mfile.group(1), "code": src})
+                continue
+            if lang not in ("py", "python"):
+                blocks.append({"t": "code", "code": src, "stdin": "", "norun": True, "lang": lang, "files": []})
+                continue
             norun = "norun" in info
             m = re.search(r'input="([^"]*)"', info) or re.search(r"input=(.*)$", info)
             stdin = m.group(1).replace("|", "\n") + "\n" if m else ""
-            blk = {"t": "code", "code": src, "stdin": stdin, "norun": norun}
+            files, pending_files[:] = list(pending_files), []
+            blk = {"t": "code", "code": src, "stdin": stdin, "norun": norun, "lang": "py", "files": files}
             if not norun:
                 try:
-                    out, err = run(src, stdin)
+                    out, err = run(src, stdin, files)
                 except Timeout:
                     errors.append(f"{where}: lesson code timed out:\n{src}")
                     out, err = "", None
@@ -148,6 +171,8 @@ def parse_lesson(body, where):
             para.append(s)
         i += 1
     flush()
+    if pending_files:
+        errors.append(f"{where}: file= block(s) not followed by a runnable code block")
     return blocks
 
 
@@ -186,19 +211,65 @@ def build_concept(e, eid):
 
 
 def func_name(sol):
-    m = re.search(r"^def (\w+)\(", sol, re.M)
+    m = re.search(r"^(?:def|class) (\w+)\b", sol, re.M)
     return m.group(1) if m else None
+
+
+def skeleton(sol):
+    """Starter code: keep class/def headers (and decorators), replace every body with a placeholder."""
+    lines = sol.split("\n")
+    out = []
+
+    def indent(ln):
+        return len(ln) - len(ln.lstrip())
+
+    imports = [ln for ln in lines if ln.startswith(("import ", "from "))]
+    in_def = None  # indent of the def whose body we are skipping
+    for i, ln in enumerate(lines):
+        st = ln.lstrip()
+        if in_def is not None and st and indent(ln) > in_def:
+            continue  # inside a function body: helpers there are the student's job
+        if st:
+            in_def = None
+        is_head = st.startswith(("class ", "def ")) and st.rstrip().endswith(":")
+        is_deco = st.startswith("@")
+        if not (is_head or is_deco):
+            continue
+        prev_deco = out and out[-1].lstrip().startswith("@")
+        if not prev_deco and out and out[-1].strip() and not out[-1].rstrip().endswith(":"):
+            if not indent(ln):
+                out.append("")
+            out.append("")
+        out.append(ln)
+        if is_deco:
+            continue
+        ind = " " * indent(ln)
+        if st.startswith("def "):
+            out += [ind + "    # Kodingizni shu yerga yozing", ind + "    pass"]
+            in_def = indent(ln)
+        else:
+            body = []
+            for l in lines[i + 1:]:
+                if l.strip() and indent(l) <= indent(ln):
+                    break
+                body.append(l)
+            if not any(l.lstrip().startswith("def ") for l in body):
+                out.append(ind + "    pass")
+    if imports:
+        out = imports + ["", ""] + out
+    return "\n".join(out) + "\n"
 
 
 def build_func(e, eid):
     sol = e["solution"]
     name = func_name(sol)
     if not name:
-        errors.append(f"{eid}: solution has no def")
+        errors.append(f"{eid}: solution has no def/class")
         return None
     tests = []
     # One sequential run so stateful tasks (global counters etc.) get consistent expectations.
-    res = json.loads(H["check_function"](sol, json.dumps([{"call": c, "expect": "None"} for c in e["calls"]])))
+    files = json.dumps(e.get("files") or [])
+    res = json.loads(H["check_function"](sol, json.dumps([{"call": c, "expect": "None"} for c in e["calls"]]), files))
     if res["error"]:
         errors.append(f"{eid}: solution failed to load: {res['error']}")
         return None
@@ -208,18 +279,18 @@ def build_func(e, eid):
         else:
             tests.append({"call": call, "expect": r["got"]})
     # Solution must pass its own tests (catches non-determinism).
-    chk = json.loads(H["check_function"](sol, json.dumps(tests)))
+    chk = json.loads(H["check_function"](sol, json.dumps(tests), files))
     if not all(t["ok"] for t in chk["results"]):
         errors.append(f"{eid}: solution does not pass its own tests: {chk['results']}")
-    defline = re.search(r"^def .*:$", sol, re.M).group(0)
-    starter = e["starter"] or f"{defline}\n    # Kodingizni shu yerga yozing\n    pass\n"
-    chk2 = json.loads(H["check_function"](starter, json.dumps(tests)))
+    starter = e["starter"] or skeleton(sol)
+    chk2 = json.loads(H["check_function"](starter, json.dumps(tests), files))
     if not chk2["error"] and all(t["ok"] for t in chk2["results"]):
         errors.append(f"{eid}: starter already passes all tests")
     if len(tests) < 3:
         errors.append(f"{eid}: function task needs at least 3 test calls")
     return {"kind": "func", "title": e["title"], "prompt": inline(e["prompt"]), "starter": starter, "tests": tests,
-            "solution": sol, "hint": inline(e["hint"]) if e["hint"] else None, "lv": e["lv"], "name": name}
+            "solution": sol, "hint": inline(e["hint"]) if e["hint"] else None, "lv": e["lv"], "name": name,
+            "files": e.get("files") or []}
 
 
 def build_prog(e, eid):
@@ -227,18 +298,19 @@ def build_prog(e, eid):
     tests = []
     for stdin in e["stdins"]:
         stdin_n = stdin + "\n"
-        out, err = run(sol, stdin_n)
+        out, err = run(sol, stdin_n, e.get("files"))
         if err:
             errors.append(f"{eid}: solution raised {err} for stdin {stdin!r}")
         if not out.strip():
             errors.append(f"{eid}: solution printed nothing for stdin {stdin!r}")
         tests.append({"stdin": stdin_n, "expect": out})
     starter = e["starter"] if e["starter"] is not None else "# Kodingizni shu yerga yozing\n"
-    chk = json.loads(H["check_program"](starter, json.dumps(tests)))
+    chk = json.loads(H["check_program"](starter, json.dumps(tests), json.dumps(e.get("files") or [])))
     if all(t["ok"] for t in chk["results"]):
         errors.append(f"{eid}: starter already passes all tests")
     return {"kind": "prog", "title": e["title"], "prompt": inline(e["prompt"]), "starter": starter, "tests": tests,
-            "solution": sol, "hint": inline(e["hint"]) if e["hint"] else None, "lv": e["lv"]}
+            "solution": sol, "hint": inline(e["hint"]) if e["hint"] else None, "lv": e["lv"],
+            "files": e.get("files") or []}
 
 
 SITE_NAMES = {"exercism": "Exercism", "lc": "LeetCode", "cses": "CSES", "acmp": "acmp.ru"}
@@ -263,6 +335,14 @@ def build_link(e, eid):
         if ref not in ACMP:
             errors.append(f"{eid}: unknown acmp id {ref}")
         url, title = f"https://acmp.ru/index.asp?main=task&id_task={ref}", e["title"] or ACMP.get(ref, str(ref))
+    elif site == "docs":
+        d = DOCS.get(ref)
+        if not d:
+            errors.append(f"{eid}: unverified docs page {ref}")
+            return None
+        url, title = d["url"], e["title"] or d["title"]
+        return {"kind": "link", "site": "docs", "siteName": d["site"], "title": title, "url": url,
+                "note": inline(e["note"]) if e["note"] else None, "lv": 2}
     else:
         errors.append(f"{eid}: unknown site {site}")
         return None

@@ -30,13 +30,17 @@ Shrift: Nunito (SIL Open Font License, `assets/fonts/OFL.txt`).
 Python'ni noldan oʻrgatuvchi kompyuter ilovasi (Windows, macOS, Linux). Svelte + Electron,
 Python kodi ilova ichida **internetsiz** ishlaydi (Pyodide, Python 3.14).
 
-- 6 boʻlim (2–7): Python asoslari, operatorlar, boshqaruv oqimi, funksiyalar,
-  maʼlumotlar tuzilmalari, istisnolar — **65 mavzu, 1 300 mashq**.
+- 12 boʻlim (2–13): Python asoslari, operatorlar, boshqaruv oqimi, funksiyalar,
+  maʼlumotlar tuzilmalari, istisnolar, OOP, modullar va paketlar, standart kutubxona,
+  PyPI va virtual muhitlar, mashhur paketlar (API, scraping, PDF, Excel, NumPy) va Django —
+  **123 mavzu, 2 460 mashq**.
 - Har bir mavzu: qisqa dars + jonli kod misollari (oʻzgartirib ishga tushirish mumkin) + 20 mashq:
   natijani topish, savollar, funksiya/dastur yozish (avtomatik testlar bilan) va online masalalar
-  (Exercism, LeetCode, CSES, acmp.ru).
+  (Exercism, LeetCode, CSES, acmp.ru) hamda rasmiy hujjatlar (Python, Django, pip...).
+- Koʻp faylli topshiriqlar: yordamchi modullar va maʼlumot fayllari alohida tablarda.
 - Boʻlim imtihonlari (taymer, 70% oʻtish bali), XP va darajalar, faollik xaritasi, kod maydoni,
-  qidiruv (Ctrl K), tungi/kunduzgi mavzu, zaxira nusxa.
+  qidiruv (Ctrl K, mavzular va mashqlar), har mavzu uchun shaxsiy qaydlar, yigʻiladigan yon panel
+  (Ctrl B), tungi/kunduzgi mavzu, zaxira nusxa.
 - Telegram orqali bir martalik faollashtirish (ICPC yoʻli bilan bir xil, `TELEGRAM_BOT_TOKEN` secret).
 
 Oʻrnatuvchilar: **Actions → Build Mirae Academy → Artifacts**.

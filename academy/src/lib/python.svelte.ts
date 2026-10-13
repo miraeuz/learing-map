@@ -84,13 +84,16 @@ async function call<T>(op: string, payload: Record<string, unknown>, timeoutMs: 
   return { ...result, ms };
 }
 
-export const runCode = (code: string, stdin = '', timeoutMs = 6000) => call<RunResult>('run', { code, stdin }, timeoutMs);
+export interface PyFile { name: string; code: string }
 
-export const checkFunction = (code: string, tests: { call: string; expect?: string; raises?: string }[]) =>
-  call<CheckResult>('func', { code, tests }, 8000);
+export const runCode = (code: string, stdin = '', timeoutMs = 6000, files: PyFile[] = []) =>
+  call<RunResult>('run', { code, stdin, files }, timeoutMs);
 
-export const checkProgram = (code: string, tests: { stdin: string; expect: string }[]) =>
-  call<CheckResult>('prog', { code, tests }, 8000);
+export const checkFunction = (code: string, tests: { call: string; expect?: string; raises?: string }[], files: PyFile[] = []) =>
+  call<CheckResult>('func', { code, tests, files }, 8000);
+
+export const checkProgram = (code: string, tests: { stdin: string; expect: string }[], files: PyFile[] = []) =>
+  call<CheckResult>('prog', { code, tests, files }, 8000);
 
 /** Uzbek explanations for the most common Python errors. */
 export function explainError(e: PyError | null): string {
@@ -108,6 +111,23 @@ export function explainError(e: PyError | null): string {
     EOFError: 'input() uchun kirish maʼlumoti yetmadi — "Kirish" maydoniga qiymat yozing.',
     RecursionError: 'Rekursiya juda chuqur: funksiya oʻzini toʻxtamasdan chaqiryapti.',
     Timeout: 'Vaqt tugadi: kod juda uzoq ishladi.',
+    ModuleNotFoundError: 'Modul topilmadi: nomini tekshiring. Bu yerda faqat standart kutubxona va mashqqa berilgan yordamchi fayllar mavjud (pip paketlari — kompyuteringizda).',
+    ImportError: 'Import xatosi: modul topildi, lekin undan soʻralgan nom yoʻq (yoki aylanma import).',
+    FileNotFoundError: 'Fayl topilmadi: nomi va papkasini tekshiring. Joriy papkadagi fayllarni koʻrish uchun os.listdir() dan foydalaning.',
+    FileExistsError: 'Fayl yoki papka allaqachon mavjud: exist_ok=True yoki boshqa nom ishlating.',
+    IsADirectoryError: 'Bu papka, fayl emas: open() faqat fayllarni ochadi.',
+    PermissionError: 'Ruxsat yoʻq: bu faylni oʻqish yoki yozish mumkin emas.',
+    OSError: 'Operatsion tizim xatosi: fayl, papka yoki tizim bilan ishlashda muammo.',
+    UnicodeDecodeError: 'Kodlash xatosi: faylni encoding="utf-8" bilan oching yoki bayt rejimida oʻqing.',
+    JSONDecodeError: 'JSON notoʻgʻri: qoʻshtirnoqlar ("..."), vergullar va qavslarni tekshiring.',
+    OperationalError: 'Maʼlumotlar bazasi xatosi: SQL soʻrovi, jadval yoki ustun nomini tekshiring.',
+    IntegrityError: 'Bazaning cheklovi buzildi: masalan, NOT NULL maydon boʻsh yoki UNIQUE qiymat takrorlandi.',
+    AssertionError: 'Tekshiruv (assert) bajarilmadi: kutilgan shart yolgʻon chiqdi.',
+    NotImplementedError: 'Metod hali yozilmagan: voris sinfda uni albatta qayta yozing.',
+    StopIteration: 'Iterator tugadi: next() uchun boshqa element qolmadi.',
+    UnboundLocalError: 'Lokal oʻzgaruvchi qiymat olishidan oldin ishlatildi: tashqi oʻzgaruvchi uchun global/nonlocal kerak boʻlishi mumkin.',
+    OverflowError: 'Son juda katta: natija bu tur uchun chegaradan oshdi.',
+    TimeoutError: 'Kutish vaqti tugadi.',
   };
   return map[e.type] ?? '';
 }

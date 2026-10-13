@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { topicById, sectionOf, neighbours, BANDS, KIND_LABEL, exTitle } from '../lib/course';
-  import { app, topicProgress, markRead } from '../lib/store.svelte';
+  import { topicById, sectionOf, neighbours, bandOf, KIND_LABEL, exTitle } from '../lib/course';
+  import { app, topicProgress, markRead, save } from '../lib/store.svelte';
   import { nav, openTopic, go } from '../lib/nav.svelte';
   import Lesson from './Lesson.svelte';
   import ExQuiz from './ExQuiz.svelte';
@@ -14,7 +14,7 @@
   const sec = $derived(sectionOf(id));
   const nb = $derived(neighbours(id));
   const prog = $derived(topicProgress(id));
-  const band = $derived(BANDS[sec.num]);
+  const band = $derived(bandOf(sec.num));
   const cur = $derived(topic.ex[Math.min(ex, topic.ex.length - 1)]);
   const headings = $derived(topic.blocks.map((b, i) => ({ b, i })).filter((x) => x.b.t === 'h') as { b: { t: 'h'; text: string }; i: number }[]);
 
@@ -109,6 +109,21 @@
               <li><button onclick={() => jump(h.i)}>{h.b.text}</button></li>
             {/each}
           </ol>
+        </div>
+        <div class="rail-card notes">
+          <h4>📝 Mening qaydlarim</h4>
+          <textarea
+            rows="5"
+            placeholder="Muhim fikrlar, savollar, eslatmalar… Faqat shu kompyuterda saqlanadi."
+            value={app.saved.notes[id] ?? ''}
+            oninput={(e) => {
+              const v = (e.currentTarget as HTMLTextAreaElement).value;
+              if (v.trim()) app.saved.notes[id] = v;
+              else delete app.saved.notes[id];
+              save();
+            }}
+          ></textarea>
+          {#if app.saved.notes[id]}<small>✓ Saqlandi</small>{/if}
         </div>
         <div class="rail-card tipc">
           <h4>⌨️ Maslahat</h4>
@@ -216,6 +231,9 @@
   .rail-card ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.15rem; counter-reset: h; }
   .rail-card li button { width: 100%; text-align: left; border: 0; background: none; padding: 0.35rem 0.5rem; border-radius: 0.45rem; color: var(--text-2); font-size: 0.9rem; line-height: 1.35; }
   .rail-card li button:hover { background: var(--surface-2); color: var(--text); }
+  .notes textarea { width: 100%; resize: vertical; min-height: 6.5rem; padding: 0.6rem 0.7rem; border-radius: var(--r-s); border: 1px solid var(--line); background: var(--bg-2); color: var(--text); font: 0.9rem/1.5 var(--body, inherit); }
+  .notes textarea:focus { outline: none; border-color: var(--lapis); box-shadow: 0 0 0 3px rgb(74 116 255 / 0.15); }
+  .notes small { font-size: 0.75rem; color: var(--turq); }
   .tipc p { margin: 0; font-size: 0.88rem; color: var(--text-2); line-height: 1.55; }
 
   .practice { display: grid; gap: 1rem; }

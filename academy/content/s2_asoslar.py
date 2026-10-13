@@ -336,7 +336,7 @@ print("Toʻlov:", jami, "soʻm")
     Q("`input()` qanday turdagi qiymat qaytaradi?", "Har doim satr (str)", "Har doim butun son (int)", "Foydalanuvchi nima yozsa, oʻsha tur", "Mantiqiy qiymat (bool)"),
     PR("Almashtirish", "Kirishda ism. Uni `ism` oʻzgaruvchisiga saqlang va `Salom, ISM` chiqaring (vergul va boʻsh joy bilan).", 'ism = input()\nprint("Salom,", ism)', "Ali", "Madina", "Sherzod"),
     PR("Yosh", "Kirishda tugʻilgan yil. 2026-yildagi yoshni chiqaring.", "yil = int(input())\nprint(2026 - yil)", "2009", "1990", "2026"),
-    PR("Doiraning uzunligi", "Kirishda radius (butun son). Aylana uzunligini `2 * 3.14 * r` formula bilan chiqaring.", "r = int(input())\nprint(2 * 3.14 * r)", "1", "5", "10"),
+    PR("Doiraning uzunligi", "Kirishda radius (butun son). Aylana uzunligini `2 * 3.14 * r` formula bilan hisoblang va `round(..., 2)` bilan 2 xonagacha yaxlitlab chiqaring.", "r = int(input())\nprint(round(2 * 3.14 * r, 2))", "1", "5", "10"),
     PR("Chegirma", "Kirishda narx (soʻm). 20% chegirmadan keyingi narxni butun son qilib chiqaring: `narx - narx * 20 // 100`.", "narx = int(input())\nprint(narx - narx * 20 // 100)", "100000", "35000", "999"),
     PR("Oylik toʻlov", "Kirishda telefon narxi va oylar soni (ikki qator). Oylik toʻlovni chiqaring: narx / oylar.", "narx = int(input())\noy = int(input())\nprint(narx / oy)", "3600000\n12", "1000000\n4", "500000\n3"),
     PR("Taksi", "Kirishda masofa (km). Narx: 6000 soʻm oʻtirish + har km uchun 2500 soʻm. Jami narxni chiqaring.", "km = int(input())\nprint(6000 + km * 2500)", "0", "4", "15"),

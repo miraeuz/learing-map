@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { sections, course, BANDS, allTopics, sectionOf } from '../lib/course';
+  import { sections, course, bandOf, allTopics, sectionOf } from '../lib/course';
   import { app, levelOf, streak, solvedCount, nextTopic, topicProgress, today, uzDate } from '../lib/store.svelte';
   import { go, openTopic } from '../lib/nav.svelte';
   import Ring from './Ring.svelte';
@@ -124,7 +124,7 @@
   <section class="grid">
     {#each sections as s, i}
       {@const ss = secStats(s.num)}
-      {@const band = BANDS[s.num]}
+      {@const band = bandOf(s.num)}
       {@const ex = app.saved.exams[s.num]}
       <article class="sec">
         <button class="sec-main" onclick={() => openTopic(s.topics.find((t) => topicProgress(t.id).pct < 1)?.id ?? s.topics[0].id)}>

@@ -1,11 +1,12 @@
 <script lang="ts">
   import { untrack, tick } from 'svelte';
   import type { CodeEx } from '../lib/course';
-  import { xpFor } from '../lib/course';
+  import { xpFor, langOfFile } from '../lib/course';
   import { app, markSolved, addAttempt, markRevealed, setDraft, toast } from '../lib/store.svelte';
   import { runCode, checkFunction, checkProgram, py, type PyError, type TestResult } from '../lib/python.svelte';
   import CodeEditor from './CodeEditor.svelte';
   import Output from './Output.svelte';
+  import FileTabs from './FileTabs.svelte';
 
   let { ex, onNext }: { ex: CodeEx; onNext?: () => void } = $props();
 
@@ -20,6 +21,8 @@
   let showSol = $state(false);
   let justSolved = $state(false);
   let resultsEl = $state<HTMLElement | null>(null);
+  let tab = $state(-1);
+  const files = $derived(ex.files ?? []);
 
   const solved = $derived(!!app.saved.solved[ex.id]);
   const attempts = $derived(app.saved.attempts[ex.id] ?? 0);
@@ -43,7 +46,8 @@
     busy = 'run';
     results = null;
     loadError = null;
-    const r = await runCode(code, stdin + '\n');
+    tab = -1;
+    const r = await runCode(code, stdin + '\n', 6000, $state.snapshot(files));
     run = { stdout: r.stdout, error: r.error, ms: r.ms };
     busy = '';
   }
@@ -53,7 +57,9 @@
     busy = 'check';
     run = null;
     loadError = null;
-    const r = ex.kind === 'func' ? await checkFunction(code, ex.tests) : await checkProgram(code, ex.tests);
+    tab = -1;
+    const fs = $state.snapshot(files);
+    const r = ex.kind === 'func' ? await checkFunction(code, ex.tests, fs) : await checkProgram(code, ex.tests, fs);
     busy = '';
     if (r.error) {
       loadError = r.error;
@@ -128,6 +134,12 @@
         👁 {showSol ? 'Yechimni yashirish' : 'Yechimni koʻrish'}
       </button>
     </div>
+    {#if files.length}
+      <div class="given">
+        <span>📎</span>
+        <p>Yordamchi fayllar tayyor: {#each files as f, i}<button class="fname" onclick={() => (tab = i)}>{f.name}</button>{i < files.length - 1 ? ', ' : ''}{/each}. Ular kodingiz yonida turadi — <code>import</code> qilish yoki <code>open()</code> bilan oʻqish mumkin.</p>
+      </div>
+    {/if}
     {#if showHint && ex.hint}<div class="hint">{@html ex.hint}</div>{/if}
     {#if showSol}
       <div class="sol">
@@ -143,12 +155,22 @@
   <section class="work">
     <div class="ed">
       <div class="ed-head">
-        <span class="file">{ex.kind === 'func' ? `${ex.name}.py` : 'main.py'}</span>
+        {#if files.length}
+          <FileTabs {files} mainName={ex.kind === 'func' ? `${ex.name}.py` : 'main.py'} bind:active={tab} />
+        {:else}
+          <span class="file">{ex.kind === 'func' ? `${ex.name}.py` : 'main.py'}</span>
+        {/if}
         {#if solved}<span class="done">✓ Yechilgan</span>{/if}
         <span class="sp"></span>
         <button class="ic" onclick={resetCode} title="Boshidan boshlash">↺</button>
       </div>
-      <CodeEditor bind:value={code} minLines={9} maxHeight="26rem" errorLine={errLine} onRun={doRun} onCheck={doCheck} />
+      {#if tab >= 0 && files[tab]}
+        <div class="ro-note">🔒 <b>{files[tab].name}</b> — yordamchi fayl, faqat oʻqish uchun. Kodingizga qaytish uchun birinchi tabni bosing.</div>
+        {#key tab}<CodeEditor value={files[tab].code} readonly lang={langOfFile(files[tab].name)} minLines={9} maxHeight="26rem" />{/key}
+      {/if}
+      <div style:display={tab >= 0 ? 'none' : null}>
+        <CodeEditor bind:value={code} minLines={9} maxHeight="26rem" errorLine={errLine} onRun={doRun} onCheck={doCheck} />
+      </div>
       {#if needsInput}
         <label class="stdin">
           <span>Kirish:</span>
@@ -239,6 +261,13 @@
   .ed { border-radius: var(--r-l); overflow: hidden; border: 1px solid var(--code-line); background: var(--code-bg); box-shadow: 0 1rem 2.4rem rgb(0 0 0 / 0.22); }
   .ed-head { display: flex; align-items: center; gap: 0.6rem; padding: 0.4rem 0.5rem 0.4rem 1rem; border-bottom: 1px solid var(--code-line); }
   .file { font: 0.8rem var(--mono); color: #8fa0d8; }
+  .ed-head :global(.tabs) { flex: 0 1 auto; }
+  .ro-note { padding: 0.5rem 1rem; font-size: 0.8rem; color: #f7bd46; background: rgb(247 189 70 / 0.08); border-bottom: 1px solid var(--code-line); }
+  .given { display: flex; gap: 0.6rem; align-items: flex-start; padding: 0.7rem 0.9rem; border-radius: var(--r-m); background: rgb(57 220 200 / 0.08); border: 1px solid rgb(57 220 200 / 0.25); font-size: 0.9rem; line-height: 1.55; color: var(--text-2); }
+  .given p { margin: 0; }
+  .given code { font-size: 0.9em; color: var(--turq); }
+  .fname { border: 0; padding: 0 0.15rem; background: none; font: 600 0.88rem var(--mono); color: var(--turq); text-decoration: underline dotted; text-underline-offset: 3px; }
+  .fname:hover { color: var(--text); }
   .done { font-size: 0.75rem; padding: 0.15rem 0.5rem; border-radius: 1rem; background: rgb(57 220 200 / 0.15); color: #39dcc8; font-weight: 600; }
   .sp { flex: 1; }
   .ic { width: 2rem; height: 2rem; border-radius: 0.5rem; border: 0; background: none; color: #7381b4; font-size: 1.05rem; }

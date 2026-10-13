@@ -1,0 +1,566 @@
+{
+ "py-classes": {
+  "url": "https://docs.python.org/3/tutorial/classes.html",
+  "title": "Classes — rasmiy qoʻllanma",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/tutorial/classes.rst"
+ },
+ "py-datamodel": {
+  "url": "https://docs.python.org/3/reference/datamodel.html",
+  "title": "Data model: maxsus (magic) metodlar",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/reference/datamodel.rst"
+ },
+ "py-abc": {
+  "url": "https://docs.python.org/3/library/abc.html",
+  "title": "abc — abstrakt sinflar",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/abc.rst"
+ },
+ "py-dataclasses": {
+  "url": "https://docs.python.org/3/library/dataclasses.html",
+  "title": "dataclasses",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/dataclasses.rst"
+ },
+ "py-descriptor": {
+  "url": "https://docs.python.org/3/howto/descriptor.html",
+  "title": "Descriptor HowTo (property qanday ishlaydi)",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/howto/descriptor.rst"
+ },
+ "py-enum": {
+  "url": "https://docs.python.org/3/library/enum.html",
+  "title": "enum — sanab oʻtiladigan turlar",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/enum.rst"
+ },
+ "py-collections": {
+  "url": "https://docs.python.org/3/library/collections.html",
+  "title": "collections (UserDict, UserList)",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/collections.rst"
+ },
+ "py-modules": {
+  "url": "https://docs.python.org/3/tutorial/modules.html",
+  "title": "Modules — rasmiy qoʻllanma",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/tutorial/modules.rst"
+ },
+ "py-import": {
+  "url": "https://docs.python.org/3/reference/import.html",
+  "title": "Import tizimi",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/reference/import.rst"
+ },
+ "py-sys": {
+  "url": "https://docs.python.org/3/library/sys.html",
+  "title": "sys (sys.path, sys.argv)",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/sys.rst"
+ },
+ "py-main": {
+  "url": "https://docs.python.org/3/library/__main__.html",
+  "title": "__main__ — skript sifatida ishga tushirish",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/__main__.rst"
+ },
+ "py-compile": {
+  "url": "https://docs.python.org/3/library/py_compile.html",
+  "title": "py_compile (.pyc fayllar)",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/py_compile.rst"
+ },
+ "py-importlib": {
+  "url": "https://docs.python.org/3/library/importlib.html",
+  "title": "importlib",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/importlib.rst"
+ },
+ "py-pathlib": {
+  "url": "https://docs.python.org/3/library/pathlib.html",
+  "title": "pathlib — fayl yoʻllari",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/pathlib.rst"
+ },
+ "py-os": {
+  "url": "https://docs.python.org/3/library/os.html",
+  "title": "os",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/os.rst"
+ },
+ "py-shutil": {
+  "url": "https://docs.python.org/3/library/shutil.html",
+  "title": "shutil — fayl va kataloglar",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/shutil.rst"
+ },
+ "py-glob": {
+  "url": "https://docs.python.org/3/library/glob.html",
+  "title": "glob — fayllarni qidirish",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/glob.rst"
+ },
+ "py-inputoutput": {
+  "url": "https://docs.python.org/3/tutorial/inputoutput.html",
+  "title": "Input and Output (fayllar)",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/tutorial/inputoutput.rst"
+ },
+ "py-zipfile": {
+  "url": "https://docs.python.org/3/library/zipfile.html",
+  "title": "zipfile",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/zipfile.rst"
+ },
+ "py-csv": {
+  "url": "https://docs.python.org/3/library/csv.html",
+  "title": "csv",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/csv.rst"
+ },
+ "py-json": {
+  "url": "https://docs.python.org/3/library/json.html",
+  "title": "json",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/json.rst"
+ },
+ "py-sqlite3": {
+  "url": "https://docs.python.org/3/library/sqlite3.html",
+  "title": "sqlite3",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/sqlite3.rst"
+ },
+ "py-datetime": {
+  "url": "https://docs.python.org/3/library/datetime.html",
+  "title": "datetime",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/datetime.rst"
+ },
+ "py-time": {
+  "url": "https://docs.python.org/3/library/time.html",
+  "title": "time",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/time.rst"
+ },
+ "py-random": {
+  "url": "https://docs.python.org/3/library/random.html",
+  "title": "random",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/random.rst"
+ },
+ "py-secrets": {
+  "url": "https://docs.python.org/3/library/secrets.html",
+  "title": "secrets — xavfsiz tasodifiy qiymatlar",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/secrets.rst"
+ },
+ "py-webbrowser": {
+  "url": "https://docs.python.org/3/library/webbrowser.html",
+  "title": "webbrowser",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/webbrowser.rst"
+ },
+ "py-smtplib": {
+  "url": "https://docs.python.org/3/library/smtplib.html",
+  "title": "smtplib",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/smtplib.rst"
+ },
+ "py-email-examples": {
+  "url": "https://docs.python.org/3/library/email.examples.html",
+  "title": "email: misollar",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/email.examples.rst"
+ },
+ "py-string": {
+  "url": "https://docs.python.org/3/library/string.html",
+  "title": "string (Template)",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/string.rst"
+ },
+ "py-argparse": {
+  "url": "https://docs.python.org/3/library/argparse.html",
+  "title": "argparse",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/argparse.rst"
+ },
+ "py-argparse-howto": {
+  "url": "https://docs.python.org/3/howto/argparse.html",
+  "title": "Argparse Tutorial",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/howto/argparse.rst"
+ },
+ "py-subprocess": {
+  "url": "https://docs.python.org/3/library/subprocess.html",
+  "title": "subprocess",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/subprocess.rst"
+ },
+ "py-math": {
+  "url": "https://docs.python.org/3/library/math.html",
+  "title": "math",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/math.rst"
+ },
+ "py-statistics": {
+  "url": "https://docs.python.org/3/library/statistics.html",
+  "title": "statistics",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/statistics.rst"
+ },
+ "py-re": {
+  "url": "https://docs.python.org/3/library/re.html",
+  "title": "re — regular expressions",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/re.rst"
+ },
+ "py-regex-howto": {
+  "url": "https://docs.python.org/3/howto/regex.html",
+  "title": "Regular Expression HOWTO",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/howto/regex.rst"
+ },
+ "py-venv-tutorial": {
+  "url": "https://docs.python.org/3/tutorial/venv.html",
+  "title": "Virtual Environments and Packages",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/tutorial/venv.rst"
+ },
+ "py-venv": {
+  "url": "https://docs.python.org/3/library/venv.html",
+  "title": "venv",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/venv.rst"
+ },
+ "py-installing": {
+  "url": "https://docs.python.org/3/installing/index.html",
+  "title": "Installing Python Modules",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/installing/index.rst"
+ },
+ "py-pydoc": {
+  "url": "https://docs.python.org/3/library/pydoc.html",
+  "title": "pydoc",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/pydoc.rst"
+ },
+ "py-controlflow": {
+  "url": "https://docs.python.org/3/tutorial/controlflow.html",
+  "title": "Docstrings (More Control Flow Tools)",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/tutorial/controlflow.rst"
+ },
+ "py-urllib-parse": {
+  "url": "https://docs.python.org/3/library/urllib.parse.html",
+  "title": "urllib.parse",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/urllib.parse.rst"
+ },
+ "py-urllib-request": {
+  "url": "https://docs.python.org/3/library/urllib.request.html",
+  "title": "urllib.request",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/urllib.request.rst"
+ },
+ "py-html-parser": {
+  "url": "https://docs.python.org/3/library/html.parser.html",
+  "title": "html.parser",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/html.parser.rst"
+ },
+ "py-http-status": {
+  "url": "https://docs.python.org/3/library/http.html",
+  "title": "http (status kodlar)",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/http.rst"
+ },
+ "py-logging-howto": {
+  "url": "https://docs.python.org/3/howto/logging.html",
+  "title": "Logging HOWTO",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/howto/logging.rst"
+ },
+ "py-typing": {
+  "url": "https://docs.python.org/3/library/typing.html",
+  "title": "typing",
+  "site": "Python docs",
+  "source": "python/cpython/Doc/library/typing.rst"
+ },
+ "pkg-installing": {
+  "url": "https://packaging.python.org/en/latest/tutorials/installing-packages/",
+  "title": "Installing Packages",
+  "site": "Python Packaging",
+  "source": "pypa/packaging.python.org/source/tutorials/installing-packages.rst"
+ },
+ "pkg-managing": {
+  "url": "https://packaging.python.org/en/latest/tutorials/managing-dependencies/",
+  "title": "Managing Application Dependencies (Pipenv)",
+  "site": "Python Packaging",
+  "source": "pypa/packaging.python.org/source/tutorials/managing-dependencies.rst"
+ },
+ "pkg-publish": {
+  "url": "https://packaging.python.org/en/latest/tutorials/packaging-projects/",
+  "title": "Packaging Python Projects",
+  "site": "Python Packaging",
+  "source": "pypa/packaging.python.org/source/tutorials/packaging-projects.rst"
+ },
+ "pkg-pyproject": {
+  "url": "https://packaging.python.org/en/latest/guides/writing-pyproject-toml/",
+  "title": "Writing your pyproject.toml",
+  "site": "Python Packaging",
+  "source": "pypa/packaging.python.org/source/guides/writing-pyproject-toml.rst"
+ },
+ "pkg-venv-guide": {
+  "url": "https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/",
+  "title": "pip va virtual muhitlar",
+  "site": "Python Packaging",
+  "source": "pypa/packaging.python.org/source/guides/installing-using-pip-and-virtual-environments.rst"
+ },
+ "pip-user-guide": {
+  "url": "https://pip.pypa.io/en/stable/user_guide/",
+  "title": "pip User Guide",
+  "site": "pip docs",
+  "source": "pypa/pip/docs/html/user_guide.rst"
+ },
+ "pip-requirements": {
+  "url": "https://pip.pypa.io/en/stable/reference/requirements-file-format/",
+  "title": "Requirements file format",
+  "site": "pip docs",
+  "source": "pypa/pip/docs/html/reference/requirements-file-format.md"
+ },
+ "pipenv-basics": {
+  "url": "https://pipenv.pypa.io/en/latest/pipfile.html",
+  "title": "Pipfile va Pipfile.lock",
+  "site": "Pipenv docs",
+  "source": "pypa/pipenv/docs/pipfile.md"
+ },
+ "vscode-envs": {
+  "url": "https://code.visualstudio.com/docs/python/environments",
+  "title": "Python environments in VS Code",
+  "site": "VS Code docs",
+  "source": "microsoft/vscode-docs/docs/python/environments.md"
+ },
+ "vscode-python": {
+  "url": "https://code.visualstudio.com/docs/python/python-tutorial",
+  "title": "Python in VS Code",
+  "site": "VS Code docs",
+  "source": "microsoft/vscode-docs/docs/python/python-tutorial.md"
+ },
+ "requests-quickstart": {
+  "url": "https://requests.readthedocs.io/en/latest/user/quickstart/",
+  "title": "Requests: Quickstart",
+  "site": "Requests docs",
+  "source": "psf/requests/docs/user/quickstart.rst"
+ },
+ "numpy-beginners": {
+  "url": "https://numpy.org/doc/stable/user/absolute_beginners.html",
+  "title": "NumPy: the absolute basics for beginners",
+  "site": "NumPy docs",
+  "source": "numpy/numpy/doc/source/user/absolute_beginners.rst"
+ },
+ "numpy-quickstart": {
+  "url": "https://numpy.org/doc/stable/user/quickstart.html",
+  "title": "NumPy quickstart",
+  "site": "NumPy docs",
+  "source": "numpy/numpy/doc/source/user/quickstart.rst"
+ },
+ "selenium-first": {
+  "url": "https://www.selenium.dev/documentation/webdriver/getting_started/first_script/",
+  "title": "Selenium: birinchi skript",
+  "site": "Selenium docs",
+  "source": "SeleniumHQ/seleniumhq.github.io/website_and_docs/content/documentation/webdriver/getting_started/first_script.en.md"
+ },
+ "pypdf-extract": {
+  "url": "https://pypdf.readthedocs.io/en/stable/user/extract-text.html",
+  "title": "pypdf: matn ajratib olish",
+  "site": "pypdf docs",
+  "source": "py-pdf/pypdf/docs/user/extract-text.md"
+ },
+ "pypdf-merge": {
+  "url": "https://pypdf.readthedocs.io/en/stable/user/merging-pdfs.html",
+  "title": "pypdf: PDF birlashtirish",
+  "site": "pypdf docs",
+  "source": "py-pdf/pypdf/docs/user/merging-pdfs.md"
+ },
+ "dotenv": {
+  "url": "https://github.com/theskumar/python-dotenv",
+  "title": "python-dotenv",
+  "site": "GitHub",
+  "source": "theskumar/python-dotenv/README.md"
+ },
+ "dj-tut1": {
+  "url": "https://docs.djangoproject.com/en/stable/intro/tutorial01/",
+  "title": "Tutorial 1: loyiha va birinchi view",
+  "site": "Django docs",
+  "source": "django/django/docs/intro/tutorial01.txt"
+ },
+ "dj-tut2": {
+  "url": "https://docs.djangoproject.com/en/stable/intro/tutorial02/",
+  "title": "Tutorial 2: modellar va admin",
+  "site": "Django docs",
+  "source": "django/django/docs/intro/tutorial02.txt"
+ },
+ "dj-tut3": {
+  "url": "https://docs.djangoproject.com/en/stable/intro/tutorial03/",
+  "title": "Tutorial 3: view va shablonlar",
+  "site": "Django docs",
+  "source": "django/django/docs/intro/tutorial03.txt"
+ },
+ "dj-tut4": {
+  "url": "https://docs.djangoproject.com/en/stable/intro/tutorial04/",
+  "title": "Tutorial 4: formalar va generic view",
+  "site": "Django docs",
+  "source": "django/django/docs/intro/tutorial04.txt"
+ },
+ "dj-tut5": {
+  "url": "https://docs.djangoproject.com/en/stable/intro/tutorial05/",
+  "title": "Tutorial 5: testlar",
+  "site": "Django docs",
+  "source": "django/django/docs/intro/tutorial05.txt"
+ },
+ "dj-tut6": {
+  "url": "https://docs.djangoproject.com/en/stable/intro/tutorial06/",
+  "title": "Tutorial 6: statik fayllar",
+  "site": "Django docs",
+  "source": "django/django/docs/intro/tutorial06.txt"
+ },
+ "dj-tut7": {
+  "url": "https://docs.djangoproject.com/en/stable/intro/tutorial07/",
+  "title": "Tutorial 7: adminni sozlash",
+  "site": "Django docs",
+  "source": "django/django/docs/intro/tutorial07.txt"
+ },
+ "dj-urls": {
+  "url": "https://docs.djangoproject.com/en/stable/topics/http/urls/",
+  "title": "URL dispatcher",
+  "site": "Django docs",
+  "source": "django/django/docs/topics/http/urls.txt"
+ },
+ "dj-views": {
+  "url": "https://docs.djangoproject.com/en/stable/topics/http/views/",
+  "title": "Writing views",
+  "site": "Django docs",
+  "source": "django/django/docs/topics/http/views.txt"
+ },
+ "dj-shortcuts": {
+  "url": "https://docs.djangoproject.com/en/stable/topics/http/shortcuts/",
+  "title": "Shortcuts (render, get_object_or_404)",
+  "site": "Django docs",
+  "source": "django/django/docs/topics/http/shortcuts.txt"
+ },
+ "dj-models": {
+  "url": "https://docs.djangoproject.com/en/stable/topics/db/models/",
+  "title": "Models",
+  "site": "Django docs",
+  "source": "django/django/docs/topics/db/models.txt"
+ },
+ "dj-queries": {
+  "url": "https://docs.djangoproject.com/en/stable/topics/db/queries/",
+  "title": "Making queries (ORM)",
+  "site": "Django docs",
+  "source": "django/django/docs/topics/db/queries.txt"
+ },
+ "dj-migrations": {
+  "url": "https://docs.djangoproject.com/en/stable/topics/migrations/",
+  "title": "Migrations",
+  "site": "Django docs",
+  "source": "django/django/docs/topics/migrations.txt"
+ },
+ "dj-admin": {
+  "url": "https://docs.djangoproject.com/en/stable/ref/contrib/admin/index/",
+  "title": "Django admin site",
+  "site": "Django docs",
+  "source": "django/django/docs/ref/contrib/admin/index.txt"
+ },
+ "dj-templates": {
+  "url": "https://docs.djangoproject.com/en/stable/topics/templates/",
+  "title": "Templates",
+  "site": "Django docs",
+  "source": "django/django/docs/topics/templates.txt"
+ },
+ "dj-builtins": {
+  "url": "https://docs.djangoproject.com/en/stable/ref/templates/builtins/",
+  "title": "Built-in template tags and filters",
+  "site": "Django docs",
+  "source": "django/django/docs/ref/templates/builtins.txt"
+ },
+ "dj-request-response": {
+  "url": "https://docs.djangoproject.com/en/stable/ref/request-response/",
+  "title": "Request and response objects (JsonResponse)",
+  "site": "Django docs",
+  "source": "django/django/docs/ref/request-response.txt"
+ },
+ "dj-urlresolvers": {
+  "url": "https://docs.djangoproject.com/en/stable/ref/urlresolvers/",
+  "title": "reverse() va URL nomlari",
+  "site": "Django docs",
+  "source": "django/django/docs/ref/urlresolvers.txt"
+ },
+ "dj-deployment": {
+  "url": "https://docs.djangoproject.com/en/stable/howto/deployment/index/",
+  "title": "Deploying Django",
+  "site": "Django docs",
+  "source": "django/django/docs/howto/deployment/index.txt"
+ },
+ "dj-checklist": {
+  "url": "https://docs.djangoproject.com/en/stable/howto/deployment/checklist/",
+  "title": "Deployment checklist",
+  "site": "Django docs",
+  "source": "django/django/docs/howto/deployment/checklist.txt"
+ },
+ "dj-static": {
+  "url": "https://docs.djangoproject.com/en/stable/howto/static-files/index/",
+  "title": "Static files (CSS, rasm)",
+  "site": "Django docs",
+  "source": "django/django/docs/howto/static-files/index.txt"
+ },
+ "dj-settings": {
+  "url": "https://docs.djangoproject.com/en/stable/topics/settings/",
+  "title": "Django settings",
+  "site": "Django docs",
+  "source": "django/django/docs/topics/settings.txt"
+ },
+ "dj-install": {
+  "url": "https://docs.djangoproject.com/en/stable/intro/install/",
+  "title": "Django oʻrnatish",
+  "site": "Django docs",
+  "source": "django/django/docs/intro/install.txt"
+ },
+ "djgirls-intro": {
+  "url": "https://tutorial.djangogirls.org/en/django_start_project/",
+  "title": "Django Girls: birinchi loyiha",
+  "site": "Django Girls",
+  "source": "DjangoGirls/tutorial/en/django_start_project/README.md"
+ },
+ "djgirls-models": {
+  "url": "https://tutorial.djangogirls.org/en/django_models/",
+  "title": "Django Girls: modellar",
+  "site": "Django Girls",
+  "source": "DjangoGirls/tutorial/en/django_models/README.md"
+ },
+ "djgirls-templates": {
+  "url": "https://tutorial.djangogirls.org/en/django_templates/",
+  "title": "Django Girls: shablonlar",
+  "site": "Django Girls",
+  "source": "DjangoGirls/tutorial/en/django_templates/README.md"
+ },
+ "djgirls-css": {
+  "url": "https://tutorial.djangogirls.org/en/css/",
+  "title": "Django Girls: CSS va Bootstrap",
+  "site": "Django Girls",
+  "source": "DjangoGirls/tutorial/en/css/README.md"
+ },
+ "djgirls-deploy": {
+  "url": "https://tutorial.djangogirls.org/en/deploy/",
+  "title": "Django Girls: deploy",
+  "site": "Django Girls",
+  "source": "DjangoGirls/tutorial/en/deploy/README.md"
+ },
+ "djgirls-orm": {
+  "url": "https://tutorial.djangogirls.org/en/django_orm/",
+  "title": "Django Girls: ORM va QuerySet",
+  "site": "Django Girls",
+  "source": "DjangoGirls/tutorial/en/django_orm/README.md"
+ }
+}

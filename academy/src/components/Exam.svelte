@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy } from 'svelte';
-  import { sections, type QuizEx, type CodeEx } from '../lib/course';
+  import { sections, langOfFile, type QuizEx, type CodeEx } from '../lib/course';
   import { app, recordExam, toast } from '../lib/store.svelte';
   import { nav, go, openTopic } from '../lib/nav.svelte';
   import { checkFunction, checkProgram } from '../lib/python.svelte';
@@ -87,7 +87,8 @@
 
   async function check(q: Extract<Q, { kind: 'code' }>) {
     q.busy = true;
-    const r = q.ex.kind === 'func' ? await checkFunction(q.code, q.ex.tests) : await checkProgram(q.code, q.ex.tests);
+    const fs = $state.snapshot(q.ex.files ?? []);
+    const r = q.ex.kind === 'func' ? await checkFunction(q.code, q.ex.tests, fs) : await checkProgram(q.code, q.ex.tests, fs);
     q.busy = false;
     q.checked = true;
     q.passed = r.error ? 0 : r.results.filter((t) => t.ok).length;
@@ -160,6 +161,12 @@
           {@const q = cur}
           <h3>⌨ {q.ex.title} <small>· {CODE_PTS} ball</small></h3>
           <p class="prompt">{@html q.ex.prompt}</p>
+          {#each q.ex.files ?? [] as f (f.name)}
+            <details class="helper">
+              <summary>📎 Yordamchi fayl: <code>{f.name}</code> <small>(kodingiz yonida turadi)</small></summary>
+              <div class="code"><CodeEditor value={f.code} readonly lang={langOfFile(f.name)} minLines={1} maxHeight="14rem" /></div>
+            </details>
+          {/each}
           {#if q.ex.kind === 'func'}
             <div class="ex">{#each q.ex.tests.slice(0, 2) as t}<code>{t.call} → {t.raises ? t.raises + ' xatosi' : t.expect}</code>{/each}</div>
           {:else}
@@ -272,6 +279,10 @@
   .opts button.sel { border-color: var(--lapis); background: rgb(74 116 255 / 0.16); }
   .opts button.sel > span:first-child { background: var(--lapis); border-color: var(--lapis); color: #fff; }
   .prompt { margin: 0; color: var(--text-2); line-height: 1.6; }
+  .helper summary { cursor: pointer; font-size: 0.88rem; color: var(--text-2); padding: 0.3rem 0; }
+  .helper summary code { color: var(--turq); }
+  .helper summary small { color: var(--text-3); }
+  .helper .code { margin-top: 0.4rem; }
   .ex { display: grid; gap: 0.3rem; }
   .ex code { color: var(--turq); }
   .ed-foot { display: flex; align-items: center; gap: 1rem; padding: 0.6rem 0.9rem; border-top: 1px solid var(--code-line); color: #ff9aa6; font-size: 0.88rem; }

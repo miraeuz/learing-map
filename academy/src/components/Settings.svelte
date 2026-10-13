@@ -92,7 +92,7 @@
 
   <section class="card danger">
     <h3>Natijalarni tozalash</h3>
-    <p class="muted">Barcha yechilgan mashqlar, XP, imtihonlar va kod qoralamalari oʻchadi. Ism va mavzu saqlanadi. Bu amalni bekor qilib boʻlmaydi.</p>
+    <p class="muted">Barcha yechilgan mashqlar, XP, imtihonlar va kod qoralamalari oʻchadi. Ism, rang mavzusi va qaydlaringiz saqlanadi. Bu amalni bekor qilib boʻlmaydi.</p>
     <div class="row">
       <button class="btn-danger" onclick={doReset}>
         {resetStep === 0 ? 'Natijalarni tozalash' : resetStep === 1 ? 'Ishonchingiz komilmi? Yana bosing' : 'Oxirgi tasdiq: HAMMASINI OʻCHIRISH'}

@@ -25,13 +25,14 @@ const ready = init().catch((e) => {
 });
 
 self.onmessage = async (ev) => {
-  const { id, op, code, stdin, tests } = ev.data;
+  const { id, op, code, stdin, tests, files } = ev.data;
+  const fj = JSON.stringify(files || []);
   try {
     await ready;
     let raw;
-    if (op === 'run') raw = fns.run(code, stdin || '');
-    else if (op === 'func') raw = fns.func(code, JSON.stringify(tests));
-    else if (op === 'prog') raw = fns.prog(code, JSON.stringify(tests));
+    if (op === 'run') raw = fns.run(code, stdin || '', fj);
+    else if (op === 'func') raw = fns.func(code, JSON.stringify(tests), fj);
+    else if (op === 'prog') raw = fns.prog(code, JSON.stringify(tests), fj);
     else throw new Error('unknown op ' + op);
     self.postMessage({ type: 'result', id, data: JSON.parse(raw) });
   } catch (e) {

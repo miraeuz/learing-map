@@ -369,7 +369,7 @@ else:
     P('for x in [1, 2, 3]:\n    if x == 5:\n        break\nelse:\n    print("topilmadi")', "Hech narsa", "5", "1 2 3"),
     P('for x in [1, 5, 3]:\n    if x == 5:\n        print("bor")\n        break\nelse:\n    print("yoʻq")', "bor\nyoʻq", "yoʻq", "5"),
     Q("`continue` nima qiladi?", "Joriy qadamni tashlab, keyingisiga oʻtadi", "Sikldan chiqadi", "Siklni boshidan boshlaydi", "Dasturni toʻxtatadi"),
-    Q("`for … else` dagi `else` qachon bajariladi?", "Sikl break siz tugaganda", "Sikl bir marta ham bajarilmasa", "break boʻlganda", "Har bir qadamdan keyin"),
+    Q("`for … else` dagi `else` qachon bajariladi?", "Sikl break siz tugaganda (hatto bir marta ham aylanmasa ham)", "Faqat sikl birinchi qadamida", "break boʻlganda", "Har bir qadamdan keyin"),
     PR("1 dan n gacha", "Kirishda n. 1 dan n gacha sonlarni bir qatorda chiqaring.", "n = int(input())\nfor i in range(1, n + 1):\n    print(i, end=\" \")\nprint()", "5", "1", "10"),
     PR("Yigʻindi", "Kirishda n. 1 dan n gacha sonlar yigʻindisini `for` bilan hisoblang.", "s = 0\nfor i in range(1, int(input()) + 1):\n    s += i\nprint(s)", "10", "1", "100"),
     PR("Faktorial", "Kirishda n. `n!` ni chiqaring.", "f = 1\nfor i in range(2, int(input()) + 1):\n    f *= i\nprint(f)", "5", "0", "20"),

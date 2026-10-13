@@ -1,5 +1,6 @@
 /** Typed access to the verified course (built by content/build.py). */
 import raw from '../data/course.json';
+import type { PyFile } from './python.svelte';
 
 export type Block =
   | { t: 'p'; html: string }
@@ -8,12 +9,12 @@ export type Block =
   | { t: 'tip'; html: string }
   | { t: 'warn'; html: string }
   | { t: 'table'; rows: string[][] }
-  | { t: 'code'; code: string; stdin: string; norun: boolean; out: string; err: { type: string; msg: string; line: number | null } | null };
+  | { t: 'code'; code: string; stdin: string; norun: boolean; lang: string; files: PyFile[]; out?: string; err?: { type: string; msg: string; line: number | null } | null };
 
 interface ExBase { id: string; lv: number }
 export interface QuizEx extends ExBase { kind: 'quiz'; q: string; code: string | null; options: string[]; answer: number; mono: boolean; why: string | null }
-export interface FuncEx extends ExBase { kind: 'func'; title: string; prompt: string; starter: string; tests: { call: string; expect?: string; raises?: string }[]; solution: string; hint: string | null; name: string }
-export interface ProgEx extends ExBase { kind: 'prog'; title: string; prompt: string; starter: string; tests: { stdin: string; expect: string }[]; solution: string; hint: string | null }
+export interface FuncEx extends ExBase { kind: 'func'; title: string; prompt: string; starter: string; tests: { call: string; expect?: string; raises?: string }[]; solution: string; hint: string | null; name: string; files: PyFile[] }
+export interface ProgEx extends ExBase { kind: 'prog'; title: string; prompt: string; starter: string; tests: { stdin: string; expect: string }[]; solution: string; hint: string | null; files: PyFile[] }
 export interface LinkEx extends ExBase { kind: 'link'; site: string; siteName: string; title: string; url: string; note: string | null }
 export type Exercise = QuizEx | FuncEx | ProgEx | LinkEx;
 export type CodeEx = FuncEx | ProgEx;
@@ -41,7 +42,31 @@ export const BANDS: Record<number, { label: string; tone: 'turq' | 'lapis' | 'go
   5: { label: 'Oʻrta', tone: 'lapis' },
   6: { label: 'Oʻrta+', tone: 'gold' },
   7: { label: 'Ilgʻor', tone: 'rose' },
+  8: { label: 'Ilgʻor', tone: 'rose' },
+  9: { label: 'Ilgʻor', tone: 'rose' },
+  10: { label: 'Amaliy', tone: 'turq' },
+  11: { label: 'Amaliy', tone: 'turq' },
+  12: { label: 'Professional', tone: 'gold' },
+  13: { label: 'Professional', tone: 'gold' },
 };
+
+/** Fallback so a newly added section never breaks the UI before it gets a band. */
+export const bandOf = (num: number) => BANDS[num] ?? { label: 'Yangi', tone: 'lapis' as const };
+
+/** Human label for a lesson code block's language. */
+export const LANG_LABEL: Record<string, string> = {
+  py: '🐍 Python',
+  bash: '⌘ Terminal',
+  text: '▤ Matn',
+  html: '◇ HTML shablon',
+  toml: '⚙ TOML',
+  ini: '⚙ Sozlama',
+  json: '{ } JSON',
+  sql: '⛁ SQL',
+};
+
+/** Editor mode for a file name: Python files get highlighting, the rest are plain text. */
+export const langOfFile = (name: string) => (name.endsWith('.py') ? 'py' : 'text');
 
 export const KIND_LABEL: Record<Exercise['kind'], string> = {
   quiz: 'Savol',

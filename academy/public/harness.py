@@ -3,8 +3,12 @@ import builtins
 import contextlib
 import io
 import json
+import importlib
 import math
+import os
+import shutil
 import sys
+import tempfile
 import traceback
 
 OUT_LIMIT = 20000
@@ -31,13 +35,57 @@ def _err_info(exc):
     return {"type": type(exc).__name__, "msg": msg, "line": line}
 
 
+@contextlib.contextmanager
+def _sandbox():
+    """Run student code in a fresh, empty folder.
+
+    Files, modules and databases the code creates live only for this run, so
+    lessons about files, modules, CSV/JSON/ZIP and SQLite behave the same every
+    time — at build time and inside the app.
+    """
+    base = tempfile.mkdtemp(prefix="mirae-")
+    old_cwd = os.getcwd()
+    old_path = list(sys.path)
+    old_argv = list(sys.argv)
+    old_mods = set(sys.modules)
+    os.chdir(base)
+    sys.path.insert(0, base)
+    importlib.invalidate_caches()
+    try:
+        yield base
+    finally:
+        os.chdir(old_cwd)
+        sys.path[:] = old_path
+        sys.argv[:] = old_argv
+        for name in set(sys.modules) - old_mods:
+            f = getattr(sys.modules[name], "__file__", None) or ""
+            if f.startswith(base) or not f:
+                sys.modules.pop(name, None)
+        importlib.invalidate_caches()
+        shutil.rmtree(base, ignore_errors=True)
+
+
+def _write_files(files_json):
+    """Write helper files (modules, data) into the sandbox folder. Folders are created as needed."""
+    for f in json.loads(files_json or "[]"):
+        name = f["name"].replace("\\", "/").lstrip("/")
+        if ".." in name.split("/"):
+            continue
+        d = os.path.dirname(name)
+        if d:
+            os.makedirs(d, exist_ok=True)
+        with open(name, "w", encoding="utf-8") as fh:
+            fh.write(f["code"])
+    importlib.invalidate_caches()
+
+
 def _exec(code, stdin, ns):
     out = _CappedIO()
     old_in = sys.stdin
     sys.stdin = io.StringIO(stdin or "")
     err = None
     try:
-        with contextlib.redirect_stdout(out):
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(out):
             exec(compile(code, FILENAME, "exec"), ns)
     except SystemExit:
         pass
@@ -60,9 +108,10 @@ def _norm(s):
     return "\n".join(lines)
 
 
-def run_program(code, stdin=""):
-    ns = {"__name__": "__main__"}
-    text, err = _exec(code, stdin, ns)
+def run_program(code, stdin="", files_json="[]"):
+    with _sandbox():
+        _write_files(files_json)
+        text, err = _exec(code, stdin, {"__name__": "__main__"})
     return json.dumps({"stdout": text, "error": err})
 
 
@@ -79,7 +128,13 @@ def _same(got, exp):
     return got == exp
 
 
-def check_function(code, tests_json):
+def check_function(code, tests_json, files_json="[]"):
+    with _sandbox():
+        _write_files(files_json)
+        return _check_function(code, tests_json)
+
+
+def _check_function(code, tests_json):
     tests = json.loads(tests_json)
     ns = {"__name__": "__main__"}
     text, err = _exec(code, "", ns)
@@ -90,7 +145,7 @@ def check_function(code, tests_json):
         call = t["call"]
         out = _CappedIO()
         try:
-            with contextlib.redirect_stdout(out):
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(out):
                 got = eval(call, ns)
             if "raises" in t:
                 results.append({"call": call, "ok": False, "got": repr(got), "expect": t["raises"] + " xatosi"})
@@ -107,12 +162,14 @@ def check_function(code, tests_json):
     return json.dumps({"stdout": text, "error": None, "results": results})
 
 
-def check_program(code, cases_json):
+def check_program(code, cases_json, files_json="[]"):
     cases = json.loads(cases_json)
     results = []
     first_out = ""
     for i, c in enumerate(cases):
-        text, err = _exec(code, c.get("stdin", ""), {"__name__": "__main__"})
+        with _sandbox():
+            _write_files(files_json)
+            text, err = _exec(code, c.get("stdin", ""), {"__name__": "__main__"})
         if i == 0:
             first_out = text
         if err:

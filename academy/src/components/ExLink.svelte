@@ -6,10 +6,24 @@
   let { ex, onNext }: { ex: LinkEx; onNext?: () => void } = $props();
   const solved = $derived(!!app.saved.solved[ex.id]);
 
-  const SITE: Record<string, { color: string; about: string; how: string }> = {
+  type Site = { color: string; about: string; how: string; open?: string; tips?: string[]; tipsTitle?: string };
+  const SITE: Record<string, Site> = {
     exercism: { color: '#7d5cf6', about: 'Exercism — bepul, mentorli mashqlar platformasi. Python treki bosqichma-bosqich tuzilgan.', how: 'Saytda roʻyxatdan oʻting, Python trekiga qoʻshiling va mashqni brauzerdagi muharrirda yeching.' },
     lc: { color: '#f7a21b', about: 'LeetCode — dunyodagi eng mashhur algoritmik masalalar bazasi. Ish suhbatlariga tayyorgarlikda ishlatiladi.', how: 'Tilni «Python3» qilib tanlang. Funksiya shablonini toʻldiring va «Submit» bosing.' },
     cses: { color: '#39dcc8', about: 'CSES — Finlyandiya universiteti tuzgan klassik olimpiada masalalari toʻplami.', how: 'Kirish standart oqimdan (input()) oʻqiladi, natija print() bilan chiqariladi. Tilni Python3 qilib yuboring.' },
+    docs: {
+      color: '#4a74ff',
+      about: 'Rasmiy hujjat — kutubxona yoki freymvork mualliflari yozgan asl manba. Eng aniq va eng yangi maʼlumot shu yerda.',
+      how: 'Sahifani oching, misollarni oʻqing va ularni «Kod maydoni»da yoki kompyuteringizda takrorlab koʻring. Tushunganingizdan soʻng belgilang.',
+      open: 'Hujjatni ochish ↗',
+      tipsTitle: 'Hujjatni samarali oʻqish',
+      tips: [
+        'Avval <b>sarlavhalar</b>ni koʻzdan kechiring — sahifa xaritasini tuzib oling.',
+        'Har bir <b>kod misolini</b> oʻzingiz yozib ishga tushiring, nusxalamang.',
+        'Notanish atamani shu sahifadagi havola orqali oching — hujjatlar bir-biriga bogʻlangan.',
+        'Ingliz tili qiyin boʻlsa, brauzer tarjimasidan foydalaning, lekin kodni tarjima qildirmang.',
+      ],
+    },
     acmp: { color: '#ff7a8a', about: 'acmp.ru — maktab olimpiadalari uchun mashhur rus tilidagi masalalar arxivi.', how: 'Masala sharti rus tilida. Kirish/chiqish odatda standart oqim orqali. Tilni Python qilib yuboring.' },
   };
   const s = $derived(SITE[ex.site] ?? SITE.exercism);
@@ -35,21 +49,26 @@
     <p class="about">{s.about}</p>
     <div class="how"><b>Qanday yechiladi:</b> {s.how}</div>
     <div class="acts">
-      <a class="btn-primary" href={ex.url} target="_blank" rel="noopener noreferrer">Masalani ochish ↗</a>
+      <a class="btn-primary" href={ex.url} target="_blank" rel="noopener noreferrer">{s.open ?? 'Masalani ochish ↗'}</a>
       <button class={solved ? 'btn-ghost done' : 'btn-ghost'} onclick={toggle}>
-        {solved ? '✓ Yechildi (bekor qilish)' : 'Yechdim — belgilash'}
+        {#if ex.site === 'docs'}{solved ? '✓ Oʻqildi (bekor qilish)' : 'Oʻqidim — belgilash'}{:else}{solved ? '✓ Yechildi (bekor qilish)' : 'Yechdim — belgilash'}{/if}
       </button>
     </div>
     <p class="url">{ex.url}</p>
   </div>
   <aside class="side">
-    <h4>Online masalalarni yechish odatlari</h4>
-    <ol>
-      <li>Shartni <b>ikki marta</b> oʻqing, kirish va chiqish formatini yozib oling.</li>
-      <li>Avval namunaviy testni qoʻlda hisoblang.</li>
-      <li>Yechimni «Kod maydoni»da sinab koʻring, keyin yuboring.</li>
-      <li>«Wrong Answer» — chegaraviy holatlarni tekshiring: 0, 1, boʻsh roʻyxat, juda katta son.</li>
-    </ol>
+    {#if s.tips}
+      <h4>{s.tipsTitle}</h4>
+      <ol>{#each s.tips as t}<li>{@html t}</li>{/each}</ol>
+    {:else}
+      <h4>Online masalalarni yechish odatlari</h4>
+      <ol>
+        <li>Shartni <b>ikki marta</b> oʻqing, kirish va chiqish formatini yozib oling.</li>
+        <li>Avval namunaviy testni qoʻlda hisoblang.</li>
+        <li>Yechimni «Kod maydoni»da sinab koʻring, keyin yuboring.</li>
+        <li>«Wrong Answer» — chegaraviy holatlarni tekshiring: 0, 1, boʻsh roʻyxat, juda katta son.</li>
+      </ol>
+    {/if}
     {#if onNext}<button class="btn-ghost sm" onclick={onNext}>Keyingi mashq →</button>{/if}
   </aside>
 </div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { allTopics, sectionOf, plain } from '../lib/course';
+  import { allTopics, sectionOf, plain, exTitle, KIND_LABEL } from '../lib/course';
   import { topicProgress } from '../lib/store.svelte';
   import { openTopic, go } from '../lib/nav.svelte';
 
@@ -16,6 +16,10 @@
     head: norm(`${t.id} ${t.title} ${t.short}`),
     body: norm(t.blocks.map((b) => (b.t === 'h' ? b.text : b.t === 'p' || b.t === 'tip' || b.t === 'warn' ? plain(b.html) : b.t === 'code' ? b.code : '')).join(' ')),
   }));
+  // Coding tasks and online problems are searchable by their titles too.
+  const exIndex = allTopics.flatMap((t) =>
+    t.ex.map((e, i) => ({ t, i, e, key: e.kind === 'quiz' ? '' : norm(exTitle(e)) })).filter((x) => x.key),
+  );
   const pages = [
     { label: '🏠 Bosh sahifa', run: () => go({ name: 'home' }) },
     { label: '⌨ Kod maydoni', run: () => go({ name: 'playground' }) },
@@ -23,7 +27,8 @@
     { label: '⚙ Sozlamalar', run: () => go({ name: 'settings' }) },
   ];
 
-  const results = $derived.by(() => {
+  type Hit = { t: (typeof allTopics)[number]; where: string; ex?: number; kind?: string };
+  const results = $derived.by((): Hit[] => {
     const s = norm(q.trim());
     if (!s) return index.slice(0, 8).map((x) => ({ t: x.t, where: '' }));
     const words = s.split(/\s+/);
@@ -36,7 +41,14 @@
       .filter((r) => r.score)
       .sort((a, b) => b.score - a.score)
       .slice(0, 10)
-      .map((r) => ({ t: r.x.t, where: r.score === 1 ? 'dars matnida' : '' }));
+      .map((r): Hit => ({ t: r.x.t, where: r.score === 1 ? 'dars matnida' : '' }))
+      .concat(
+        exIndex
+          .filter((x) => words.every((w) => x.key.includes(w)))
+          .slice(0, 6)
+          .map((x) => ({ t: x.t, ex: x.i, where: exTitle(x.e), kind: KIND_LABEL[x.e.kind] })),
+      )
+      .slice(0, 14);
   });
   $effect(() => { void q; sel = 0; });
 
@@ -44,7 +56,8 @@
     const r = results[i];
     if (!r) return;
     onClose();
-    openTopic(r.t.id);
+    if (r.ex !== undefined) openTopic(r.t.id, 'mashq', r.ex);
+    else openTopic(r.t.id);
   }
 
   function onKey(e: KeyboardEvent) {
@@ -61,7 +74,7 @@
   <div class="pal" role="dialog" aria-modal="true" aria-label="Qidiruv">
     <div class="in">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5" /></svg>
-      <input bind:this={input} bind:value={q} onkeydown={onKey} placeholder="Mavzu, tushuncha yoki funksiya: lugʻat, try, append…" />
+      <input bind:this={input} bind:value={q} onkeydown={onKey} placeholder="Mavzu, tushuncha yoki mashq: lugʻat, try, slugify, JSON…" />
       <kbd>Esc</kbd>
     </div>
     {#if !q.trim()}
@@ -73,9 +86,15 @@
         {@const p = topicProgress(r.t.id)}
         <li>
           <button class:on={i === sel} onmouseenter={() => (sel = i)} onclick={() => choose(i)}>
-            <span class="id">{r.t.id}</span>
-            <span class="tx"><b>{r.t.title}</b><small>{s.emoji} {s.title}{r.where ? ` · ${r.where}` : ''}</small></span>
-            <span class="pr">{p.done}/{p.total}</span>
+            {#if r.ex !== undefined}
+              <span class="id ex">{r.ex + 1}</span>
+              <span class="tx"><b>{r.where}</b><small>{r.kind} · {r.t.id} {r.t.title}</small></span>
+              <span class="pr tag">mashq</span>
+            {:else}
+              <span class="id">{r.t.id}</span>
+              <span class="tx"><b>{r.t.title}</b><small>{s.emoji} {s.title}{r.where ? ` · ${r.where}` : ''}</small></span>
+              <span class="pr">{p.done}/{p.total}</span>
+            {/if}
           </button>
         </li>
       {:else}
@@ -105,5 +124,7 @@
   .tx b { font-weight: 600; }
   .tx small { color: var(--text-3); font-size: 0.8rem; }
   .pr { font-size: 0.78rem; color: var(--text-3); font-variant-numeric: tabular-nums; }
+  .id.ex { color: var(--gold); }
+  .pr.tag { padding: 0.1rem 0.5rem; border-radius: 1rem; background: rgb(247 189 70 / 0.12); color: var(--gold); }
   .none { padding: 1.5rem; text-align: center; color: var(--text-3); }
 </style>

@@ -2,8 +2,9 @@
   import { untrack } from 'svelte';
   import CodeEditor from './CodeEditor.svelte';
   import Output from './Output.svelte';
+  import FileTabs from './FileTabs.svelte';
   import { runCode, type PyError } from '../lib/python.svelte';
-  import type { Block } from '../lib/course';
+  import { LANG_LABEL, langOfFile, type Block } from '../lib/course';
 
   let { block }: { block: Extract<Block, { t: 'code' }> } = $props();
 
@@ -11,8 +12,17 @@
   let code = $state(orig);
   const shownStdin = (s: string) => s.replace(/\n$/, '').split('\n').join(' | ');
   let stdin = $state(untrack(() => shownStdin(block.stdin)));
-  let out = $state(untrack(() => block.out));
-  let error = $state<PyError | null>(untrack(() => block.err));
+  let out = $state(untrack(() => block.out ?? ''));
+  let error = $state<PyError | null>(untrack(() => block.err ?? null));
+  let tab = $state(-1);
+  const lang = $derived(block.lang || 'py');
+  const files = $derived(block.files ?? []);
+  const caption = $derived(
+    lang === 'bash' ? 'Bu buyruqlar kompyuteringizdagi terminalda bajariladi.'
+    : lang === 'html' ? 'Shablon fayli — uni Django serverda maʼlumot bilan toʻldiradi.'
+    : lang === 'py' ? 'Bu kod namuna sifatida koʻrsatilgan — u shu yerda ishga tushirilmaydi.'
+    : '',
+  );
   let ms = $state<number | null>(null);
   let ran = $state(false);
   let busy = $state(false);
@@ -23,10 +33,11 @@
   async function run() {
     if (busy || block.norun) return;
     busy = true;
-    const r = await runCode(code, stdin.split('|').map((x) => x.trim()).join('\n') + '\n');
+    tab = -1;
+    const r = await runCode(code, stdin.split('|').map((x) => x.trim()).join('\n') + '\n', 6000, $state.snapshot(files));
     busy = false;
     ran = true;
-    out = r.stdout.replace(/\n$/, '');
+    out = r.stdout.replace(/\n+$/, '');
     error = r.error;
     ms = r.ms;
   }
@@ -34,8 +45,8 @@
   function reset() {
     code = orig;
     stdin = shownStdin(block.stdin);
-    out = block.out;
-    error = block.err;
+    out = block.out ?? '';
+    error = block.err ?? null;
     ms = null;
     ran = false;
   }
@@ -49,9 +60,13 @@
   }
 </script>
 
-<figure class="lc" class:norun={block.norun}>
+<figure class="lc" class:norun={block.norun} class:plain={lang !== 'py'}>
   <div class="head">
-    <span class="lang">🐍 Python</span>
+    {#if files.length}
+      <FileTabs {files} mainName="main.py" mainIcon="🐍" bind:active={tab} />
+    {:else}
+      <span class="lang">{LANG_LABEL[lang] ?? lang.toUpperCase()}</span>
+    {/if}
     {#if changed}<span class="edited">oʻzgartirilgan</span>{/if}
     <span class="sp"></span>
     <button class="ic" onclick={copy} title="Nusxalash">{copied ? '✓' : '⧉'}</button>
@@ -62,7 +77,12 @@
       </button>
     {/if}
   </div>
-  <CodeEditor bind:value={code} minLines={1} maxHeight="30rem" onRun={run} />
+  {#if tab >= 0 && files[tab]}
+    {#key tab}<CodeEditor value={files[tab].code} readonly lang={langOfFile(files[tab].name)} minLines={1} maxHeight="30rem" />{/key}
+  {/if}
+  <div style:display={tab >= 0 ? 'none' : null}>
+    <CodeEditor bind:value={code} {lang} readonly={lang !== 'py'} minLines={1} maxHeight="30rem" onRun={run} />
+  </div>
   {#if !block.norun}
     {#if usesInput}
       <label class="stdin">
@@ -71,8 +91,8 @@
       </label>
     {/if}
     <Output stdout={out} {error} {ms} live={ran} label={ran ? 'Natija' : 'Natija (namuna)'} />
-  {:else}
-    <figcaption>Bu kod namuna sifatida koʻrsatilgan — u shu yerda ishga tushirilmaydi.</figcaption>
+  {:else if caption}
+    <figcaption>{caption}</figcaption>
   {/if}
 </figure>
 
@@ -80,6 +100,8 @@
   .lc { margin: 0; border-radius: var(--r-m); overflow: hidden; border: 1px solid var(--code-line); background: var(--code-bg); box-shadow: 0 0.6rem 1.6rem rgb(0 0 0 / 0.18); }
   .head { display: flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.4rem 0.35rem 0.9rem; border-bottom: 1px solid var(--code-line); background: rgb(255 255 255 / 0.02); }
   .lang { font-size: 0.75rem; font-weight: 600; color: #7381b4; }
+  .plain .lang { color: #8fa0d8; }
+  .plain :global(.cm-content) { color: #c9d4f5; }
   .edited { font-size: 0.7rem; padding: 0.1rem 0.45rem; border-radius: 1rem; background: rgb(247 189 70 / 0.15); color: #f7bd46; }
   .sp { flex: 1; }
   .ic { width: 2rem; height: 2rem; border-radius: 0.5rem; border: 0; background: none; color: #7381b4; font-size: 1rem; }

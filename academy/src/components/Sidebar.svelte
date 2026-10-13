@@ -6,7 +6,7 @@
   import BrandMark from './BrandMark.svelte';
   import Ring from './Ring.svelte';
 
-  let { onSearch }: { onSearch: () => void } = $props();
+  let { onSearch, onCollapse }: { onSearch: () => void; onCollapse?: () => void } = $props();
 
   const current = $derived(nav.route.name === 'topic' ? nav.route.id : null);
   let open = $state<Record<number, boolean>>({});
@@ -51,14 +51,21 @@
 </script>
 
 <aside class="side">
-  <button class="brand" onclick={() => go({ name: 'home' })} title="Bosh sahifa">
-    <BrandMark size="2.2rem" />
-    <span class="bt">Mirae <b>Academy</b></span>
-  </button>
+  <div class="brand-row">
+    <button class="brand" onclick={() => go({ name: 'home' })} title="Bosh sahifa">
+      <BrandMark size="2.2rem" />
+      <span class="bt">Mirae <b>Academy</b></span>
+    </button>
+    {#if onCollapse}
+      <button class="collapse" onclick={onCollapse} title="Yon panelni yashirish (Ctrl+B)" aria-label="Yon panelni yashirish">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg>
+      </button>
+    {/if}
+  </div>
 
   <button class="search" onclick={onSearch}>
     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5" /></svg>
-    <span>Mavzu qidirish…</span>
+    <span>Mavzu yoki mashq…</span>
     <kbd>Ctrl K</kbd>
   </button>
 
@@ -120,7 +127,11 @@
     overflow: hidden;
   }
   button { border: 0; background: none; text-align: left; }
+  .brand-row { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; }
   .brand { display: flex; align-items: center; gap: 0.7rem; padding: 0.2rem 0.5rem 0.5rem; }
+  .collapse { width: 2rem; height: 2rem; margin-bottom: 0.3rem; display: grid; place-items: center; border: 0; border-radius: 0.55rem; background: none; color: var(--text-3); opacity: 0.7; transition: opacity 0.15s, background 0.15s; }
+  .collapse:hover { opacity: 1; background: var(--bg-2); color: var(--text); }
+  .collapse svg { width: 1.05rem; height: 1.05rem; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
   .bt { font-family: var(--display); font-size: 1.02rem; font-weight: 500; letter-spacing: 0.01em; }
   .bt b { color: var(--gold); font-weight: 700; }
 
