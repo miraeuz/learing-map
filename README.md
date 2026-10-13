@@ -25,6 +25,24 @@ Oʻz kompyuteringizda: `./build_apk.sh` (Flutter va Android SDK kerak).
 
 Shrift: Nunito (SIL Open Font License, `assets/fonts/OFL.txt`).
 
+## Mirae Academy (`academy/`)
+
+Python'ni noldan oʻrgatuvchi kompyuter ilovasi (Windows, macOS, Linux). Svelte + Electron,
+Python kodi ilova ichida **internetsiz** ishlaydi (Pyodide, Python 3.14).
+
+- 6 boʻlim (2–7): Python asoslari, operatorlar, boshqaruv oqimi, funksiyalar,
+  maʼlumotlar tuzilmalari, istisnolar — **65 mavzu, 1 300 mashq**.
+- Har bir mavzu: qisqa dars + jonli kod misollari (oʻzgartirib ishga tushirish mumkin) + 20 mashq:
+  natijani topish, savollar, funksiya/dastur yozish (avtomatik testlar bilan) va online masalalar
+  (Exercism, LeetCode, CSES, acmp.ru).
+- Boʻlim imtihonlari (taymer, 70% oʻtish bali), XP va darajalar, faollik xaritasi, kod maydoni,
+  qidiruv (Ctrl K), tungi/kunduzgi mavzu, zaxira nusxa.
+- Telegram orqali bir martalik faollashtirish (ICPC yoʻli bilan bir xil, `TELEGRAM_BOT_TOKEN` secret).
+
+Oʻrnatuvchilar: **Actions → Build Mirae Academy → Artifacts**.
+Ishlab chiqish: `cd academy && npm install && npm run dev`.
+Yangi mavzu qoʻshish: [`academy/content/README.md`](academy/content/README.md).
+
 ## Kompyuter versiyasi (`desktop/`)
 
 Windows, macOS va Linux uchun. TypeScript + Svelte, Electron bilan oʻralgan.

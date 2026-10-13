@@ -1,0 +1,116 @@
+{
+  "name": "mirae-academy",
+  "productName": "Mirae Academy",
+  "version": "1.0.0",
+  "description": "Mirae Academy — Python dasturlashni oʻzbek tilida oʻrganish",
+  "author": "muhammadiev",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "content": "python3 content/build.py",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4180",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "test": "node scripts/test-license.cjs",
+    "dist": "node scripts/write-config.cjs --strict && node scripts/copy-pyodide.cjs && vite build && electron-builder --publish never",
+    "predev": "node scripts/copy-pyodide.cjs",
+    "prebuild": "node scripts/copy-pyodide.cjs"
+  },
+  "devDependencies": {
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/lang-python": "^6.2.1",
+    "@codemirror/language": "^6.13.1",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.14",
+    "@lezer/highlight": "^1.2.5",
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@tsconfig/svelte": "^5.0.8",
+    "codemirror": "^6.0.2",
+    "electron": "^44.7.0",
+    "electron-builder": "^26.15.3",
+    "pyodide": "^314.0.7",
+    "svelte": "^5.57.2",
+    "svelte-check": "^4.7.6",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.4"
+  },
+  "build": {
+    "appId": "uz.mirae.academy",
+    "productName": "Mirae Academy",
+    "artifactName": "Mirae-Academy-${version}-${os}-${arch}.${ext}",
+    "directories": {
+      "output": "release",
+      "buildResources": "resources"
+    },
+    "files": [
+      "dist/**",
+      "electron/**",
+      "package.json"
+    ],
+    "asarUnpack": [],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "resources/icon.png",
+      "legalTrademarks": "Mirae Academy"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "Mirae-Academy-${version}-setup.${ext}",
+      "license": "resources/installer-terms.txt",
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Mirae Academy",
+      "uninstallDisplayName": "Mirae Academy",
+      "deleteAppDataOnUninstall": false
+    },
+    "portable": {
+      "artifactName": "Mirae-Academy-${version}-portable.${ext}"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
+      "icon": "resources/icon.png",
+      "category": "public.app-category.education"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "resources/icon.png",
+      "category": "Education",
+      "maintainer": "muhammadiev <nldgooner@gmail.com>"
+    },
+    "publish": null,
+    "copyright": "© 2026 muhammadiev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/miraeuz/learing-map.git"
+  },
+  "homepage": "https://github.com/miraeuz/learing-map"
+}

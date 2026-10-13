@@ -5,6 +5,8 @@ on:
     paths-ignore:
       - 'desktop/**'
       - '.github/workflows/build-desktop.yml'
+      - 'academy/**'
+      - '.github/workflows/build-academy.yml'
   workflow_dispatch:
 
 jobs:

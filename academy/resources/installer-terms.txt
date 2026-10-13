@@ -1,0 +1,45 @@
+﻿Mirae Academy — foydalanish shartlari va maxfiylik
+
+1. LITSENZIYA
+Mirae Academy — Python dasturlash tilini oʻrgatuvchi bepul oʻquv ilovasi.
+Copyright (c) 2026 muhammadiev. Dastur "qanday boʻlsa shunday" taqdim
+etiladi, hech qanday kafolatsiz. Dastur kodi MIT litsenziyasi asosida:
+https://github.com/miraeuz/learing-map/blob/main/LICENSE
+
+Ilova tarkibidagi uchinchi tomon komponentlari:
+  - Pyodide (Python interpretatori) — Mozilla Public License 2.0;
+  - Unbounded, Onest, JetBrains Mono shriftlari — SIL Open Font License 1.1;
+  - Electron, CodeMirror — MIT litsenziyasi.
+
+2. MAXFIYLIK
+Natijalaringiz (yechilgan mashqlar, XP, kod qoralamalari) faqat shu
+kompyuterda saqlanadi. Yozgan kodingiz kompyuteringizning oʻzida, internetsiz
+bajariladi va hech qayerga yuborilmaydi.
+
+Faollashtirishda (birinchi ishga tushirishda) Mirae Academy Telegram botiga
+quyidagilar yuboriladi:
+  - siz kiritgan ism;
+  - kompyuter nomi va operatsion tizim turi;
+  - bir martalik faollashtirish kodi.
+Boshqa hech qanday maʼlumot yuborilmaydi.
+Toʻliq maxfiylik siyosati:
+https://github.com/miraeuz/learing-map/blob/main/PRIVACY.md
+
+3. ONLINE MASALALAR
+Mashqlardagi online masalalar Exercism, LeetCode, CSES va acmp.ru
+saytlariga tegishli. Ilova faqat ularga havola beradi; havolalar
+brauzeringizda ochiladi va oʻsha saytlarning oʻz shartlari amal qiladi.
+
+"Roziman" tugmasini bosib, siz ushbu shartlarga rozilik bildirasiz.
+
+---------------------------------------------------------------------
+
+Mirae Academy — terms of use and privacy (English)
+
+Free educational software provided "as is" without warranty (MIT License).
+Bundles Pyodide (MPL-2.0), OFL-licensed fonts, Electron and CodeMirror (MIT).
+Progress and your code stay on this computer; code runs locally and offline.
+During activation the name you enter, your computer name and OS type, and a
+one-time code are sent to the Mirae Academy Telegram bot. Nothing else is sent.
+Practice-problem links open third-party sites under their own terms.
+Privacy policy: https://github.com/miraeuz/learing-map/blob/main/PRIVACY.md

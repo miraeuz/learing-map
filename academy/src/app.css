@@ -1,0 +1,124 @@
+@font-face { font-family: 'Unbounded'; font-weight: 300 900; font-display: swap; src: url('./assets/fonts/Unbounded.ttf') format('truetype'); }
+@font-face { font-family: 'Onest'; font-weight: 300 900; font-display: swap; src: url('./assets/fonts/Onest.ttf') format('truetype'); }
+@font-face { font-family: 'JetBrains Mono'; font-weight: 300 800; font-display: swap; src: url('./assets/fonts/JetBrainsMono.ttf') format('truetype'); }
+
+/*
+  "Lojuvard" — the lapis, turquoise and gold of Samarkand's domes, seen at night.
+  Lapis for depth, turquoise for "go / correct", gold for achievement.
+*/
+:root,
+:root[data-theme='dark'] {
+  --bg: #060b20;
+  --bg-2: #0a1230;
+  --surface: #0f1a42;
+  --surface-2: #142252;
+  --raised: #1a2a62;
+  --line: #22346f;
+  --line-2: #2f4489;
+  --text: #edf1ff;
+  --text-2: #a9b4dd;
+  --text-3: #7381b4;
+  --lapis: #4a74ff;
+  --lapis-2: #2f57e6;
+  --turq: #39dcc8;
+  --turq-2: #1fb3a1;
+  --turq-ink: #032b28;
+  --gold: #f7bd46;
+  --gold-2: #d99a1e;
+  --rose: #ff7a8a;
+  --rose-bg: rgb(255 122 138 / 0.12);
+  --ok-bg: rgb(57 220 200 / 0.12);
+  --glow: 0 0 0 1px rgb(74 116 255 / 0.25), 0 0.6rem 2rem rgb(3 8 30 / 0.55);
+  --code-bg: #071028;
+  --code-line: #1a2a5c;
+  --scrim: rgb(2 6 20 / 0.66);
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --bg: #f3efe4;
+  --bg-2: #ebe5d5;
+  --surface: #fffdf8;
+  --surface-2: #f7f2e6;
+  --raised: #ffffff;
+  --line: #e2d8c0;
+  --line-2: #cfc2a3;
+  --text: #0b1638;
+  --text-2: #3d4a75;
+  --text-3: #6b7598;
+  --lapis: #2446c9;
+  --lapis-2: #1a35a3;
+  --turq: #0e9f8f;
+  --turq-2: #0a7f72;
+  --turq-ink: #ffffff;
+  --gold: #c98a12;
+  --gold-2: #a56f08;
+  --rose: #d33a50;
+  --rose-bg: rgb(211 58 80 / 0.1);
+  --ok-bg: rgb(14 159 143 / 0.1);
+  --glow: 0 0 0 1px rgb(36 70 201 / 0.12), 0 0.5rem 1.6rem rgb(60 45 10 / 0.12);
+  --code-bg: #0b1638;
+  --code-line: #22346f;
+  --scrim: rgb(20 18 10 / 0.45);
+  color-scheme: light;
+}
+
+:root {
+  --r-s: 0.6rem;
+  --r-m: 0.95rem;
+  --r-l: 1.4rem;
+  --side: clamp(17rem, 19vw, 21rem);
+  --display: 'Unbounded', 'Onest', system-ui, sans-serif;
+  --body: 'Onest', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', 'Onest', ui-monospace, monospace;
+
+  font-size: clamp(14px, 0.28vw + 10.6px, 17px);
+  font-family: var(--body);
+  font-weight: 450;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--bg); overflow: hidden; }
+button, input, textarea, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: var(--lapis); }
+:focus-visible { outline: 2px solid var(--turq); outline-offset: 2px; border-radius: 0.45rem; }
+::selection { background: rgb(57 220 200 / 0.35); }
+* { scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; }
+
+code, kbd, pre { font-family: var(--mono); }
+kbd {
+  display: inline-block; min-width: 1.5em; padding: 0.05em 0.42em;
+  border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 0.35rem;
+  background: var(--surface-2); color: var(--text-2);
+  font-size: 0.78em; font-weight: 600; text-align: center;
+}
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* ---------- shared controls ---------- */
+.btn-primary, .btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem;
+  height: 2.75rem; padding: 0 1.25rem; border-radius: var(--r-s);
+  font-weight: 600; font-size: 0.95rem; white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, transform 0.12s, box-shadow 0.15s, color 0.15s;
+}
+.btn-primary {
+  border: 0; color: #fff;
+  background: linear-gradient(135deg, var(--lapis), var(--lapis-2));
+  box-shadow: 0 0.35rem 1.1rem rgb(47 87 230 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.18);
+}
+.btn-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 0.5rem 1.4rem rgb(47 87 230 / 0.45), inset 0 1px 0 rgb(255 255 255 / 0.18); }
+.btn-primary:active:not(:disabled) { transform: translateY(1px); }
+.btn-primary:disabled { opacity: 0.45; cursor: default; box-shadow: none; }
+.btn-ghost { border: 1px solid var(--line-2); background: transparent; color: var(--text); }
+.btn-ghost:hover:not(:disabled) { border-color: var(--lapis); background: rgb(74 116 255 / 0.08); }
+.btn-ghost:disabled { opacity: 0.4; cursor: default; }
+.sm { height: 2.25rem; padding: 0 0.9rem; font-size: 0.86rem; }

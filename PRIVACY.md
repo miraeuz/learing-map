@@ -51,3 +51,11 @@ ICPC yoʻli stores all progress locally. The only network transfer happens durin
 activation: the name you enter, your computer name and OS type, and a one-time code
 are sent to the author's Telegram bot so the code can be delivered. No analytics,
 no progress data, no files are sent. Contact: https://github.com/miraeuz/learing-map/issues
+
+## Mirae Academy
+
+Mirae Academy ilovasi ham xuddi shu qoidalarga amal qiladi: natijalar, yozgan kodingiz va
+qoralamalaringiz faqat kompyuteringizda saqlanadi, kod esa kompyuterning oʻzida, internetsiz
+bajariladi. Internetga faqat faollashtirishda Mirae Academy Telegram botiga ism, kompyuter
+nomi, operatsion tizim turi va bir martalik kod yuboriladi. Online masalalar havolalari
+(Exercism, LeetCode, CSES, acmp.ru) brauzeringizda ochiladi.

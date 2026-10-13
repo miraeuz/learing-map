@@ -1,0 +1,6 @@
+node_modules/
+dist/
+release/
+electron/config.cjs
+public/pyodide/
+__pycache__/
