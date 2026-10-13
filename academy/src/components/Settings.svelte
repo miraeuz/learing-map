@@ -2,10 +2,15 @@
   import { app, setName, setTheme, resetProgress, exportBackup, importBackup, toast, levelOf, solvedCount, uzDate } from '../lib/store.svelte';
   import { py } from '../lib/python.svelte';
   import { course } from '../lib/course';
-  import { hasBridge } from '../lib/license';
+  import { onMount } from 'svelte';
+  import { hasBridge, bridge, licenceDate, RENEW_WARN_DAYS, type LicenseStatus } from '../lib/license';
 
   let name = $state(app.saved.name);
   let resetStep = $state(0);
+  let lic = $state<LicenseStatus | null>(null);
+  onMount(async () => {
+    if (hasBridge()) try { lic = await bridge().license.status(); } catch { lic = null; }
+  });
   let fileInput: HTMLInputElement;
   const lv = $derived(levelOf(app.saved.xp));
   const since = uzDate(new Date(app.saved.createdAt), { year: true });
@@ -77,7 +82,7 @@
         <span class="sw light"><i></i><i></i></span>Kunduzgi qogʻoz
       </button>
     </div>
-    <p class="muted">Klaviatura: <kbd>Ctrl</kbd>+<kbd>K</kbd> qidiruv · <kbd>F11</kbd> toʻliq ekran · <kbd>Ctrl</kbd>+<kbd>↵</kbd> kodni ishga tushirish · <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>↵</kbd> tekshirish</p>
+    <p class="muted">Klaviatura: <kbd>Ctrl</kbd>+<kbd>K</kbd> qidiruv · <kbd>Ctrl</kbd>+<kbd>B</kbd> yon panel · <kbd>F11</kbd> toʻliq ekran · <kbd>Ctrl</kbd>+<kbd>↵</kbd> kodni ishga tushirish · <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>↵</kbd> tekshirish</p>
   </section>
 
   <section class="card">
@@ -107,7 +112,14 @@
       <dt>Versiya</dt><dd>Mirae Academy {__APP_VERSION__}</dd>
       <dt>Python</dt><dd>{py.version ? `${py.version} (Pyodide, oflayn)` : py.status === 'loading' ? 'yuklanmoqda…' : 'birinchi ishga tushirishda yuklanadi'}</dd>
       <dt>Kurs</dt><dd>{course.totals.topics} mavzu · {course.totals.ex} mashq · {course.totals.lessonCode} ta jonli kod misoli</dd>
-      <dt>Faollashtirish</dt><dd>{hasBridge() ? 'Bu kompyuterda faollashtirilgan' : 'Brauzer rejimi'}</dd>
+      <dt>Faollashtirish</dt>
+      <dd>
+        {#if !hasBridge()}Brauzer rejimi
+        {:else if lic?.activated && lic.validUntil}
+          {licenceDate(lic.validUntil)}gacha amal qiladi ·
+          <span class:warn={(lic.daysLeft ?? 0) <= RENEW_WARN_DAYS}>{lic.daysLeft} kun qoldi</span>
+        {:else}Bu kompyuterda faollashtirilgan{/if}
+      </dd>
       <dt>Shriftlar</dt><dd>Unbounded, Onest, JetBrains Mono — SIL Open Font License</dd>
     </dl>
     <p class="muted">© 2026 Mirae Academy. Barcha mashq javoblari kod orqali avtomatik tekshirilgan.</p>
@@ -117,6 +129,7 @@
 <style>
   .page { display: grid; gap: 1rem; padding: 2rem clamp(1.5rem, 3vw, 3rem) 3rem; max-width: 52rem; margin: 0 auto; }
   h1 { margin: 0 0 0.4rem; font-family: var(--display); font-size: 2rem; font-weight: 700; }
+  .warn { color: var(--gold); font-weight: 600; }
   .card { display: grid; gap: 0.8rem; padding: 1.3rem 1.5rem; border-radius: var(--r-l); background: var(--surface); border: 1px solid var(--line); }
   h3 { margin: 0; font-size: 1.05rem; }
   .profile { grid-template-columns: auto 1fr; align-items: center; gap: 1.2rem; background: linear-gradient(135deg, rgb(74 116 255 / 0.16), var(--surface) 70%); }

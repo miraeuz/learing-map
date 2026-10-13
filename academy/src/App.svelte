@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { app, save } from './lib/store.svelte';
+  import { app, save, toast } from './lib/store.svelte';
   import { nav } from './lib/nav.svelte';
-  import { hasBridge, bridge, type LicenseStatus } from './lib/license';
+  import { hasBridge, bridge, licenceDate, RENEW_WARN_DAYS, type LicenseStatus } from './lib/license';
   import { warmUp } from './lib/python.svelte';
   import Gate from './components/Gate.svelte';
   import Sidebar from './components/Sidebar.svelte';
@@ -22,14 +22,42 @@
   let status = $state<LicenseStatus | null>(null);
   let search = $state(false);
 
-  onMount(async () => {
+  onMount(() => {
+    boot();
+    // The app may stay open for days: re-check the licence every half hour.
+    const timer = hasBridge() ? setInterval(recheck, 30 * 60 * 1000) : null;
+    return () => { if (timer) clearInterval(timer); };
+  });
+
+  async function boot() {
     if (hasBridge()) {
       try { status = await bridge().license.status(); } catch { status = null; }
     }
     const activated = !hasBridge() || !!status?.activated;
     phase = activated && app.saved.name ? 'app' : 'gate';
-    if (phase === 'app') startPython();
-  });
+    if (phase === 'app') {
+      startPython();
+      remind();
+    }
+  }
+
+  async function recheck() {
+    if (phase !== 'app') return;
+    try {
+      const s = await bridge().license.status();
+      if (!s.activated && !nav.examActive) {
+        status = s;
+        phase = 'gate';
+      }
+    } catch { /* keep working; checked again later */ }
+  }
+
+  /** Gentle reminder during the last month of the licence. */
+  function remind() {
+    const d = status?.daysLeft ?? 0;
+    if (!status?.activated || !status.validUntil || d > RENEW_WARN_DAYS) return;
+    setTimeout(() => toast(`Litsenziya ${d} kundan keyin tugaydi (${licenceDate(status!.validUntil!)}). Yangilash uchun ustozingizga murojaat qiling.`, { tone: 'gold', ms: 9000 }), 2500);
+  }
 
   function startPython() {
     // Load Python in the background so the first "Run" is instant.
@@ -59,7 +87,15 @@
 {#if phase === 'boot'}
   <div class="boot"><BrandMark size="4rem" glow /></div>
 {:else if phase === 'gate'}
-  <Gate {status} onDone={() => { phase = 'app'; startPython(); }} />
+  {#key status}
+    <Gate {status} onDone={async () => {
+      if (hasBridge()) {
+        try { status = await bridge().license.status(); } catch { /* keep previous */ }
+      }
+      phase = 'app';
+      startPython();
+    }} />
+  {/key}
 {:else}
   <div class="shell" class:collapsed={app.saved.sideCollapsed}>
     {#if app.saved.sideCollapsed}

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy, untrack } from 'svelte';
   import { app, setName } from '../lib/store.svelte';
-  import { hasBridge, bridge, errorText, type LicenseStatus } from '../lib/license';
+  import { hasBridge, bridge, errorText, licenceDate, type LicenseStatus } from '../lib/license';
   import { course, sections } from '../lib/course';
   import BrandMark from './BrandMark.svelte';
 
@@ -9,6 +9,9 @@
 
   const init = untrack(() => status);
   const needsCode = hasBridge() && !init?.activated;
+  // The year is over (or the clock was turned back): same code flow, renewal wording.
+  const renewing = needsCode && Boolean(init?.licensed);
+  const clockBack = Boolean(init?.clockBack);
   let step = $state<'name' | 'code'>(app.saved.name && needsCode ? 'code' : 'name');
   let name = $state(app.saved.name || init?.name || '');
   let digits = $state(['', '', '', '', '', '']);
@@ -140,7 +143,7 @@
         <ol class="steps" aria-label="Qadamlar">
           <li class:on={step === 'name'} class:done={step === 'code'}><span>{step === 'code' ? '✓' : '1'}</span>Ism</li>
           <li class="bar" class:done={step === 'code'}></li>
-          <li class:on={step === 'code'} class:done={success}><span>{success ? '✓' : '2'}</span>Faollashtirish</li>
+          <li class:on={step === 'code'} class:done={success}><span>{success ? '✓' : '2'}</span>{renewing ? 'Yangilash' : 'Faollashtirish'}</li>
         </ol>
       {/if}
 
@@ -154,11 +157,17 @@
           <button class="btn-primary big" disabled={!nameOk || busy}>{needsCode ? 'Davom etish' : 'Boshlash'} <span aria-hidden="true">→</span></button>
         </form>
       {:else}
-        <h1>{success ? 'Tayyor!' : 'Faollashtirish'}</h1>
+        <h1>{success ? 'Tayyor!' : clockBack ? 'Sanani tekshiring' : renewing ? 'Muddat tugadi' : 'Faollashtirish'}</h1>
         {#if success}
-          <p class="lead ok">Ilova faollashtirildi. Omad, {name.trim().split(' ')[0]}! 🚀</p>
+          <p class="lead ok">{renewing ? 'Litsenziya yana 1 yilga yangilandi' : 'Ilova 1 yilga faollashtirildi'}. Omad, {name.trim().split(' ')[0]}! 🚀</p>
+        {:else if clockBack}
+          <p class="lead">Kompyuterdagi sana avval koʻrilgan sanadan oldinga qaytarilgan. Sana va vaqtni toʻgʻri qoʻyib, ilovani qayta oching.</p>
+          <div class="notice">🕒 Natijalaringiz, qaydlaringiz va kodlaringiz saqlangan — hech narsa oʻchmaydi.</div>
         {:else if !sent}
-          <p class="lead">Bir martalik kod Mirae Academy Telegram botiga yuboriladi. Kodni ustozingizdan oling va shu yerga kiriting.</p>
+          {#if renewing}
+            <div class="notice">📅 Bir yillik foydalanish muddati <b>{licenceDate(init?.validUntil ?? 0)}</b> kuni tugadi. Natijalaringiz, XP va qaydlaringiz saqlangan — yangilagach hammasi joyida boʻladi.</div>
+          {/if}
+          <p class="lead">Bir martalik kod Mirae Academy Telegram botiga yuboriladi. Kodni ustozingizdan oling va shu yerga kiriting. Faollashtirish <b>1 yil</b> amal qiladi.</p>
           <button class="btn-primary big" onclick={send} disabled={busy || resendIn > 0}>
             {busy ? 'Yuborilmoqda…' : resendIn > 0 ? `Kod yuborish (${mmss(resendIn)})` : 'Kod yuborish'}
           </button>
@@ -189,7 +198,7 @@
           </div>
           <button class="btn-primary big" onclick={verify} disabled={code.length !== 6 || busy}>{busy ? 'Tekshirilmoqda…' : 'Faollashtirish'}</button>
         {/if}
-        {#if !success}
+        {#if !success && !clockBack}
           <button class="back" onclick={() => { step = 'name'; error = ''; }}>← Ismni oʻzgartirish</button>
         {/if}
       {/if}
@@ -259,6 +268,9 @@
   h1 { margin: 0; font-family: var(--display); font-size: 2rem; font-weight: 700; letter-spacing: -0.01em; }
   .lead { margin: 0; color: var(--text-2); font-size: 1.02rem; line-height: 1.55; }
   .lead.ok { color: var(--turq); font-weight: 600; }
+  .lead b { color: var(--text); }
+  .notice { padding: 0.8rem 1rem; border-radius: var(--r-m); background: rgb(247 189 70 / 0.1); border: 1px solid rgb(247 189 70 / 0.35); color: var(--text-2); line-height: 1.55; font-size: 0.95rem; }
+  .notice b { color: var(--gold); }
   form { display: grid; gap: 0.6rem; margin-top: 0.3rem; }
   label { font-weight: 600; font-size: 0.9rem; color: var(--text-2); }
   #name {

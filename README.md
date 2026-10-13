@@ -42,6 +42,9 @@ Python kodi ilova ichida **internetsiz** ishlaydi (Pyodide, Python 3.14).
   qidiruv (Ctrl K, mavzular va mashqlar), har mavzu uchun shaxsiy qaydlar, yigʻiladigan yon panel
   (Ctrl B), tungi/kunduzgi mavzu, zaxira nusxa.
 - Telegram orqali bir martalik faollashtirish (ICPC yoʻli bilan bir xil, `TELEGRAM_BOT_TOKEN` secret).
+- Faollashtirish **1 yil** amal qiladi (faollashtirilgan kundan). Muddat tugashiga 30 kun qolganda
+  eslatma chiqadi; tugagach ilova xuddi shu Telegram kodi bilan yana 1 yilga yangilanadi —
+  natijalar, XP va qaydlar saqlanib qoladi. Kompyuter sanasini orqaga surish muddatni uzaytirmaydi.
 
 Oʻrnatuvchilar: **Actions → Build Mirae Academy → Artifacts**.
 Ishlab chiqish: `cd academy && npm install && npm run dev`.

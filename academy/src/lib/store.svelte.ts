@@ -62,10 +62,11 @@ export function uzDate(d: Date, opts: { weekday?: boolean; year?: boolean } = {}
 export const today = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
 let toastSeq = 0;
-export function toast(text: string, opts: { xp?: number; tone?: 'ok' | 'info' | 'gold' } = {}) {
+export function toast(text: string, opts: { xp?: number; tone?: 'ok' | 'info' | 'gold'; ms?: number } = {}) {
   const id = ++toastSeq;
-  app.toast = { text, id, ...opts };
-  setTimeout(() => { if (app.toast?.id === id) app.toast = null; }, 2600);
+  const { ms = 2600, ...rest } = opts;
+  app.toast = { text, id, ...rest };
+  setTimeout(() => { if (app.toast?.id === id) app.toast = null; }, ms);
 }
 
 function addXp(n: number) {
